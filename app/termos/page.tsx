@@ -26,7 +26,7 @@ export default function Termos() {
 
             <h2 style={{ color: "#0e1c29", fontSize: "1.5rem", fontWeight: 700, marginTop: "3rem", marginBottom: "1rem" }}>1. Escopo de Trabalho</h2>
             <p style={{ marginBottom: "1.5rem" }}>
-              Nossos serviços abrangem a criação de interfaces digitais, landing pages e estratégias de design. O escopo detalhado de cada projeto é definido via WhatsApp ou contrato específico. Projetos do pacote "Autoridade Imediata" são limitados a até 5 páginas e funcionalidades essenciais.
+              Nossos serviços abrangem a criação de interfaces digitais, landing pages e estratégias de design. O escopo detalhado de cada projeto é definido via WhatsApp ou contrato específico. Projetos do pacote &quot;Autoridade Imediata&quot; são limitados a até 5 páginas e funcionalidades essenciais.
             </p>
 
             <h2 style={{ color: "#0e1c29", fontSize: "1.5rem", fontWeight: 700, marginTop: "3rem", marginBottom: "1rem" }}>2. Hospedagem e Domínio</h2>

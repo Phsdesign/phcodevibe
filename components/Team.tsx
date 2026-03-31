@@ -2,17 +2,18 @@
 
 import { useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 export function Team() {
   const containerRef = useRef<HTMLElement>(null);
 
-  const fadeIn = {
+  const fadeIn: Variants = {
     initial: { opacity: 0, y: 30 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, margin: "-100px" },
-    transition: { duration: 1, ease: [0.16, 1, 0.3, 1] }
+    whileInView: { opacity: 1, y: 0 }
   };
+
+  const defaultTransition = { duration: 1, ease: "easeInOut" as const };
+  const viewportConfig = { once: true, margin: "-100px" };
 
   return (
     <section id="sobre" ref={containerRef} style={{ background: "#ffffff", padding: "10rem 0", overflow: "hidden" }}>
@@ -22,6 +23,8 @@ export function Team() {
         <div className="mobile-only-header" style={{ marginBottom: "2rem", display: "none" }}>
           <motion.div 
             {...fadeIn}
+            viewport={viewportConfig}
+            transition={defaultTransition}
             style={{ fontSize: "12px", fontWeight: 700, color: "rgba(0,0,0,0.3)", letterSpacing: "0.3em", textAlign: "center" }}
           >
             01 / THE VISIONARY
@@ -33,6 +36,8 @@ export function Team() {
           {/* Portrait Side */}
           <motion.div 
             {...fadeIn}
+            viewport={viewportConfig}
+            transition={defaultTransition}
             className="portrait-container"
             style={{ position: "relative" }}
           >
@@ -64,7 +69,8 @@ export function Team() {
           <div className="content-container">
             <motion.div 
               {...fadeIn}
-              transition={{ delay: 0.2 }}
+              viewport={viewportConfig}
+              transition={{ ...defaultTransition, delay: 0.2 }}
               className="desktop-only"
               style={{ fontSize: "12px", fontWeight: 700, color: "rgba(0,0,0,0.3)", letterSpacing: "0.3em", marginBottom: "3rem" }}
             >
@@ -73,7 +79,8 @@ export function Team() {
             
             <motion.h2 
               {...fadeIn}
-              transition={{ delay: 0.3 }}
+              viewport={viewportConfig}
+              transition={{ ...defaultTransition, delay: 0.3 }}
               style={{ 
                 fontSize: "clamp(3rem, 6vw, 5.5rem)", 
                 fontWeight: 900, 
@@ -98,7 +105,8 @@ export function Team() {
 
             <motion.p 
               {...fadeIn}
-              transition={{ delay: 0.4 }}
+              viewport={viewportConfig}
+              transition={{ ...defaultTransition, delay: 0.4 }}
               style={{ 
                 fontSize: "1.25rem", 
                 lineHeight: 1.6, 
@@ -114,7 +122,8 @@ export function Team() {
 
             <motion.div 
               {...fadeIn}
-              transition={{ delay: 0.5 }}
+              viewport={viewportConfig}
+              transition={{ ...defaultTransition, delay: 0.5 }}
               style={{ display: "flex", gap: "2rem", alignItems: "center", flexWrap: "wrap" }}
             >
               <a href="https://instagram.com/phcodevibe" target="_blank" className="premium-link">Instagram</a>
