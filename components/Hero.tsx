@@ -54,7 +54,7 @@ export function Hero() {
   }, [ROTATING_WORDS.length]);
 
   return (
-    <section id="hero" className="hero-section" style={{ position: "relative", overflow: "hidden", height: "100vh", width: "100%" }}>
+    <section id="hero" className="hero-section" style={{ position: "relative", overflow: "hidden", minHeight: "100vh", width: "100%", display: "flex", alignItems: "center" }}>
       {/* Background Video Implementation */}
       <video
         autoPlay
@@ -120,16 +120,16 @@ export function Hero() {
         </div>
 
         {/* Bento preview stats */}
-        <div className="hero-stats-grid">
-          <div className="neu-card animate-fade-slide-1 hero-stat-tall">
+        <div className="hero-stats-grid" style={{ marginBottom: "2rem" }}>
+          <div className="neu-card animate-fade-slide-1 hero-stat-tall" style={{ minHeight: "140px" }}>
             <p ref={projectsCounter.elementRef} className="hero-stat-number">{projectsCounter.count}+</p>
             <p className="hero-stat-label">Projetos Lançados</p>
           </div>
-          <div className="neu-card animate-fade-slide-2 hero-stat-dark">
+          <div className="neu-card animate-fade-slide-2 hero-stat-dark" style={{ minHeight: "100px" }}>
             <p ref={satisfactionCounter.elementRef} className="hero-stat-number" style={{ color: "#fff" }}>{satisfactionCounter.count}%</p>
             <p className="hero-stat-label" style={{ color: "rgba(255,255,255,0.6)" }}>Satisfação</p>
           </div>
-          <div className="neu-card animate-fade-slide-3 hero-stat-light">
+          <div className="neu-card animate-fade-slide-3 hero-stat-light" style={{ minHeight: "100px" }}>
             <p ref={autoralCounter.elementRef} className="hero-stat-number" style={{ textAlign: "center" }}>{autoralCounter.count}%</p>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.375rem" }}>
               <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#000", display: "inline-block" }} />

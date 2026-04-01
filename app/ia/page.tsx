@@ -73,17 +73,24 @@ export default function AIAutomation() {
                 Desenvolvemos o cérebro digital da sua empresa. Automações que não apenas executam tarefas, mas tomam decisões estratégicas 24/7 para escalar seu lucro.
               </p>
 
-              <div className="animate-fade-slide-3">
+              <div className="animate-fade-slide-3" style={{ display: "flex", justifyContent: "flex-start" }}>
                 <a
                   href="https://wa.me/5549991031743?text=Olá! Gostaria de conversar sobre Automação com Inteligência Artificial."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-primary"
-                  style={{ 
-                    padding: "1.25rem 3rem", 
-                    borderRadius: "20px", 
-                    fontSize: "1rem", 
-                    fontWeight: 700 
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "0.75rem",
+                    padding: "1.25rem 2.5rem",
+                    borderRadius: "16px",
+                    fontSize: "1rem",
+                    fontWeight: 700,
+                    textDecoration: "none",
+                    width: "auto",
+                    minWidth: "min-content"
                   }}
                 >
                   Solicitar Auditoria Gratuita
@@ -91,8 +98,7 @@ export default function AIAutomation() {
                     <path d="M5 12h14M12 5l7 7-7 7"/>
                   </svg>
                 </a>
-              </div>
-            </div>
+              </div>            </div>
 
             {/* Right: Visual Element (Minimalist) */}
             <div className="lg:col-span-5 animate-fade-slide-delayed" style={{ position: "relative" }}>

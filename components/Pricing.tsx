@@ -195,26 +195,26 @@ export function Pricing() {
             Autoridade Imediata
           </h3>
           
-          <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "2.5rem", flexWrap: "wrap", justifyContent: "center", position: "relative", zIndex: 2 }}>
-            <div style={{ position: "relative" }}>
-               <span style={{ fontSize: "1.5rem", fontWeight: 700, color: "rgba(255,255,255,0.3)", textDecoration: "line-through" }}>R$ 1.500</span>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", marginBottom: "2.5rem", position: "relative", zIndex: 2 }}>
+            <div style={{ position: "relative", display: "inline-block" }}>
+               <span style={{ fontSize: "1.1rem", fontWeight: 700, color: "rgba(255,255,255,0.3)", textDecoration: "line-through" }}>R$ 1.500</span>
                <div style={{ position: "absolute", top: "50%", left: "-10%", width: "120%", height: "2px", background: "#ff3e3e", transform: "rotate(-10deg)" }} />
             </div>
-            <div className="price-highlight-blue" style={{ display: "flex", alignItems: "baseline", gap: "0.5rem" }}>
-               <span style={{ fontSize: "1.5rem", fontWeight: 800, opacity: 0.8 }}>R$</span>
-               <span style={{ fontSize: "clamp(4rem, 10vw, 7rem)", fontWeight: 900, lineHeight: 1 }}>997</span>
+            <div className="price-highlight-blue" style={{ display: "flex", alignItems: "baseline", gap: "0.4rem" }}>
+               <span style={{ fontSize: "1.2rem", fontWeight: 800, opacity: 0.8 }}>R$</span>
+               <span style={{ fontSize: "clamp(4rem, 15vw, 7rem)", fontWeight: 900, lineHeight: 1 }}>997</span>
             </div>
           </div>
 
-          <div style={{ position: "relative", zIndex: 2, marginBottom: "3rem" }}>
+          <div style={{ position: "relative", zIndex: 2, marginBottom: "3rem", width: "100%" }}>
             <ul 
               className="exclusive-list-mobile"
               style={{ 
                 listStyle: "none", 
-                padding: 0, 
+                padding: "0 1rem", 
                 margin: "0 auto", 
                 display: "grid", 
-                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", 
+                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", 
                 gap: "1rem",
                 maxWidth: "700px",
                 textAlign: "left"
