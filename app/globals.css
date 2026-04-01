@@ -81,23 +81,21 @@ html, body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   background-color: var(--bg);
-  scroll-behavior: auto;
+  scroll-behavior: auto !important;
   -webkit-text-size-adjust: 100%;
   text-rendering: optimizeSpeed;
 }
 
-/* Force hardware acceleration for all elements during scroll */
-* {
+/* Force hardware acceleration only for specific heavy elements */
+.flashlight-card, 
+.animate-fade-slide,
+.marquee-scroll {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   -webkit-perspective: 1000;
   perspective: 1000;
-}
-
-/* Specific GPU triggers for heavy components */
-.flashlight-card, 
-.animate-fade-slide {
   will-change: transform, opacity;
+}
 }
 
 /* Premium Focus Visível */
@@ -120,10 +118,6 @@ a:focus-visible {
 /* Optimize image rendering for speed */
 img {
   image-rendering: -webkit-optimize-contrast;
-}
-
-html.scroll-smooth {
-  scroll-behavior: smooth;
 }
 
 /* Force scroll restoration on navigation */
