@@ -4,6 +4,8 @@ import { FloatingButtons } from "@/components/FloatingButtons";
 import { ScrollEffects } from "@/components/ScrollEffects";
 import "./globals.css";
 
+import Script from "next/script";
+
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -40,7 +42,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className="scroll-smooth" suppressHydrationWarning>
+    <html lang="pt-BR" suppressHydrationWarning>
+      <head>
+        <Script id="restore-scroll" strategy="beforeInteractive">
+          {`
+            if ('scrollRestoration' in history) {
+              history.scrollRestoration = 'manual';
+            }
+          `}
+        </Script>
+      </head>
       <body
         className={`${inter.variable} antialiased selection:bg-blue-500 selection:text-white`}
       >
