@@ -103,13 +103,12 @@ export function Contact() {
                 }}
               >
                 Pronto para o próximo <br />
-                <span style={{ color: "rgba(255,255,255,0.2)" }}>nível de impacto?</span>
+                <span style={{ color: "rgba(255,255,255,0.4)" }}>nível de impacto?</span>
               </h2>
 
-              <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.0625rem", lineHeight: 1.6, marginBottom: "3rem", maxWidth: "420px" }}>
+              <p style={{ color: "rgba(255,255,255,0.8)", fontSize: "1.0625rem", lineHeight: 1.6, marginBottom: "3rem", maxWidth: "420px" }}>
                 Não fazemos apenas sites. Construímos ativos digitais que exalam autoridade. Fale conosco e vamos desenhar sua nova realidade.
               </p>
-
               {/* Contact Channels */}
               <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
                 {[
