@@ -20,8 +20,8 @@ export default function Home() {
     <main style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", background: "#ffffff" }}>
       <Navbar />
       <Hero />
-      <Marquee />
       <FeaturesAI />
+      <Marquee />
       <Services />
       <Metrics />
       <Portfolio />

@@ -537,9 +537,9 @@ section {
 }
 
 /* Specific fix for the first scroll: Pre-render content */
-#hero, .fn-section, #marquee {
-  content-visibility: visible !important;
-  contain: layout style paint !important;
+#hero, .fn-section, #marquee, #features, #servicos, #metricas, #portfolio, #precos, #sobre, #contato {
+  content-visibility: auto !important;
+  contain-intrinsic-size: 1px 500px;
   will-change: transform;
 }
 

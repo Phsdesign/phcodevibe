@@ -13,15 +13,25 @@ function NeuralCanvas({ isHovered }: { isHovered: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    // Otimização: No mobile desativamos o canvas para performance
+    if (window.innerWidth < 768) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     let animationFrameId: number;
+    let isInView = false;
     let particles: { x: number; y: number; vx: number; vy: number }[] = [];
     const particleCount = 120;
     const connectionDistance = 80;
+
+    // Observer para rodar apenas quando visível
+    const observer = new IntersectionObserver((entries) => {
+      isInView = entries[0].isIntersecting;
+    }, { threshold: 0.1 });
+    observer.observe(canvas);
 
     const resize = () => {
       canvas.width = canvas.offsetWidth;
@@ -35,6 +45,11 @@ function NeuralCanvas({ isHovered }: { isHovered: boolean }) {
     };
 
     const draw = () => {
+      if (!isInView) {
+        animationFrameId = requestAnimationFrame(draw);
+        return;
+      }
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       const color = isHovered ? "255, 255, 255" : "0, 0, 0";
       const opacity = isHovered ? 0.4 : 0.1;
@@ -63,7 +78,11 @@ function NeuralCanvas({ isHovered }: { isHovered: boolean }) {
 
     window.addEventListener("resize", resize);
     resize(); draw();
-    return () => { cancelAnimationFrame(animationFrameId); window.removeEventListener("resize", resize); };
+    return () => { 
+      cancelAnimationFrame(animationFrameId); 
+      window.removeEventListener("resize", resize);
+      observer.disconnect();
+    };
   }, [isHovered]);
 
   return <canvas ref={canvasRef} style={{ width: "100%", height: "100%", opacity: 0.8 }} />;
@@ -95,13 +114,23 @@ function FlowCanvas({ isHovered }: { isHovered: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
+    // Otimização: No mobile desativamos o canvas para performance
+    if (window.innerWidth < 768) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     let animationFrameId: number;
+    let isInView = false;
     let particles: { x: number; y: number; size: number; speed: number; angle: number }[] = [];
+
+    // Observer para rodar apenas quando visível
+    const observer = new IntersectionObserver((entries) => {
+      isInView = entries[0].isIntersecting;
+    }, { threshold: 0.1 });
+    observer.observe(canvas);
 
     const resize = () => {
       canvas.width = canvas.offsetWidth;
@@ -116,6 +145,11 @@ function FlowCanvas({ isHovered }: { isHovered: boolean }) {
     };
 
     const draw = () => {
+      if (!isInView) {
+        animationFrameId = requestAnimationFrame(draw);
+        return;
+      }
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       const color = isHovered ? "0, 0, 0" : "0, 0, 0";
       const opacity = isHovered ? 0.15 : 0.05;
@@ -136,7 +170,11 @@ function FlowCanvas({ isHovered }: { isHovered: boolean }) {
 
     window.addEventListener("resize", resize);
     resize(); draw();
-    return () => { cancelAnimationFrame(animationFrameId); window.removeEventListener("resize", resize); };
+    return () => { 
+      cancelAnimationFrame(animationFrameId); 
+      window.removeEventListener("resize", resize);
+      observer.disconnect();
+    };
   }, [isHovered]);
 
   return <canvas ref={canvasRef} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }} />;
