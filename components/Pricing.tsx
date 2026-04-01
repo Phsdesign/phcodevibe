@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 const regularPlans = [
   {
@@ -15,17 +16,6 @@ const regularPlans = [
     ],
   },
   {
-    name: "Personalizado",
-    price: "5.000 +",
-    desc: "Sistemas complexos e experiências imersivas sob medida.",
-    features: [
-      "Tudo do plano Elite",
-      "Motion Design Integrado (Lottie)",
-      "Otimização Core Web Vitals",
-      "Consultoria de Estratégia Digital",
-    ],
-  },
-  {
     name: "Elite",
     price: "3.000",
     desc: "O equilíbrio perfeito entre design premium e resultados.",
@@ -36,334 +26,312 @@ const regularPlans = [
       "SEO Avançado & Performance",
     ],
   },
+  {
+    name: "Personalizado",
+    price: "5.000 +",
+    desc: "Sistemas complexos e experiências imersivas sob medida.",
+    features: [
+      "Tudo do plano Elite",
+      "Motion Design Integrado (Lottie)",
+      "Otimização Core Web Vitals",
+      "Consultoria de Estratégia Digital",
+    ],
+  },
 ];
 
 export function Pricing() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section id="precos" style={{ padding: "8rem 0", width: "100%", background: "transparent" }}>
+    <section id="precos" style={{ padding: "10rem 0", width: "100%", background: "#ffffff", overflow: "hidden" }}>
       <style jsx global>{`
-        @keyframes shimmer-blue {
-          0% { background-position: -200% 0; }
-          100% { background-position: 200% 0; }
+        @keyframes premium-glow {
+          0%, 100% { opacity: 0.5; filter: blur(40px); }
+          50% { opacity: 0.8; filter: blur(60px); }
         }
-        @keyframes pulse-blue {
-          0% { box-shadow: 0 0 0 0 rgba(0, 112, 243, 0.4); }
-          70% { box-shadow: 0 0 0 20px rgba(0, 112, 243, 0); }
-          100% { box-shadow: 0 0 0 0 rgba(0, 112, 243, 0); }
-        }
-        @keyframes ray-move-blue {
-          0% { transform: translateX(-100%) skewX(-15deg); }
-          100% { transform: translateX(200%) skewX(-15deg); }
-        }
-        @keyframes scanline {
-          0% { top: 0%; }
-          100% { top: 100%; }
-        }
-        @keyframes button-call {
-          0%, 100% { transform: scale(1); box-shadow: 0 20px 40px rgba(0, 112, 243, 0.4); }
-          50% { transform: scale(1.05); box-shadow: 0 30px 60px rgba(0, 112, 243, 0.7); filter: brightness(1.2); }
-        }
-        .promo-card-exclusive-blue {
-          background: linear-gradient(135deg, #000 0%, #001a33 50%, #000 100%);
-          border: 2px solid #0070f3;
-          animation: pulse-blue 2s infinite;
+        
+        .premium-card-stealth {
+          background: #000;
+          border: 1px solid rgba(255,255,255,0.1);
           position: relative;
-          overflow: hidden;
-          transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+          z-index: 2;
+          transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        @media (max-width: 768px) {
-          .promo-card-exclusive-blue {
-            padding: 3rem 1rem !important;
-            border-radius: 32px !important;
-          }
-          .promo-card-exclusive-blue h3 {
-            font-size: 1.75rem !important;
-            margin-bottom: 2rem !important;
-          }
-          .exclusive-list-mobile {
-            grid-template-columns: 1fr !important;
-            gap: 0.75rem !important;
-          }
-          .price-highlight-blue span:last-child {
-            font-size: 4.5rem !important;
-          }
-          .cta-button-mobile {
-            padding: 1.25rem 2rem !important;
-            font-size: 1rem !important;
-            width: 100% !important;
-          }
-        }
-        .promo-card-exclusive-blue::after {
+
+        .premium-card-stealth::before {
           content: "";
           position: absolute;
-          top: 0;
-          left: 0;
-          width: 50%;
-          height: 100%;
-          background: linear-gradient(to right, transparent, rgba(0, 112, 243, 0.15), transparent);
-          animation: ray-move-blue 4s infinite linear;
+          inset: 0;
+          background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 50%, rgba(255,255,255,0.02) 100%);
           pointer-events: none;
         }
-        .scanline-effect {
-          position: absolute;
-          left: 0;
-          width: 100%;
-          height: 2px;
-          background: rgba(0, 112, 243, 0.2);
-          animation: scanline 3s linear infinite;
-          pointer-events: none;
-          z-index: 1;
-        }
-        .exclusive-badge-blue {
-          background: linear-gradient(90deg, #0070f3, #00c2ff, #0070f3);
-          background-size: 200% auto;
-          animation: shimmer-blue 3s linear infinite;
-          color: #fff;
-          padding: 0.6rem 1.5rem;
-          border-radius: 999px;
-          font-weight: 900;
-          font-size: 0.75rem;
+
+        .offer-badge-minimal {
+          padding: 6px 14px;
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 4px;
+          font-family: monospace;
+          font-size: 0.65rem;
+          font-weight: 700;
+          letter-spacing: 0.2em;
+          color: rgba(255,255,255,0.4);
           text-transform: uppercase;
-          letter-spacing: 0.1em;
-          box-shadow: 0 10px 20px rgba(0, 112, 243, 0.3);
-          display: flex;
-          alignItems: center;
-          gap: 0.5rem;
         }
-        .price-highlight-blue {
+
+        .price-glitch {
+          font-size: clamp(5rem, 12vw, 9rem);
+          font-weight: 900;
+          line-height: 0.8;
+          letter-spacing: -0.06em;
+          color: #fff;
           position: relative;
-          color: #0070f3;
-          filter: drop-shadow(0 0 15px rgba(0, 112, 243, 0.6));
         }
-        .dark-premium-card {
-          background: #000 !important;
-          color: #fff !important;
-          border: 1px solid rgba(255,255,255,0.1) !important;
+
+        .cta-premium-stealth {
+          background: #fff;
+          color: #000;
+          padding: 1.25rem 3.5rem;
+          border-radius: 2px;
+          font-weight: 800;
+          font-size: 0.85rem;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+          border: 1px solid #fff;
         }
-        .light-card {
-          background: #ffffff !important;
-          color: #0e1c29 !important;
-          border: 1px solid rgba(0,0,0,0.06) !important;
+
+        .cta-premium-stealth:hover {
+          background: transparent;
+          color: #fff;
+          transform: translateY(-4px);
+          box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        @media (max-width: 768px) {
+          .premium-card-stealth {
+            padding: 4rem 1.5rem !important;
+          }
+          .price-glitch {
+            font-size: 5.5rem !important;
+          }
         }
       `}</style>
 
       <div className="container" style={{ maxWidth: "1280px" }}>
-
-        {/* Header */}
-        <div style={{ textAlign: "center", marginBottom: "5rem" }}>
-          <div style={{ display: "flex", justifyContent: "center", marginBottom: "1.5rem" }}>
-            <div className="orbai-badge">
-              <span>TABELA DE INVESTIMENTOS 2026</span>
-            </div>
-          </div>
-          <h2 style={{
-              fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
-              letterSpacing: "-0.05em",
-              fontWeight: 800,
-              color: "#0e1c29",
-              lineHeight: 1,
-            }}>
-            Escolha o Plano Ideal
-          </h2>
-        </div>
-
-        {/* PROMO CARD EXCLUSIVO AZUL REFORMULADO */}
-        <div 
-          className="promo-card-exclusive-blue"
-          style={{
-            maxWidth: "960px",
-            margin: "0 auto 6rem",
-            padding: "4rem 2rem",
-            borderRadius: "40px",
-            color: "#fff",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            textAlign: "center",
-            boxShadow: "0 40px 100px -20px rgba(0, 112, 243, 0.3)"
-          }}
-        >
-          <div className="scanline-effect" />
-          <div className="exclusive-badge-blue" style={{ marginBottom: "2.5rem", position: "relative", zIndex: 2 }}>
-            <span style={{ width: "8px", height: "8px", background: "#ff3e3e", borderRadius: "50%", animation: "pulse 1s infinite" }} />
-            OFERTA RELÂMPAGO: 2 VAGAS RESTANTES
-          </div>
-
-          <h3 style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 800, letterSpacing: "-0.03em", marginBottom: "1.5rem", position: "relative", zIndex: 2 }}>
-            Autoridade Imediata
-          </h3>
+        
+        {/* Main Offer Section */}
+        <div style={{ position: "relative", marginBottom: "10rem" }}>
           
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", marginBottom: "2.5rem", position: "relative", zIndex: 2 }}>
-            <div style={{ position: "relative", display: "inline-block" }}>
-               <span style={{ fontSize: "1.1rem", fontWeight: 700, color: "rgba(255,255,255,0.3)", textDecoration: "line-through" }}>R$ 1.500</span>
-               <div style={{ position: "absolute", top: "50%", left: "-10%", width: "120%", height: "2px", background: "#ff3e3e", transform: "rotate(-10deg)" }} />
-            </div>
-            <div className="price-highlight-blue" style={{ display: "flex", alignItems: "baseline", gap: "0.4rem" }}>
-               <span style={{ fontSize: "1.2rem", fontWeight: 800, opacity: 0.8 }}>R$</span>
-               <span style={{ fontSize: "clamp(4rem, 15vw, 7rem)", fontWeight: 900, lineHeight: 1 }}>997</span>
-            </div>
-          </div>
+          {/* Decorative Glow Elements */}
+          <div style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "80%",
+            height: "80%",
+            background: "radial-gradient(circle, rgba(0, 112, 243, 0.08) 0%, transparent 70%)",
+            animation: "premium-glow 8s infinite ease-in-out",
+            pointerEvents: "none",
+            zIndex: 1
+          }} />
 
-          <div style={{ position: "relative", zIndex: 2, marginBottom: "3rem", width: "100%" }}>
-            <ul 
-              className="exclusive-list-mobile"
-              style={{ 
-                listStyle: "none", 
-                padding: "0 1rem", 
-                margin: "0 auto", 
-                display: "grid", 
-                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", 
-                gap: "1rem",
-                maxWidth: "700px",
-                textAlign: "left"
-              }}
-            >
-              {[
-                "Até 5 páginas exclusivas",
-                "SEO Básico (Indexação Google)",
-                "Animações Essenciais",
-                "Site 100% Responsivo",
-                "Hospedagem Gratuita (Vercel/Cloudflare)",
-                "Você paga apenas o domínio"
-              ].map((item, idx) => (
-                <li key={idx} style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "1rem", color: "rgba(255,255,255,0.8)" }}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0070f3" strokeWidth="3">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <a
-            href="https://wa.me/5549991031743?text=Olá!%20Vi%20a%20oferta%20exclusiva%20Autoridade%20Imediata%20de%20R$997%20(5%20páginas,%20SEO,%20Hospedagem)%20e%20gostaria%20de%20garantir%20minha%20vaga."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="cta-button-mobile"
+          <div 
+            className="premium-card-stealth"
             style={{
-              background: "#0070f3",
-              color: "#fff",
-              padding: "1.5rem 4rem",
-              borderRadius: "20px",
-              fontWeight: 900,
-              fontSize: "1.25rem",
-              textDecoration: "none",
-              boxShadow: "0 20px 40px rgba(0, 112, 243, 0.4)",
-              transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-              textTransform: "uppercase",
-              letterSpacing: "0.05em",
-              position: "relative",
-              zIndex: 2,
-              animation: "button-call 2s ease-in-out infinite"
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-10px) scale(1.02)";
-              e.currentTarget.style.boxShadow = "0 30px 60px rgba(0, 112, 243, 0.6)";
-              e.currentTarget.style.background = "#00c2ff";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0) scale(1)";
-              e.currentTarget.style.boxShadow = "0 20px 40px rgba(0, 112, 243, 0.4)";
-              e.currentTarget.style.background = "#0070f3";
+              maxWidth: "1000px",
+              margin: "0 auto",
+              padding: "6rem 4rem",
+              borderRadius: "4px",
+              textAlign: "center",
+              boxShadow: "0 60px 100px -30px rgba(0,0,0,0.4)"
             }}
           >
-            GARANTIR MINHA VAGA AGORA
-          </a>
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: "3rem" }}>
+              <div className="offer-badge-minimal">
+                <span style={{ color: "#fff", marginRight: "8px" }}>●</span>
+                Disponibilidade Limitada: Março 2026
+              </div>
+            </div>
+
+            <h2 style={{ 
+              fontFamily: "var(--font-display)", 
+              fontSize: "clamp(2rem, 5vw, 4rem)", 
+              color: "#fff", 
+              fontWeight: 800, 
+              letterSpacing: "-0.04em",
+              marginBottom: "1rem" 
+            }}>
+              Autoridade Imediata
+            </h2>
+            <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "1rem", marginBottom: "4rem", fontWeight: 500 }}>
+              Design de elite para quem não aceita o comum.
+            </p>
+
+            <div style={{ marginBottom: "5rem" }}>
+              <div style={{ opacity: 0.2, fontSize: "1.2rem", fontWeight: 700, textDecoration: "line-through", color: "#fff", marginBottom: "0.5rem" }}>
+                R$ 1.500
+              </div>
+              <div className="price-glitch">
+                <span style={{ fontSize: "1.5rem", verticalAlign: "top", marginRight: "10px", opacity: 0.5 }}>R$</span>
+                997
+              </div>
+            </div>
+
+            <div style={{ 
+              display: "grid", 
+              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", 
+              gap: "2rem", 
+              maxWidth: "800px", 
+              margin: "0 auto 5rem",
+              textAlign: "left"
+            }}>
+              {[
+                "Presença Digital de Elite",
+                "SEO de Alta Performance",
+                "Animações Cinematográficas",
+                "Infraestrutura de Nuvem",
+                "Foco Total em Conversão",
+                "Domínio não incluso"
+              ].map((item, i) => (
+                <div key={i} style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  <div style={{ width: "4px", height: "4px", background: "#fff", opacity: 0.3 }} />
+                  <span style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.6)", fontWeight: 500 }}>{item}</span>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <a 
+                href="https://wa.me/5549991031743?text=Olá!%20Gostaria%20de%20garantir%20o%20plano%20Autoridade%20Imediata%20de%20R$997.%20Busco%20exclusividade."
+                className="cta-premium-stealth"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Garantir Exclusividade
+              </a>
+            </div>
+          </div>
         </div>
 
-        {/* Planos Padrão */}
-        <div style={{ textAlign: "center", marginBottom: "4rem" }}>
-          <h4 style={{ fontSize: "1.2rem", fontWeight: 700, color: "rgba(0,0,0,0.3)", letterSpacing: "0.1em", textTransform: "uppercase" }}>Outras Opções de Investimento</h4>
+        {/* Regular Plans Header */}
+        <div style={{ textAlign: "center", marginBottom: "5rem" }}>
+          <h3 style={{ 
+            fontSize: "0.8rem", 
+            fontWeight: 800, 
+            letterSpacing: "0.4rem", 
+            textTransform: "uppercase", 
+            color: "rgba(0,0,0,0.2)",
+            marginBottom: "1rem"
+          }}>
+            Outros Investimentos
+          </h3>
+          <div style={{ width: "40px", height: "2px", background: "#000", margin: "0 auto", opacity: 0.1 }} />
         </div>
 
+        {/* Regular Plans Grid */}
         <div style={{ 
           display: "grid", 
-          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))", 
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 350px), 1fr))", 
           gap: "2rem" 
         }}>
           {regularPlans.map((p, i) => {
-            const isMiddle = i === 1;
+            const isElite = p.name === "Elite";
             return (
-              <div
+              <motion.div
                 key={p.name}
-                className={isMiddle ? 'dark-premium-card' : 'light-card'}
                 onMouseEnter={() => setHoveredIndex(i)}
                 onMouseLeave={() => setHoveredIndex(null)}
                 style={{
-                  borderRadius: "32px",
-                  padding: "3.5rem 2.5rem",
+                  background: isElite ? "#000" : "#fff",
+                  color: isElite ? "#fff" : "#0e1c29",
+                  borderRadius: "2px",
+                  padding: "4rem 2.5rem",
+                  border: isElite ? "none" : "1px solid rgba(0,0,0,0.06)",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "2.5rem",
+                  gap: "3rem",
                   transition: "all 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
-                  transform: hoveredIndex === i ? "translateY(-10px)" : "none",
-                  boxShadow: hoveredIndex === i ? "0 40px 80px -20px rgba(0,0,0,0.15)" : "0 4px 20px rgba(0,0,0,0.02)"
+                  transform: hoveredIndex === i ? "translateY(-8px)" : "none",
+                  boxShadow: hoveredIndex === i ? "0 40px 80px -20px rgba(0,0,0,0.1)" : "0 4px 20px rgba(0,0,0,0.02)"
                 }}
               >
                 <div>
-                  <p style={{ fontSize: "0.75rem", fontWeight: 800, textTransform: "uppercase", marginBottom: "0.5rem", color: isMiddle ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)", letterSpacing: "0.1em" }}>
-                    Plano {p.name}
-                  </p>
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "0.5rem" }}>
-                    <span style={{ fontSize: "1.25rem", fontWeight: 700, color: isMiddle ? "rgba(255,255,255,0.6)" : "rgba(0,0,0,0.6)" }}>R$</span>
-                    <p style={{ fontSize: "3.5rem", fontWeight: 900, letterSpacing: "-0.04em", color: isMiddle ? "#fff" : "#0e1c29" }}>{p.price}</p>
+                  <div style={{ 
+                    fontSize: "0.7rem", 
+                    fontWeight: 800, 
+                    textTransform: "uppercase", 
+                    letterSpacing: "0.2rem", 
+                    marginBottom: "1.5rem", 
+                    opacity: isElite ? 0.4 : 0.3 
+                  }}>
+                    {p.name}
                   </div>
-                  <p style={{ fontSize: "1rem", marginTop: "1rem", lineHeight: 1.5, color: isMiddle ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.7)" }}>
+                  <div style={{ display: "flex", alignItems: "baseline", gap: "0.5rem" }}>
+                    <span style={{ fontSize: "1.1rem", fontWeight: 700, opacity: 0.5 }}>R$</span>
+                    <p style={{ fontSize: "3rem", fontWeight: 900, letterSpacing: "-0.04em" }}>{p.price}</p>
+                  </div>
+                  <p style={{ fontSize: "0.95rem", marginTop: "1.5rem", lineHeight: 1.6, opacity: 0.6 }}>
                     {p.desc}
                   </p>
                 </div>
 
+                <div style={{ height: "1px", background: isElite ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.06)" }} />
+
+                <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "1.2rem", padding: 0, margin: 0 }}>
+                  {p.features.map((f) => (
+                    <li key={f} style={{ display: "flex", alignItems: "flex-start", gap: "12px", fontSize: "0.85rem", opacity: 0.7 }}>
+                      <span style={{ color: isElite ? "#fff" : "#000", fontWeight: 900 }}>—</span>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+
                 <a
-                  href={`https://wa.me/5549991031743?text=${encodeURIComponent(`Olá! Tenho interesse no Plano ${p.name} de R$ ${p.price}. Poderia me dar mais detalhes?`)}`}
+                  href={`https://wa.me/5549991031743?text=${encodeURIComponent(`Olá! Gostaria de detalhes sobre o investimento no plano ${p.name}.`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    gap: "0.6rem",
-                    textDecoration: "none",
                     padding: "1.2rem",
-                    borderRadius: "16px",
-                    background: isMiddle ? "#fff" : "#000",
-                    color: isMiddle ? "#000" : "#fff",
+                    border: isElite ? "1px solid #fff" : "1px solid #000",
+                    background: isElite ? "#fff" : "transparent",
+                    color: isElite ? "#000" : "#000",
                     fontWeight: 800,
-                    fontSize: "1rem",
+                    fontSize: "0.75rem",
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    textDecoration: "none",
+                    marginTop: "auto",
                     transition: "all 0.3s ease",
                   }}
+                  onMouseEnter={(e) => {
+                    if (isElite) {
+                      e.currentTarget.style.background = "transparent";
+                      e.currentTarget.style.color = "#fff";
+                    } else {
+                      e.currentTarget.style.background = "#000";
+                      e.currentTarget.style.color = "#fff";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (isElite) {
+                      e.currentTarget.style.background = "#fff";
+                      e.currentTarget.style.color = "#000";
+                    } else {
+                      e.currentTarget.style.background = "transparent";
+                      e.currentTarget.style.color = "#000";
+                    }
+                  }}
                 >
-                  Selecionar Plano
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="7" y1="17" x2="17" y2="7" />
-                    <polyline points="7 7 17 7 17 17" />
-                  </svg>
+                  Consultar Projeto
                 </a>
-
-                <div style={{ height: "1px", background: isMiddle ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)" }} />
-
-                <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "1.2rem", padding: 0, margin: 0 }}>
-                  {p.features.map((f) => (
-                    <li key={f} style={{ display: "flex", alignItems: "center", gap: "0.8rem", fontSize: "0.95rem", opacity: 0.8 }}>
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                        <polyline points="20 6 9 17 4 12" />
-                      </svg>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
-
-        {/* Footer Note */}
-        <div style={{ textAlign: "center", marginTop: "6rem", opacity: 0.4 }}>
-          <p style={{ fontSize: "0.85rem", fontWeight: 500 }}>
-            * Todos os valores são baseados em complexidade padrão. Orçamentos personalizados sob consulta.
-          </p>
         </div>
       </div>
     </section>
