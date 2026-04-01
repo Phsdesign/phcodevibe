@@ -96,7 +96,6 @@ html, body {
   perspective: 1000;
   will-change: transform, opacity;
 }
-}
 
 /* Premium Focus Visível */
 :focus-visible {
@@ -2316,14 +2315,14 @@ section {
   overflow: hidden;
   background: #ffffff;
   border: 1px solid rgba(0,0,0,0.06);
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  transition: box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.4s ease;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.04);
   contain: layout;
 }
 .portfolio-card-immersive:hover {
-  transform: translateY(-8px) scale(1.01);
-  box-shadow: 0 25px 60px rgba(0,0,0,0.12), 0 10px 20px rgba(0,0,0,0.06);
+  border-color: rgba(0,0,0,0.12);
+  box-shadow: 0 30px 60px -12px rgba(0,0,0,0.12);
 }
 .portfolio-image-wrapper {
   position: relative;
