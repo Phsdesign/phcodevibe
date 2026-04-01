@@ -39,7 +39,6 @@ function ProjectCard({ project, index }: { project: typeof portfolioData[0]; ind
     >
       <Link 
         href={`/portfolio/${project.slug}`} 
-        scroll={false}
         className="portfolio-card-link"
         aria-label={`Ver detalhes do projeto: ${project.title}`}
       >

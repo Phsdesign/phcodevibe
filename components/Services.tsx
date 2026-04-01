@@ -121,7 +121,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
   const initialY = isDesktop ? 0 : 40;
 
   return (
-    <Link href={service.href} scroll={false} style={{ display: "contents", textDecoration: "none" }}>
+    <Link href={service.href} style={{ display: "contents", textDecoration: "none" }}>
       <motion.div
         ref={cardRef}
         role="button"

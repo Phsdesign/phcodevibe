@@ -43,15 +43,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
-      <head>
-        <Script id="restore-scroll" strategy="beforeInteractive">
-          {`
-            if ('scrollRestoration' in history) {
-              history.scrollRestoration = 'manual';
-            }
-          `}
-        </Script>
-      </head>
       <body
         className={`${inter.variable} antialiased selection:bg-blue-500 selection:text-white`}
       >
