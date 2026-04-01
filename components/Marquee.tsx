@@ -3,7 +3,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 /**
- * Marquee — Updated to Static Grid with Hover Effects
+ * Marquee — Premium Bento Style for Partners
  */
 
 const clientLogos = [
@@ -28,56 +28,74 @@ const benefitTags = [
 
 export function Marquee() {
   return (
-    <section id="marquee" className="marquee-section animate-on-scroll" style={{ padding: "80px 0", background: "#fcfcfc" }}>
+    <section id="marquee" className="marquee-section" style={{ padding: "100px 0", background: "#ffffff" }}>
       <div className="container" style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 20px" }}>
-        {/* Label */}
-        <div style={{ 
-          textAlign: "center", 
-          fontSize: "12px", 
-          fontWeight: 700, 
-          textTransform: "uppercase", 
-          letterSpacing: "0.2em", 
-          color: "rgba(0,0,0,0.4)",
-          marginBottom: "4rem"
-        }}>
-          Nossas Conexões & Parcerias
+        {/* Section Header */}
+        <div style={{ textAlign: "center", marginBottom: "5rem" }}>
+          <div style={{ 
+            display: "inline-block",
+            fontSize: "10px", 
+            fontWeight: 800, 
+            textTransform: "uppercase", 
+            letterSpacing: "0.4em", 
+            color: "rgba(0,0,0,0.25)",
+            border: "1px solid rgba(0,0,0,0.05)",
+            padding: "8px 24px",
+            borderRadius: "100px",
+            marginBottom: "1.5rem"
+          }}>
+            Nossas Conexões & Parcerias
+          </div>
+          <h2 style={{ 
+            fontSize: "clamp(1.5rem, 4vw, 2.5rem)", 
+            fontWeight: 800, 
+            letterSpacing: "-0.03em",
+            color: "#0e1c29" 
+          }}>
+            Marcas que confiam na nossa vibração.
+          </h2>
         </div>
 
-        {/* Static Logo Grid with Hover Effects */}
+        {/* Premium Bento Grid for PC / Simple Flex for Mobile */}
         <div style={{ 
-          display: "grid", 
-          gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", 
-          gap: "2rem",
-          alignItems: "center",
-          justifyItems: "center",
-          marginBottom: "5rem"
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "1.5rem",
+          justifyContent: "center",
+          marginBottom: "6rem"
         }}>
           {clientLogos.map((logo, i) => (
             <motion.div 
               key={i} 
-              whileHover={{ scale: 1.05, y: -5 }}
-              transition={{ type: "spring", stiffness: 300 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              whileHover={{ 
+                y: -10,
+                boxShadow: "0 30px 60px -15px rgba(0,0,0,0.1)"
+              }}
               style={{ 
-                width: "100%",
-                maxWidth: "200px",
-                height: "100px",
+                width: "min(100%, 180px)",
+                height: "120px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                padding: "1.5rem",
+                padding: "2rem",
                 background: "#ffffff",
-                borderRadius: "24px",
-                border: "1px solid rgba(0,0,0,0.04)",
-                boxShadow: "0 4px 20px -10px rgba(0,0,0,0.05)",
-                filter: "grayscale(100%) opacity(0.6)",
+                borderRadius: "32px",
+                border: "1px solid rgba(0,0,0,0.06)",
                 cursor: "pointer",
-                transition: "filter 0.3s ease"
+                filter: "grayscale(100%) opacity(0.4)",
+                transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)"
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.filter = "grayscale(0%) opacity(1)";
+                e.currentTarget.style.borderColor = "rgba(0,0,0,0.12)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.filter = "grayscale(100%) opacity(0.6)";
+                e.currentTarget.style.filter = "grayscale(100%) opacity(0.4)";
+                e.currentTarget.style.borderColor = "rgba(0,0,0,0.06)";
               }}
             >
               <div style={{ position: "relative", width: "100%", height: "100%" }}>
@@ -93,17 +111,41 @@ export function Marquee() {
           ))}
         </div>
 
-        {/* Benefit Tags — Still scrolling for dynamic feel, but more subtle */}
-        <div className="marquee-track" style={{ borderTop: "1px solid rgba(0,0,0,0.05)", paddingTop: "3rem" }}>
-          <div className="marquee-scroll marquee-tags">
-            {[...benefitTags, ...benefitTags].map((tag, i) => (
-              <div key={i} className="marquee-tag" style={{ background: "transparent", border: "1px solid rgba(0,0,0,0.1)", color: "rgba(0,0,0,0.6)" }}>
-                {tag}
-              </div>
-            ))}
-          </div>
+        {/* Benefit Tags — Subtle Animation */}
+        <div style={{ 
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "10px",
+          justifyContent: "center",
+          opacity: 0.6
+        }}>
+          {benefitTags.map((tag, i) => (
+            <span key={i} style={{
+              fontSize: "11px",
+              fontWeight: 600,
+              padding: "6px 16px",
+              borderRadius: "100px",
+              background: "#f8f9fa",
+              border: "1px solid rgba(0,0,0,0.05)",
+              color: "#0e1c29"
+            }}>
+              {tag}
+            </span>
+          ))}
         </div>
       </div>
+
+      <style jsx>{`
+        .marquee-section {
+          position: relative;
+          z-index: 10;
+        }
+        @media (max-width: 768px) {
+          .marquee-section {
+            padding: 60px 0 !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

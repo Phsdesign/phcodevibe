@@ -121,22 +121,20 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
   const initialY = isDesktop ? 0 : 40;
 
   return (
-    <Link href={service.href} style={{ display: "contents", textDecoration: "none" }}>
-      <motion.div
-        ref={cardRef}
-        role="button"
-        tabIndex={0}
-        aria-label={`Ver detalhes do serviço: ${service.title}`}
-        initial={{ opacity: 0, x: initialX, y: initialY }}
-        whileInView={{ opacity: 1, x: 0, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ 
-          delay: index * 0.1, 
-          duration: 1.2, 
-          ease: [0.16, 1, 0.3, 1] 
-        }}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+    <motion.div
+      ref={cardRef}
+      role="region"
+      aria-label={`Serviço: ${service.title}`}
+      initial={{ opacity: 0, x: initialX, y: initialY }}
+      whileInView={{ opacity: 1, x: 0, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ 
+        delay: index * 0.1, 
+        duration: 1.2, 
+        ease: [0.16, 1, 0.3, 1] 
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       style={{
         ...gridSizeClass,
         position: "relative",
@@ -144,7 +142,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
         background: "var(--bg-card)",
         border: "1px solid var(--border-color)",
         padding: "clamp(2rem, 5vw, 3rem)",
-        cursor: "pointer",
+        cursor: "default",
         transition: "all 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
         boxShadow: isHovered 
           ? "var(--shadow-lg)" 
@@ -209,8 +207,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
         </div>
       </div>
     </motion.div>
-  </Link>
-);
+  );
 }
 
 export function Services() {
