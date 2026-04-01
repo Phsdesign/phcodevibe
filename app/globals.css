@@ -1007,6 +1007,24 @@ section {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
+
+  /* Otimização Crítica: Desativar filtros pesados no scroll mobile */
+  .glass, .orbai-badge, .navbar-nav, .proj-image-number, .proj-lightbox, .proj-hero-image-scroll-hint {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+  }
+
+  .animate-on-scroll, .animate-fade-slide, .proj-gallery-item {
+    filter: none !important;
+    transition-duration: 0.4s !important; /* Animações mais rápidas e simples */
+  }
+
+  /* Reduzir complexidade de sombras no mobile */
+  .neu-card, .neu-card-flat, .flashlight-card, .glass-logo-card {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+    transition: transform 0.3s ease !important;
+  }
 }
 
 

@@ -6,6 +6,12 @@ export function ScrollEffects() {
 
   useEffect(() => {
     const handleScroll = () => {
+      // Otimização: No mobile (largura < 768px), desativamos transições de cor pesadas
+      if (window.innerWidth < 768) {
+        ticking.current = false;
+        return;
+      }
+
       // Ignora cálculos pesados no scroll inicial (transição Hero)
       if (window.scrollY < 100) {
         ticking.current = false;

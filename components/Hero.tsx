@@ -82,7 +82,7 @@ export function Hero() {
       {/* Content */}
       <div className="container hero-reveal-container" style={{ textAlign: "center", position: "relative", zIndex: 1 }}>
         {/* Status Badge */}
-        <div className="animate-on-scroll orbai-badge" style={{ marginBottom: "2rem" }}>
+        <div className="animate-on-scroll orbai-badge hidden md:inline-flex" style={{ marginBottom: "2rem" }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2">
             <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z"/>
           </svg>
