@@ -29,12 +29,12 @@ const benefitTags = [
 ];
 
 export function Marquee() {
-  // Increased duplication to 4x to ensure seamless loop on large screens
-  const repeatedLogos = [...clientLogos, ...clientLogos, ...clientLogos, ...clientLogos];
-  const repeatedTags = [...benefitTags, ...benefitTags, ...benefitTags, ...benefitTags];
+  // Reduzido para 2x para diminuir o número de nós no DOM e melhorar performance
+  const repeatedLogos = [...clientLogos, ...clientLogos];
+  const repeatedTags = [...benefitTags, ...benefitTags];
 
   return (
-    <section className="marquee-section animate-on-scroll">
+    <section id="marquee" className="marquee-section animate-on-scroll">
       {/* Label */}
       <div className="marquee-label">
         Nossas Conexões & Parcerias
@@ -44,15 +44,14 @@ export function Marquee() {
       <div className="marquee-track">
         <div className="marquee-scroll marquee-logos">
           {repeatedLogos.map((logo, i) => (
-            <div key={i} className="marquee-logo-card">
+            <div key={i} className="marquee-logo-card" style={{ boxShadow: "none", border: "1px solid rgba(0,0,0,0.05)" }}>
               <div className="marquee-logo-inner">
                 <Image
                   src={logo.src}
                   alt={`Client Logo ${i}`}
                   fill
                   sizes="128px"
-                  loading="eager"
-                  priority={i < 12}
+                  loading="lazy"
                   style={{ objectFit: "contain" }}
                 />
               </div>
@@ -65,13 +64,37 @@ export function Marquee() {
       <div className="marquee-track">
         <div className="marquee-scroll marquee-tags">
           {repeatedTags.map((tag, i) => (
-            <div key={i} className="marquee-tag">
+            <div key={i} className="marquee-tag" style={{ boxShadow: "none" }}>
               {tag}
             </div>
           ))}
         </div>
       </div>
 
+      <style jsx>{`
+        @media (max-width: 768px) {
+          .marquee-logos, .marquee-tags {
+            animation: none !important;
+            display: flex !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+            gap: 1rem !important;
+            width: 100% !important;
+            padding: 1rem !important;
+          }
+          .marquee-logo-card {
+            width: 80px !important;
+            height: 80px !important;
+          }
+          .marquee-tag {
+            font-size: 0.7rem !important;
+          }
+          .marquee-track {
+            mask-image: none !important;
+            overflow: visible !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }
