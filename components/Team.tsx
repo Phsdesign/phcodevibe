@@ -15,7 +15,7 @@ export function Team() {
     whileInView: { opacity: 1, y: 0 }
   };
 
-  const defaultTransition = { duration: 0.8, ease: [0.16, 1, 0.3, 1] };
+  const defaultTransition: import("framer-motion").Transition = { duration: 0.8, ease: [0.16, 1, 0.3, 1] };
   const viewportConfig = { once: true, margin: "-50px" };
 
   return (
