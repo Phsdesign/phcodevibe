@@ -131,7 +131,6 @@ export function Footer() {
               <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "1.25rem" }}>
                 <li><a href="https://instagram.com/phcodevibe" target="_blank" style={{ textDecoration: "none", color: "#0e1c29", fontWeight: 600, fontSize: "0.9375rem", opacity: 0.6, transition: "opacity 0.2s" }} onMouseEnter={(e) => e.currentTarget.style.opacity = "1"} onMouseLeave={(e) => e.currentTarget.style.opacity = "0.6"}>Instagram</a></li>
                 <li><a href="https://behance.net/henriquedesignn" target="_blank" style={{ textDecoration: "none", color: "#0e1c29", fontWeight: 600, fontSize: "0.9375rem", opacity: 0.6, transition: "opacity 0.2s" }} onMouseEnter={(e) => e.currentTarget.style.opacity = "1"} onMouseLeave={(e) => e.currentTarget.style.opacity = "0.6"}>Behance</a></li>
-                <li><a href="https://github.com/Phsdesign" target="_blank" style={{ textDecoration: "none", color: "#0e1c29", fontWeight: 600, fontSize: "0.9375rem", opacity: 0.6, transition: "opacity 0.2s" }} onMouseEnter={(e) => e.currentTarget.style.opacity = "1"} onMouseLeave={(e) => e.currentTarget.style.opacity = "0.6"}>Open Source</a></li>
               </ul>
             </div>
 
