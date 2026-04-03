@@ -114,9 +114,9 @@ a:focus-visible {
   transform: translate3d(0,0,0);
 }
 
-/* Optimize image rendering for speed */
+/* Optimize image rendering */
 img {
-  image-rendering: -webkit-optimize-contrast;
+  image-rendering: auto;
 }
 
 /* Force scroll restoration on navigation */

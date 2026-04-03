@@ -8,11 +8,13 @@ import { motion } from "framer-motion";
 
 const clientLogos = [
   { src: "/logos/2.png", name: "Client 1" },
+  { src: "/logos/32.png", name: "Client 2" },
   { src: "/logos/Ces_Sistemas branco - Oficial.png", name: "Ces Sistemas" },
   { src: "/logos/Elleganza-Branco.png", name: "Elleganza" },
   { src: "/logos/LOGO3.png", name: "Client 3" },
   { src: "/logos/Logo-PH-6.png", name: "PH Logo" },
   { src: "/logos/Marca_04_branca.png", name: "Brand 4" },
+  { src: "/logos/logoazul.png", name: "Logo Azul" },
 ];
 
 const benefitTags = [
@@ -73,38 +75,43 @@ export function Marquee() {
               transition={{ delay: i * 0.1 }}
               whileHover={{ 
                 y: -10,
-                boxShadow: "0 30px 60px -15px rgba(0,0,0,0.1)"
+                boxShadow: "0 30px 60px -15px rgba(0,0,0,0.3)"
               }}
               style={{ 
-                width: "min(100%, 180px)",
-                height: "120px",
+                width: "min(100%, 220px)",
+                height: "140px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                padding: "2rem",
-                background: "#ffffff",
+                padding: "1.5rem",
+                background: "#000000",
                 borderRadius: "32px",
-                border: "1px solid rgba(0,0,0,0.06)",
+                border: "1px solid rgba(255,255,255,0.1)",
                 cursor: "pointer",
-                filter: "grayscale(100%) opacity(0.4)",
-                transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)"
+                transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+                overflow: "hidden"
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.filter = "grayscale(0%) opacity(1)";
-                e.currentTarget.style.borderColor = "rgba(0,0,0,0.12)";
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)";
+                e.currentTarget.style.transform = "translateY(-10px) scale(1.02)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.filter = "grayscale(100%) opacity(0.4)";
-                e.currentTarget.style.borderColor = "rgba(0,0,0,0.06)";
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
+                e.currentTarget.style.transform = "translateY(0) scale(1)";
               }}
             >
-              <div style={{ position: "relative", width: "100%", height: "100%" }}>
+              <div style={{ position: "relative", width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Image
                   src={logo.src}
                   alt={logo.name}
-                  fill
-                  sizes="160px"
-                  style={{ objectFit: "contain" }}
+                  width={160}
+                  height={80}
+                  style={{ 
+                    objectFit: "contain",
+                    width: "85%",
+                    height: "85%",
+                    filter: "brightness(0) invert(1)" // Garante que a logo fique branca se não for
+                  }}
                 />
               </div>
             </motion.div>
@@ -143,6 +150,10 @@ export function Marquee() {
         @media (max-width: 768px) {
           .marquee-section {
             padding: 60px 0 !important;
+          }
+          div[style*="width: min(100%, 220px)"] {
+            width: calc(50% - 0.75rem) !important;
+            height: 100px !important;
           }
         }
       `}</style>

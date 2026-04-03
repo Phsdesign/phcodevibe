@@ -102,7 +102,7 @@ export function Footer() {
           {/* Brand & Mission */}
           <div className="md:col-span-5 animate-fade-slide">
             <div style={{ display: "flex", alignItems: "center", gap: "0.875rem", marginBottom: "2rem" }}>
-              <Image src="/logo1.png" alt="Logo" width={36} height={36} />
+              <Image src="/logoicon.svg" alt="Logo" width={36} height={36} />
               <span style={{ fontWeight: 800, fontSize: "1.5rem", letterSpacing: "-0.04em" }}>PH CODE VIBE</span>
             </div>
             

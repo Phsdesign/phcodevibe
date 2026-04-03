@@ -1,399 +1,352 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-const skills = [
-  "MOTION DESIGN", "VFX ARTIST", "WEB DESIGN", "IDENTIDADE VISUAL", 
-  "BRANDING", "3D MODELING", "AI EXPLORER", "UI/UX DESIGN",
-  "GIT WORKFLOW", "VERCEL DEPLOY"
+/* ─── SLIDER DATA ─── */
+const SLIDES = [
+  {
+    index: "01",
+    tags: ["DESEJO", "AUTORIDADE", "LUXO"],
+    title: "Design que Gera Lucro",
+    desc: "9 anos criando experiências que transformam meros visitantes em clientes apaixonados. Não fazemos apenas o 'bonito', criamos identidades que impõe respeito e justificam o seu preço."
+  },
+  {
+    index: "02",
+    tags: ["ESTRATÉGIA", "CONVERSÃO", "ELITE"],
+    title: "Venda Mais Caro",
+    desc: "Posicionamos sua marca no topo. Quando o seu site transparece excelência, a barreira do preço desaparece e o seu cliente entende o valor real do que você entrega."
+  },
+  {
+    index: "03",
+    tags: ["EXCLUSIVO", "ÚNICO", "IMBATÍVEL"],
+    title: "Sua Marca Absolute",
+    desc: "Crie um ecossistema digital onde cada pixel é planejado para prender a atenção. Transformamos seu site em seu melhor vendedor, funcionando 24h por dia."
+  }
 ];
 
-/* ─── High Density Neural Canvas (IA Card) ─── */
-function NeuralCanvas({ isHovered }: { isHovered: boolean }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    // Otimização: No mobile desativamos o canvas para performance
-    if (window.innerWidth < 768) return;
-
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let animationFrameId: number;
-    let isInView = false;
-    let particles: { x: number; y: number; vx: number; vy: number }[] = [];
-    const particleCount = 120;
-    const connectionDistance = 80;
-
-    // Observer para rodar apenas quando visível
-    const observer = new IntersectionObserver((entries) => {
-      isInView = entries[0].isIntersecting;
-    }, { threshold: 0.1 });
-    observer.observe(canvas);
-
-    const resize = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-      particles = Array.from({ length: particleCount }, () => ({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-      }));
-    };
-
-    const draw = () => {
-      if (!isInView) {
-        animationFrameId = requestAnimationFrame(draw);
-        return;
-      }
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const color = isHovered ? "255, 255, 255" : "0, 0, 0";
-      const opacity = isHovered ? 0.4 : 0.1;
-
-      particles.forEach((p1, i) => {
-        p1.x += p1.vx; p1.y += p1.vy;
-        if (p1.x < 0 || p1.x > canvas.width) p1.vx *= -1;
-        if (p1.y < 0 || p1.y > canvas.height) p1.vy *= -1;
-
-        ctx.fillStyle = `rgba(${color}, ${opacity})`;
-        ctx.beginPath(); ctx.arc(p1.x, p1.y, 1.5, 0, Math.PI * 2); ctx.fill();
-
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const dx = p1.x - p2.x; const dy = p1.y - p2.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < connectionDistance) {
-            ctx.strokeStyle = `rgba(${color}, ${(1 - dist / connectionDistance) * opacity})`;
-            ctx.lineWidth = 0.5;
-            ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
-          }
-        }
-      });
-      animationFrameId = requestAnimationFrame(draw);
-    };
-
-    window.addEventListener("resize", resize);
-    resize(); draw();
-    return () => { 
-      cancelAnimationFrame(animationFrameId); 
-      window.removeEventListener("resize", resize);
-      observer.disconnect();
-    };
-  }, [isHovered]);
-
-  return <canvas ref={canvasRef} style={{ width: "100%", height: "100%", opacity: 0.8 }} />;
-}
-
-/* ─── Individual Letter Animation Component ─── */
-function AnimatedLetter({ char, index }: { char: string, index: number }) {
-  const [isHovered, setIsHovered] = useState(false);
-
-  if (char === " ") return <span style={{ width: "0.4em" }}>&nbsp;</span>;
-
+/* ─── Simple Smooth Card Component ─── */
+function SimpleSmoothCard({ children, className = "", dark = false }: { children: React.ReactNode, className?: string, dark?: boolean }) {
   return (
-    <span 
-      className={`animated-char ${isHovered ? "char-active" : ""}`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      style={{ 
-        animationDelay: `${index * 0.1}s`,
-        transitionDelay: `${isHovered ? 0 : index * 0.02}s`
-      }}
+    <motion.div
+      whileHover={{ scale: 1.02, y: -8 }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className={`spotlight-card ${dark ? "dark" : ""} ${className}`}
+      style={{ cursor: "default" }}
     >
-      {char}
-    </span>
+      <div className="card-inner-content">
+        {children}
+      </div>
+    </motion.div>
   );
 }
 
-/* ─── Background Flow Canvas ─── */
-function FlowCanvas({ isHovered }: { isHovered: boolean }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+/* ─── Security Connections Animation ─── */
+function SecurityConnections() {
+  return (
+    <div className="security-bg">
+      {[...Array(5)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="node"
+          animate={{ opacity: [0.1, 0.4, 0.1], scale: [1, 1.2, 1] }}
+          transition={{ duration: 3 + i, repeat: Infinity, ease: "easeInOut" }}
+          style={{
+            position: "absolute",
+            width: "4px",
+            height: "4px",
+            background: "#27c93f",
+            borderRadius: "50%",
+            top: `${20 + i * 15}%`,
+            left: `${30 + (i % 2) * 40}%`,
+            boxShadow: "0 0 10px #27c93f",
+          }}
+        />
+      ))}
+      <style jsx>{`
+        .security-bg { position: absolute; inset: 0; pointer-events: none; overflow: hidden; opacity: 0.4; }
+        .security-bg::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background-image: linear-gradient(rgba(39, 201, 63, 0.05) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(39, 201, 63, 0.05) 1px, transparent 1px);
+          background-size: 30px 30px;
+        }
+      `}</style>
+    </div>
+  );
+}
 
-  useEffect(() => {
-    // Otimização: No mobile desativamos o canvas para performance
-    if (window.innerWidth < 768) return;
+/* ─── Cinematic Background Animation for Process Box ─── */
+function ProcessCinematicBg() {
+  return (
+    <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none" }}>
+      <motion.div
+        animate={{
+          x: ["-20%", "20%", "-20%"],
+          y: ["-10%", "10%", "-10%"],
+          opacity: [0.05, 0.12, 0.05]
+        }}
+        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+        style={{
+          position: "absolute",
+          top: "-50%",
+          left: "-50%",
+          width: "200%",
+          height: "200%",
+          background: "radial-gradient(circle at center, rgba(255,255,255,0.15) 0%, transparent 60%)",
+          filter: "blur(100px)"
+        }}
+      />
+      {[...Array(12)].map((_, i) => (
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, y: "100%" }}
+          animate={{ 
+            opacity: [0, 0.3, 0],
+            y: ["100%", "-10%"],
+            x: [`${Math.random() * 100}%`, `${Math.random() * 100}%`]
+          }}
+          transition={{ 
+            duration: 10 + Math.random() * 10, 
+            repeat: Infinity, 
+            delay: Math.random() * 5,
+            ease: "linear" 
+          }}
+          style={{
+            position: "absolute",
+            width: "1.5px",
+            height: "1.5px",
+            background: "#fff",
+            borderRadius: "50%",
+            filter: "blur(0.5px)"
+          }}
+        />
+      ))}
+    </div>
+  );
+}
 
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let animationFrameId: number;
-    let isInView = false;
-    let particles: { x: number; y: number; size: number; speed: number; angle: number }[] = [];
-
-    // Observer para rodar apenas quando visível
-    const observer = new IntersectionObserver((entries) => {
-      isInView = entries[0].isIntersecting;
-    }, { threshold: 0.1 });
-    observer.observe(canvas);
-
-    const resize = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-      particles = Array.from({ length: 40 }, () => ({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        size: Math.random() * 2 + 1,
-        speed: 0.5 + Math.random() * 1,
-        angle: Math.random() * Math.PI * 2
-      }));
-    };
-
-    const draw = () => {
-      if (!isInView) {
-        animationFrameId = requestAnimationFrame(draw);
-        return;
-      }
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const color = isHovered ? "0, 0, 0" : "0, 0, 0";
-      const opacity = isHovered ? 0.15 : 0.05;
-
-      particles.forEach((p) => {
-        p.x += Math.cos(p.angle) * p.speed;
-        p.y += Math.sin(p.angle) * p.speed;
-        if (p.x < 0) p.x = canvas.width; if (p.x > canvas.width) p.x = 0;
-        if (p.y < 0) p.y = canvas.height; if (p.y > canvas.height) p.y = 0;
-
-        ctx.fillStyle = `rgba(${color}, ${opacity})`;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
-      });
-      animationFrameId = requestAnimationFrame(draw);
-    };
-
-    window.addEventListener("resize", resize);
-    resize(); draw();
-    return () => { 
-      cancelAnimationFrame(animationFrameId); 
-      window.removeEventListener("resize", resize);
-      observer.disconnect();
-    };
-  }, [isHovered]);
-
-  return <canvas ref={canvasRef} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }} />;
+/* ─── Animated HUD Lines ─── */
+function HUDLines() {
+  return (
+    <div className="hud-overlay">
+      <div className="line-h l1" />
+      <div className="line-h l2" />
+      <div className="line-v v1" />
+      <div className="line-v v2" />
+      <div className="corner c-tl" /><div className="corner c-tr" /><div className="corner c-bl" /><div className="corner c-br" />
+      <style jsx>{`
+        .hud-overlay { position: absolute; inset: 0; pointer-events: none; opacity: 0.15; z-index: 0; }
+        .line-h { position: absolute; left: 0; width: 100%; height: 1px; background: #000; }
+        .l1 { top: 20%; } .l2 { top: 80%; }
+        .line-v { position: absolute; top: 0; width: 1px; height: 100%; background: #000; }
+        .v1 { left: 20%; } .v2 { left: 80%; }
+        .corner { position: absolute; width: 20px; height: 20px; border: 2px solid #000; }
+        .c-tl { top: 40px; left: 40px; border-right: 0; border-bottom: 0; }
+        .c-tr { top: 40px; right: 40px; border-left: 0; border-bottom: 0; }
+        .c-bl { bottom: 40px; left: 40px; border-right: 0; border-top: 0; }
+        .c-br { bottom: 40px; right: 40px; border-left: 0; border-top: 0; }
+      `}</style>
+    </div>
+  );
 }
 
 export function FeaturesAI() {
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-  const firstName = "PEDRO HENRIQUE".split("");
-  const lastName = "SILVA".split("");
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % SLIDES.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const containerVariants: import("framer-motion").Variants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.3 } }
+  };
+
+  const stepVariants: import("framer-motion").Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+  };
 
   return (
-    <section id="features" className="features-section">
-      <div className="container" style={{ maxWidth: "1280px" }}>
+    <section ref={containerRef} id="features" className="features-v3">
+      <HUDLines />
+      
+      <div className="container" style={{ position: "relative", zIndex: 5, maxWidth: "1440px" }}>
+        
+        <header className="v3-header">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} className="v3-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+              <circle cx="12" cy="12" r="10" /><path d="M12 8v8M8 12h8" />
+            </svg>
+            <span>ESTRATEGISTA DE MARCAS & CRESCIMENTO DIGITAL</span>
+          </motion.div>
+          <h2 className="v3-title">Domine o seu <span className="outlined">Mercado.</span></h2>
+        </header>
 
-        {/* Header Artístico: Tipografia Fluida */}
-        <div className="name-header-v4">
-          <div className="badge-wrap">
-            <div className="orbai-badge">
-              <span className="dot-blink" />
-              <span>ESTRATEGISTA DIGITAL</span>
-            </div>
-          </div>
+        <div className="v3-grid">
           
-          <div className="name-container">
-            <FlowCanvas isHovered={hoveredCard === 0} />
-            <div 
-              className="name-line"
-              onMouseEnter={() => setHoveredCard(0)}
-              onMouseLeave={() => setHoveredCard(null)}
-            >
-              {firstName.map((c, i) => <AnimatedLetter key={i} char={c} index={i} />)}
+          <SimpleSmoothCard className="v3-card-large">
+            <div className="card-header-v3">
+              <AnimatePresence mode="wait">
+                <motion.span key={currentSlide} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="card-index">
+                  {SLIDES[currentSlide].index}
+                </motion.span>
+              </AnimatePresence>
+              <div className="card-tags-wrapper">
+                <AnimatePresence mode="wait">
+                  <motion.div key={currentSlide} initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -10 }} className="card-tags" style={{ display: "flex", gap: "8px", flexWrap: "wrap", justifyContent: "flex-end" }}>
+                    {SLIDES[currentSlide].tags.map(tag => (
+                      <span key={tag} className="tag-v3">{tag}</span>
+                    ))}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
             </div>
-            <div 
-              className="name-line outline-row"
-              onMouseEnter={() => setHoveredCard(0)}
-              onMouseLeave={() => setHoveredCard(null)}
-            >
-              {lastName.map((c, i) => <AnimatedLetter key={i + 20} char={c} index={i + 15} />)}
+            <div className="card-body-v3">
+              <AnimatePresence mode="wait">
+                <motion.div key={currentSlide} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
+                  <h3 style={{ fontSize: "3rem", fontWeight: 800, marginBottom: "2rem", letterSpacing: "-0.04em" }}>{SLIDES[currentSlide].title}</h3>
+                  <p style={{ fontSize: "1.2rem", lineHeight: 1.6, color: "rgba(0,0,0,0.5)", maxWidth: "500px", minHeight: "100px" }}>{SLIDES[currentSlide].desc}</p>
+                </motion.div>
+              </AnimatePresence>
+              <div className="visual-indicator" style={{ display: "flex", gap: "10px", marginTop: "4rem" }}>
+                {SLIDES.map((_, i) => (
+                  <div key={i} className={`v-bar-container ${currentSlide === i ? "active" : ""}`} onClick={() => setCurrentSlide(i)} style={{ position: "relative", width: "60px", height: "4px", borderRadius: "10px", overflow: "hidden", cursor: "pointer" }}>
+                    <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.05)" }} />
+                    {currentSlide === i && (
+                      <motion.div layoutId="activeBar" initial={{ width: 0 }} animate={{ width: "100%" }} transition={{ duration: 5, ease: "linear" }} style={{ position: "absolute", left: 0, top: 0, height: "100%", background: "#000" }} />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </SimpleSmoothCard>
+
+          <SimpleSmoothCard dark className="v3-card-med">
+            <SecurityConnections />
+            <div className="card-header-v3">
+              <span className="card-index" style={{ color: "rgba(255,255,255,0.1)" }}>02</span>
+              <div className="pulse-indicator">
+                <div className="p-dot" /><span style={{ color: "#fff", fontSize: "9px", fontWeight: "800" }}>PROTEÇÃO ATIVA</span>
+              </div>
+            </div>
+            <div className="card-body-v3">
+              <h3 style={{ color: "#fff", fontSize: "3rem", fontWeight: 800, marginBottom: "2rem" }}>Estrutura Indestrutível</h3>
+              <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "1.2rem", lineHeight: 1.6 }}>Nada de sites lentos que perdem vendas. Sua marca terá uma presença digital rápida, segura e preparada para ser encontrada no Google 24h por dia.</p>
+              <div className="tech-pills">
+                <div className="pill-v3">VELOCIDADE MÁXIMA</div>
+                <div className="pill-v3">SEGURANÇA TOTAL</div>
+                <div className="pill-v3">PRONTO PARA VENDER</div>
+              </div>
+            </div>
+          </SimpleSmoothCard>
+
+          <div className="v3-manifesto">
+            <div className="manifesto-wrap">
+              <div className="m-label">NOSSA FILOSOFIA</div>
+              <blockquote>"Um site bonito atrai o olhar, mas um site estratégico atrai o dinheiro. Minha missão é garantir que sua empresa seja a escolha óbvia do seu cliente."</blockquote>
+              <div className="m-author">
+                <strong>Pedro Henrique Silva</strong>
+                <span>Fundador @ PH Code Vibe</span>
+              </div>
             </div>
           </div>
-          
-          <div className="name-details">
-            <div className="status-progress-track">
-              <div className="status-progress-fill" />
-            </div>
-          </div>
+
         </div>
 
-        {/* Bento Grid */}
-        <div className="features-bento-grid">
-          {/* Card 1: 9 Anos */}
-          <div className="art-card" onMouseEnter={() => setHoveredCard(1)} onMouseLeave={() => setHoveredCard(null)}>
-            <div className="art-visual">
-              <div className="journey-bg-text">09</div>
-              <div className="journey-label-new">ANOS DE EVOLUÇÃO</div>
-            </div>
-            <div className="art-content">
-              <h3>Minha Jornada</h3>
-              <p>São mais de 9 anos refinando meu olhar. Comecei no design puro e hoje transformo pixels em autoridade digital.</p>
-            </div>
-          </div>
+        {/* PROCESSO ABSOLUTE */}
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: "80px 60px",
+            background: "#000",
+            borderRadius: "48px",
+            color: "#fff",
+            marginTop: "60px",
+            position: "relative",
+            overflow: "hidden",
+            width: "100%"
+          }}
+        >
+          <ProcessCinematicBg />
 
-          {/* Card 2: IA */}
-          <div className="art-card" onMouseEnter={() => setHoveredCard(2)} onMouseLeave={() => setHoveredCard(null)}>
-            <div className="art-visual" style={{ background: hoveredCard === 2 ? "rgba(255,255,255,0.02)" : "rgba(0,0,0,0.01)", borderRadius: "20px" }}>
-              <NeuralCanvas isHovered={hoveredCard === 2} />
-              <div className="neural-center-icon"><div className="core-dot" /></div>
-            </div>
-            <div className="art-content">
-              <h3>Fascínio por IA</h3>
-              <p>Sempre fui apaixonado por tecnologia. Estudo e aplico Inteligência Artificial para potencializar resultados criativos.</p>
-            </div>
-          </div>
+          <motion.div variants={stepVariants} style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px", zIndex: 2 }}>
+            <span style={{ fontSize: "10px", fontWeight: 900, opacity: 0.3, letterSpacing: "0.3em", marginBottom: "10px" }}>01</span>
+            <h4 style={{ fontSize: "2rem", fontWeight: 800, fontFamily: "serif", letterSpacing: "0.02em", marginBottom: "15px", color: "#fff" }}>IMERSÃO</h4>
+            <p style={{ fontSize: "0.95rem", color: "rgba(255,255,255,0.5)", lineHeight: 1.6, maxWidth: "280px" }}>Analisamos seu mercado e seus concorrentes para encontrar a brecha onde sua marca pode dominar.</p>
+          </motion.div>
 
-          {/* Card 3: Autodidata */}
-          <div className="art-card" onMouseEnter={() => setHoveredCard(3)} onMouseLeave={() => setHoveredCard(null)}>
-            <div className="art-visual"><div className="wireframe-cube">{[...Array(6)].map((_, i) => <div key={i} className="side" />)}</div></div>
-            <div className="art-content">
-              <h3>Espírito Autodidata</h3>
-              <p>Aprendi tudo na raça. Resolvo problemas complexos e crio projetos de ponta a ponta com agilidade absoluta.</p>
-            </div>
-          </div>
+          <motion.div variants={stepVariants} style={{ fontSize: "2rem", opacity: 0.2, padding: "0 20px", marginTop: "20px", zIndex: 2 }}>→</motion.div>
 
-          {/* Card 4: Visão 360° */}
-          <div className="art-card" onMouseEnter={() => setHoveredCard(4)} onMouseLeave={() => setHoveredCard(null)}>
-            <div className="art-visual vertical-marquee-container">
-              <div className="marquee-v-mask-top" /><div className="marquee-v-scroll">{[...skills, ...skills].map((skill, i) => <div key={i} className="v-skill-item">{skill}</div>)}</div><div className="marquee-v-mask-bottom" />
-            </div>
-            <div className="art-content">
-              <h3>Visão Multidisciplinar</h3>
-              <p>Vim do Motion e do VFX, e trouxe esse olhar cinematográfico para o desenvolvimento de experiências web.</p>
-            </div>
-          </div>
+          <motion.div variants={stepVariants} style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px", zIndex: 2 }}>
+            <span style={{ fontSize: "10px", fontWeight: 900, opacity: 0.3, letterSpacing: "0.3em", marginBottom: "10px" }}>02</span>
+            <h4 style={{ fontSize: "2rem", fontWeight: 800, fontFamily: "serif", letterSpacing: "0.02em", marginBottom: "15px", color: "#fff" }}>ARQUITETURA</h4>
+            <p style={{ fontSize: "0.95rem", color: "rgba(255,255,255,0.5)", lineHeight: 1.6, maxWidth: "280px" }}>Construímos a estética de elite e a estrutura técnica que o Google e seus clientes amam.</p>
+          </motion.div>
 
-          {/* Card 5: Engenharia Própria (WIDE) */}
-          <div className="art-card card-wide-horizontal" onMouseEnter={() => setHoveredCard(5)} onMouseLeave={() => setHoveredCard(null)}>
-            <div className="art-content-side">
-              <h3>Engenharia Própria</h3>
-              <p>Seu site nasce com engenharia de ponta: o código é guardado em um cofre digital (GitHub) e distribuído globalmente pelas nuvens mais rápidas do mundo (Vercel ou Cloudflare). Isso garante que ele esteja sempre online e carregue instantaneamente para qualquer pessoa.</p>
-              <div className="engine-status-tag"><span className="dot-pulse" />INFRAESTRUTURA GLOBAL ATIVA</div>
-            </div>
-            <div className="art-visual-side" />
-          </div>
-        </div>
+          <motion.div variants={stepVariants} style={{ fontSize: "2rem", opacity: 0.2, padding: "0 20px", marginTop: "20px", zIndex: 2 }}>→</motion.div>
+
+          <motion.div variants={stepVariants} style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px", zIndex: 2 }}>
+            <span style={{ fontSize: "10px", fontWeight: 900, opacity: 0.3, letterSpacing: "0.3em", marginBottom: "10px" }}>03</span>
+            <h4 style={{ fontSize: "2rem", fontWeight: 800, fontFamily: "serif", letterSpacing: "0.02em", marginBottom: "15px", color: "#fff" }}>DOMÍNIO</h4>
+            <p style={{ fontSize: "0.95rem", color: "rgba(255,255,255,0.5)", lineHeight: 1.6, maxWidth: "280px" }}>Lançamos sua nova presença digital configurada para converter e escalar seu faturamento.</p>
+          </motion.div>
+        </motion.div>
+
       </div>
 
       <style jsx>{`
-        .features-section { padding: 10rem 0; background: #ffffff; }
-
-        /* NAME HEADER V4 - FLUID & COMPACT */
-        .name-header-v4 { margin-bottom: 8rem; text-align: center; position: relative; }
-        .badge-wrap { display: flex; justify-content: center; margin-bottom: 2rem; }
-        
-        .name-container {
-          position: relative; padding: 2rem 0; display: flex; flex-direction: column; align-items: center; gap: 0.2rem;
+        .features-v3 { padding: 15rem 0; background: #ffffff; position: relative; overflow: hidden; }
+        .v3-header { text-align: center; margin-bottom: 10rem; }
+        .v3-badge {
+          display: inline-flex; align-items: center; padding: 10px 20px; background: #000; border-radius: 100px;
+          color: #fff; font-size: 10px; font-weight: 800; letter-spacing: 0.2em; margin-bottom: 3rem;
         }
-        
-        .name-line {
-          font-family: var(--font-display); font-size: clamp(2rem, 6vw, 3.5rem);
-          font-weight: 800; line-height: 1; letter-spacing: -0.02em;
-          display: flex; position: relative; z-index: 2;
+        .v3-title { font-size: clamp(3.5rem, 10vw, 7.5rem); font-weight: 900; line-height: 0.85; letter-spacing: -0.06em; color: #000; }
+        .v3-title .outlined { color: transparent; -webkit-text-stroke: 1.5px #000; }
+        .v3-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; margin-bottom: 40px; }
+        :global(.spotlight-card) {
+          position: relative; border-radius: 48px; padding: 5rem;
+          background: #fafafa; border: 1px solid rgba(0,0,0,0.06);
+          overflow: hidden; transition: border-color 0.4s ease;
         }
-        .outline-row {
-          color: transparent; -webkit-text-stroke: 1px rgba(0,0,0,0.2);
-        }
-
-        .animated-char {
-          display: inline-block; color: inherit;
-          animation: letterFloat 4s ease-in-out infinite alternate;
-          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        
-        .animated-char:hover {
-          color: #000; -webkit-text-stroke-width: 0;
-          transform: translateY(-10px) scale(1.2) rotate(5deg);
-          text-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        @keyframes letterFloat {
-          from { transform: translateY(0); }
-          to { transform: translateY(-6px); }
-        }
-
-        .name-details { 
-          display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-top: 2rem; 
-          opacity: 0.4;
-        }
-        .detail-tag { font-family: monospace; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.3em; }
-        
-        .status-progress-track { width: 120px; height: 2px; background: rgba(0,0,0,0.05); overflow: hidden; position: relative; }
-        .status-progress-fill { 
-          width: 40%; height: 100%; background: #000; 
-          position: absolute; left: 0; top: 0;
-          animation: progressMove 3s ease-in-out infinite alternate; 
-        }
-        @keyframes progressMove { 0% { transform: translateX(-100%); } 100% { transform: translateX(250%); } }
-
-        /* BENTO CARDS */
-        .features-bento-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 4rem; }
-        .art-card {
-          background: #ffffff; border: 1.5px solid rgba(0,0,0,0.08); border-radius: 40px; padding: 3.5rem;
-          display: flex; flex-direction: column; gap: 2.5rem; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-          overflow: hidden; position: relative; cursor: pointer;
-          box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 10px 20px -5px rgba(0,0,0,0.08);
-        }
-        .art-card:hover { background: #000; transform: translateY(-12px) scale(1.01); border-color: rgba(255,255,255,0.2); box-shadow: 0 30px 60px -15px rgba(0,0,0,0.4); }
-        .art-card:hover h3 { color: #fff; }
-        .art-card:hover p { color: rgba(255,255,255,0.5); }
-
-        .art-visual { height: 220px; position: relative; display: flex; align-items: center; justify-content: center; }
-        .journey-bg-text { font-size: 12rem; font-weight: 900; color: #000; opacity: 0.03; position: absolute; transition: all 0.6s ease; }
-        .art-card:hover .journey-bg-text { color: #fff; opacity: 0.1; }
-        .journey-label-new { font-size: 1rem; font-weight: 800; letter-spacing: 0.4em; color: #000; z-index: 2; transition: all 0.6s ease; }
-        .art-card:hover .journey-label-new { color: #fff; }
-        .core-dot { width: 8px; height: 8px; background: #000; border-radius: 50%; transition: all 0.6s ease; }
-        .art-card:hover .core-dot { background: #fff; box-shadow: 0 0 20px #fff; transform: scale(1.5); }
-        .card-wide-horizontal { grid-column: span 2; flex-direction: row; align-items: center; justify-content: space-between; gap: 4rem; }
-        .art-content-side { flex: 1.3; }
-        .art-content-side h3 { font-size: 2.5rem; font-weight: 700; color: #000; margin-bottom: 1.5rem; transition: all 0.6s ease; }
-        .art-content-side p { font-size: 1.125rem; line-height: 1.7; color: rgba(0,0,0,0.5); transition: all 0.6s ease; }
-        .engine-status-tag { display: inline-flex; align-items: center; gap: 10px; margin-top: 2.5rem; padding: 8px 16px; border-radius: 8px; background: rgba(0,0,0,0.04); font-family: monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; transition: all 0.6s ease; }
-        .art-card:hover .engine-status-tag { background: rgba(255,255,255,0.1); color: #fff; }
-        .dot-pulse { width: 6px; height: 6px; background: #000; border-radius: 50%; animation: pulse-node 2s infinite; }
-        .art-card:hover .dot-pulse { background: #fff; }
-        .wireframe-cube { width: 80px; height: 80px; position: relative; transform-style: preserve-3d; animation: rotate-cube 10s linear infinite; }
-        .side { position: absolute; width: 80px; height: 80px; border: 1px solid rgba(0,0,0,0.1); transition: all 0.6s ease; }
-        .art-card:hover .side { border-color: rgba(255,255,255,0.4); }
-        .side:nth-child(1) { transform: translateZ(40px); } .side:nth-child(2) { transform: rotateY(180deg) translateZ(40px); } .side:nth-child(3) { transform: rotateY(90deg) translateZ(40px); } .side:nth-child(4) { transform: rotateY(-90deg) translateZ(40px); } .side:nth-child(5) { transform: rotateX(90deg) translateZ(40px); } .side:nth-child(6) { transform: rotateX(-90deg) translateZ(40px); }
-        @keyframes rotate-cube { from { transform: rotateX(0) rotateY(0); } to { transform: rotateX(360deg) rotateY(360deg); } }
-        .vertical-marquee-container { width: 100%; height: 200px; overflow: hidden; position: relative; }
-        .marquee-v-scroll { display: flex; flex-direction: column; gap: 12px; animation: scroll-up 25s linear infinite; }
-        .v-skill-item { padding: 14px; background: transparent; border: 1px solid rgba(0,0,0,0.05); border-radius: 12px; font-weight: 800; font-size: 0.7rem; letter-spacing: 0.3em; color: rgba(0,0,0,0.3); text-align: center; transition: all 0.4s ease; }
-        .art-card:hover .v-skill-item { color: rgba(255,255,255,0.4); border-color: rgba(255,255,255,0.1); }
-        @keyframes scroll-up { from { transform: translateY(0); } to { transform: translateY(-50%); } }
-
-        .art-content h3 { font-size: 1.75rem; font-weight: 700; color: #000; margin-bottom: 1rem; transition: all 0.6s ease; }
-        .art-content p { font-size: 1rem; line-height: 1.7; color: rgba(0,0,0,0.5); transition: all 0.6s ease; max-width: 400px; }
-
-        @media (max-width: 768px) {
-          .features-bento-grid { 
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 1.5rem !important; 
-          }
-          .art-card { 
-            width: 100% !important;
-            padding: 2rem 1.5rem !important; 
-            border-radius: 24px !important;
-            min-height: auto !important;
-          }
-          .card-wide-horizontal { 
-            flex-direction: column !important; 
-            padding: 2rem 1.5rem !important; 
-            gap: 2rem !important; 
-          }
-          .art-content-side h3 { font-size: 1.75rem !important; }
-          .name-line { font-size: 1.8rem !important; flex-wrap: wrap !important; justify-content: center !important; }
-          .art-visual { height: 140px !important; }
-          .journey-bg-text { font-size: 7rem !important; }
+        :global(.spotlight-card.dark) { background: #080808; border-color: rgba(255,255,255,0.05); }
+        :global(.spotlight-card:hover) { border-color: rgba(0,0,0,0.2); }
+        :global(.spotlight-card.dark:hover) { border-color: rgba(255,255,255,0.2); }
+        .card-inner-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; }
+        .card-header-v3 { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8rem; }
+        .card-index { font-size: 5rem; font-weight: 900; color: rgba(0,0,0,0.04); line-height: 0.8; }
+        .tag-v3 { padding: 6px 14px; border: 1px solid rgba(0,0,0,0.1); border-radius: 100px; font-size: 9px; font-weight: 800; letter-spacing: 0.1em; color: #000; }
+        .dark .tag-v3 { border-color: rgba(255,255,255,0.1); color: #fff; }
+        .pulse-indicator { display: flex; align-items: center; gap: 8px; }
+        .p-dot { width: 6px; height: 6px; background: #27c93f; border-radius: 50%; box-shadow: 0 0 10px #27c93f; animation: p-pulse 2s infinite; }
+        @keyframes p-pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        .tech-pills { display: flex; gap: 10px; margin-top: 4rem; }
+        .pill-v3 { padding: 8px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: #fff; font-size: 9px; font-weight: 800; }
+        .v3-manifesto { grid-column: span 2; padding: 8rem 0; border-top: 1px solid rgba(0,0,0,0.05); }
+        .manifesto-wrap { max-width: 900px; margin: 0 auto; text-align: center; }
+        .m-label { font-size: 10px; font-weight: 900; letter-spacing: 0.6em; color: rgba(0,0,0,0.2); margin-bottom: 4rem; }
+        blockquote { font-size: 3rem; font-family: serif; font-style: italic; line-height: 1.2; color: #000; margin-bottom: 4rem; letter-spacing: -0.02em; }
+        .m-author { display: flex; flex-direction: column; gap: 5px; }
+        .m-author strong { font-size: 1.2rem; font-weight: 800; }
+        .m-author span { font-size: 0.9rem; color: rgba(0,0,0,0.4); }
+        @media (max-width: 1024px) {
+          .v3-grid { grid-template-columns: 1fr; }
+          blockquote { font-size: 2rem; }
+          :global(.spotlight-card) { padding: 3rem; }
         }
       `}</style>
     </section>

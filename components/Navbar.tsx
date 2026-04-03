@@ -35,7 +35,7 @@ export function Navbar() {
       <nav className="container navbar-nav">
         {/* Logo */}
         <Link href="/" className="navbar-logo-link" aria-label="Ir para a página inicial">
-          <Image src="/logos/Logo-PH-6.png" alt="PH Code Vibe Logo" width={120} height={40} style={{ objectFit: "contain" }} priority />
+          <Image src="/logoicon.svg" alt="PH Code Vibe Logo" width={32} height={32} style={{ objectFit: "contain" }} priority />
           <span className="navbar-brand">PH CODE VIBE</span>
         </Link>
 
