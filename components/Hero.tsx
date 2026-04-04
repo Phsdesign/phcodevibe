@@ -71,7 +71,7 @@ export function Hero() {
   }, [ROTATING_WORDS.length]);
 
   return (
-    <section id="hero" className="hero-section" style={{ position: "relative", overflow: "hidden", minHeight: "100vh", width: "100%", display: "flex", alignItems: "center" }}>
+    <section id="hero" className="hero-section" style={{ position: "relative", overflow: isMobile ? "visible" : "hidden", minHeight: "100vh", width: "100%", display: "flex", alignItems: "center" }}>
       {/* Background Video Implementation - Only on Desktop */}
       {!isMobile && (
         <video

@@ -7,21 +7,30 @@
 @media (max-width: 768px) {
 
   /* ════════════════════════════════════════════
-     0. BASE GLOBAL
+     0. BASE GLOBAL — RESTAURAR SCROLL NATIVO
      ════════════════════════════════════════════ */
-  html, body {
+  html {
     overflow-x: hidden !important;
-    /* Restaurar scroll nativo e fluido */
-    scroll-behavior: auto !important;
-    -webkit-overflow-scrolling: touch !important;
+    overflow-y: auto !important;
     height: auto !important;
-    width: 100% !important;
+    scroll-behavior: auto !important;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
     position: relative !important;
-    overflow-y: visible !important; /* Garante que o scroll do body flua naturalmente */
-    touch-action: pan-y !important; /* Força o reconhecimento de scroll vertical com um dedo */
+    height: auto !important;
+    width: 100% !important;
+    touch-action: auto !important; /* Libera o reconhecimento imediato do toque */
+    overscroll-behavior-y: auto !important; /* Mantém o bounce natural do sistema */
+  }
+
+  /* Impedir que seções capturem o toque indevidamente */
+  main, section {
+    overflow: visible !important;
+    height: auto !important;
   }
 
   .container {
@@ -29,45 +38,35 @@
   }
 
   /* ════════════════════════════════════════════
-     0.1 PERFORMANCE — KILL SWITCH TOTAL
-     Mata toda fonte de jank no scroll mobile.
-     Desktop = intocável.
+     0.1 PERFORMANCE — OTIMIZADA
      ════════════════════════════════════════════ */
 
-  /* ── 1. MATAR TODAS AS ANIMAÇÕES INFINITAS ── */
+  /* ── 1. MATAR ANIMAÇÕES INFINITAS PESADAS ── */
   .security-bg,
   .features-floating-icon,
-  .animate-pulse,
   .node,
   .hologram-scan,
   .neural-grid,
   .glitch-line {
     animation: none !important;
-    transition: none !important;
   }
 
   .security-bg {
     display: none !important;
   }
 
-  /* ── 2. MATAR VÍDEOS DE FUNDO ── */
+  /* ── 2. MATAR VÍDEOS DE FUNDO NO MOBILE ── */
   #hero video,
   #contato video {
     display: none !important;
   }
 
-  /* ── 3. MATAR will-change GLOBAL ── */
-  * {
-    will-change: auto !important;
-  }
-
-  /* ── 4. MATAR backdrop-filter / blur GLOBAL ── */
-  .glass,
-  .btn-secondary,
-  .orbai-badge,
-  .navbar-nav {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
+  /* ── 3. MANTER LAYERS PREPARADAS ── */
+  /* Removemos o reset global will-change: auto que causava lag inicial */
+  .flashlight-card, 
+  .animate-fade-slide,
+  .marquee-scroll {
+    will-change: transform, opacity !important;
   }
 
   /* ── 5. SIMPLIFICAR TRANSIÇÕES DE SCROLL ── */

@@ -41,9 +41,17 @@ const regularPlans = [
 
 export function Pricing() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   return (
-    <section id="precos" style={{ padding: "10rem 0", width: "100%", background: "#ffffff", overflow: "hidden" }}>
+    <section id="precos" style={{ padding: "10rem 0", width: "100%", background: "#ffffff", overflow: isMobile ? "visible" : "hidden" }}>
       <style jsx global>{`
         @keyframes premium-glow {
           0%, 100% { opacity: 0.4; filter: blur(40px); }

@@ -31,7 +31,7 @@ export function Team() {
     : { once: true, margin: "-50px" };
 
   return (
-    <section id="sobre" ref={containerRef} style={{ background: "#ffffff", padding: isMobile ? "4rem 0" : "10rem 0", overflow: "hidden" }}>
+    <section id="sobre" ref={containerRef} style={{ background: "#ffffff", padding: isMobile ? "4rem 0" : "10rem 0", overflow: isMobile ? "visible" : "hidden" }}>
       <div className="container" style={{ maxWidth: "1200px" }}>
         
         {/* --- 01. PEDRO HENRIQUE --- */}
