@@ -9,6 +9,12 @@ function useCounter(target: number, duration: number = 2000) {
   const elementRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
+    // If mobile, set count to target immediately and skip animation
+    if (typeof window !== "undefined" && window.innerWidth < 768) {
+      setCount(target);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
@@ -20,10 +26,13 @@ function useCounter(target: number, duration: number = 2000) {
     );
     if (elementRef.current) observer.observe(elementRef.current);
     return () => observer.disconnect();
-  }, []);
+  }, [target]);
 
   useEffect(() => {
     if (!isVisible) return;
+    // Animation skip double-check for resize
+    if (window.innerWidth < 768) return;
+
     let startTimestamp: number | null = null;
     const step = (timestamp: number) => {
       if (!startTimestamp) startTimestamp = timestamp;

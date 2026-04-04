@@ -43,6 +43,17 @@ function SimpleSmoothCard({ children, className = "", dark = false }: { children
 
 /* ─── Security Connections Animation ─── */
 function SecurityConnections() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  if (isMobile) return null;
+
   return (
     <div className="security-bg">
       {[...Array(5)].map((_, i) => (
@@ -80,6 +91,27 @@ function SecurityConnections() {
 
 /* ─── Cinematic Background Animation for Process Box ─── */
 function ProcessCinematicBg() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  if (isMobile) {
+    return (
+      <div style={{ 
+        position: "absolute", 
+        inset: 0, 
+        background: "radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 80%)",
+        pointerEvents: "none",
+        zIndex: 1
+      }} />
+    );
+  }
+
   return (
     <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none" }}>
       <motion.div

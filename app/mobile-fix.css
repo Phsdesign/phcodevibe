@@ -21,43 +21,89 @@
   }
 
   /* ════════════════════════════════════════════
-     0.1 PERFORMANCE — Kill animações pesadas
+     0.1 PERFORMANCE — KILL SWITCH TOTAL
+     Mata toda fonte de jank no scroll mobile.
+     Desktop = intocável.
      ════════════════════════════════════════════ */
 
-  /* Desliga SecurityConnections (5 nós com Infinity loop) */
+  /* ── 1. MATAR TODAS AS ANIMAÇÕES INFINITAS ── */
+  .security-bg,
+  .features-floating-icon,
+  .animate-pulse,
+  .node,
+  .hologram-scan,
+  .neural-grid,
+  .glitch-line {
+    animation: none !important;
+    transition: none !important;
+  }
+
   .security-bg {
     display: none !important;
   }
 
-  /* Desliga vídeo de fundo no Hero (pesado para mobile) */
-  #hero video {
-    display: none !important;
-  }
-
-  /* Desliga vídeo de fundo no Contact */
+  /* ── 2. MATAR VÍDEOS DE FUNDO ── */
+  #hero video,
   #contato video {
     display: none !important;
   }
 
-  /* Desabilitar animações Framer Motion infinitas no mobile */
-  @media (prefers-reduced-motion: no-preference) {
-    /* Nós piscantes do FeaturesAI — stop */
-    .node {
-      animation: none !important;
-      opacity: 0.2 !important;
-    }
+  /* ── 3. MATAR will-change GLOBAL ── */
+  * {
+    will-change: auto !important;
   }
 
-  /* GPU hint apenas nos elementos que realmente precisam */
-  .logo-card,
-  .navbar-header {
-    will-change: auto !important; /* Explicitamente não reservar layer */
+  /* ── 4. MATAR backdrop-filter / blur GLOBAL ── */
+  .glass,
+  .btn-secondary,
+  .orbai-badge,
+  .navbar-nav {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
 
-  /* Team Photos - Force color on mobile */
+  /* ── 5. SIMPLIFICAR TRANSIÇÕES DE SCROLL ── */
+  .animate-on-scroll,
+  .animate-fade-slide,
+  .animate-fade-slide-1,
+  .animate-fade-slide-2,
+  .animate-fade-slide-3,
+  .animate-fade-slide-4,
+  .color-reveal {
+    transition-duration: 0.3s !important;
+    transition-property: opacity, transform !important;
+    filter: none !important;
+    will-change: auto !important;
+  }
+
+  /* ── 6. SIMPLIFICAR CARDS E SOMBRAS ── */
+  .neu-card,
+  .neu-card-flat,
+  .flashlight-card,
+  .glass-logo-card,
+  .logo-card {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+    transition: none !important;
+    will-change: auto !important;
+  }
+
+  /* ── 7. FRAMER MOTION — Forçar leveza ── */
+  /* O Framer adiciona inline styles com will-change e transform.
+     Não podemos impedir via CSS, mas reduzir a carga de compositing. */
+  [style*="will-change"] {
+    will-change: auto !important;
+  }
+
+  /* ── 8. HERO SPECIFIC ── */
+  .hero-rotating-word {
+    animation-iteration-count: 1 !important;
+  }
+
+  /* ── 9. TEAM PHOTOS — Coloridas no mobile ── */
   .member-photo-inner {
     filter: grayscale(0) !important;
     transform: none !important;
+    transition: none !important;
   }
 
 

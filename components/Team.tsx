@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, Variants } from "framer-motion";
 
@@ -9,9 +9,17 @@ export function Team() {
   const [pedroHovered, setPedroHovered] = useState(false);
   const [luizHovered, setLuizHovered] = useState(false);
   const [claudioHovered, setClaudioHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const fadeIn: Variants = {
-    initial: { opacity: 0, y: 30 },
+    initial: { opacity: isMobile ? 1 : 0, y: isMobile ? 0 : 30 },
     whileInView: { opacity: 1, y: 0 }
   };
 
