@@ -17,7 +17,7 @@ const regularPlans = [
   },
   {
     name: "Plano Personalizado",
-    price: "5.000 +",
+    price: "5.000+",
     desc: "Sistemas complexos e experiências imersivas sob medida.",
     features: [
       "Tudo do plano Elite",
