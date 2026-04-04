@@ -11,11 +11,50 @@
      ════════════════════════════════════════════ */
   html, body {
     overflow-x: hidden !important;
+    /* Scroll suave nativo no mobile */
+    scroll-behavior: smooth !important;
+    -webkit-overflow-scrolling: touch !important;
   }
 
   .container {
     padding: 0 1.25rem !important;
   }
+
+  /* ════════════════════════════════════════════
+     0.1 PERFORMANCE — Kill animações pesadas
+     ════════════════════════════════════════════ */
+
+  /* Desliga SecurityConnections (5 nós com Infinity loop) */
+  .security-bg {
+    display: none !important;
+  }
+
+  /* Desliga vídeo de fundo no Hero (pesado para mobile) */
+  #hero video {
+    display: none !important;
+  }
+
+  /* Desliga vídeo de fundo no Contact */
+  #contato video {
+    display: none !important;
+  }
+
+  /* Desabilitar animações Framer Motion infinitas no mobile */
+  @media (prefers-reduced-motion: no-preference) {
+    /* Nós piscantes do FeaturesAI — stop */
+    .node {
+      animation: none !important;
+      opacity: 0.2 !important;
+    }
+  }
+
+  /* GPU hint apenas nos elementos que realmente precisam */
+  .logo-card,
+  .navbar-header {
+    will-change: auto !important; /* Explicitamente não reservar layer */
+  }
+
+
 
   /* ════════════════════════════════════════════
      1. NAVBAR

@@ -1,9 +1,9 @@
 "use client";
 import Image from "next/image";
-import { motion } from "framer-motion";
 
 /**
  * Marquee — Premium Bento Style for Partners
+ * Mobile: CSS-only animations (zero Framer Motion overhead = scroll suave)
  */
 
 const clientLogos = [
@@ -46,7 +46,7 @@ export function Marquee() {
             borderRadius: "100px",
             marginBottom: "1.5rem"
           }}>
-            Nossas Conexões & Parcerias
+            Nossas Conexões &amp; Parcerias
           </div>
           <h2 style={{ 
             fontSize: "clamp(1.5rem, 4vw, 2.5rem)", 
@@ -58,7 +58,7 @@ export function Marquee() {
           </h2>
         </div>
 
-        {/* Premium Bento Grid for PC / Simple Flex for Mobile */}
+        {/* Logo Grid — CSS-only para performance mobile */}
         <div style={{ 
           display: "flex",
           flexWrap: "wrap",
@@ -67,17 +67,11 @@ export function Marquee() {
           marginBottom: "6rem"
         }}>
           {clientLogos.map((logo, i) => (
-            <motion.div 
-              key={i} 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              whileHover={{ 
-                y: -10,
-                boxShadow: "0 30px 60px -15px rgba(0,0,0,0.3)"
-              }}
+            <div
+              key={i}
+              className="logo-card"
               style={{ 
+                ["--delay" as string]: `${i * 0.08}s`,
                 width: "min(100%, 220px)",
                 height: "140px",
                 display: "flex",
@@ -88,17 +82,8 @@ export function Marquee() {
                 borderRadius: "32px",
                 border: "1px solid rgba(255,255,255,0.1)",
                 cursor: "pointer",
-                transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-                overflow: "hidden"
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)";
-                e.currentTarget.style.transform = "translateY(-10px) scale(1.02)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
-                e.currentTarget.style.transform = "translateY(0) scale(1)";
-              }}
+                overflow: "hidden",
+              } as React.CSSProperties}
             >
               <div style={{ position: "relative", width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <Image
@@ -106,19 +91,20 @@ export function Marquee() {
                   alt={logo.name}
                   width={160}
                   height={80}
+                  loading="lazy"
                   style={{ 
                     objectFit: "contain",
                     width: "85%",
                     height: "85%",
-                    filter: "brightness(0) invert(1)" // Garante que a logo fique branca se não for
+                    filter: "brightness(0) invert(1)"
                   }}
                 />
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
-        {/* Benefit Tags — Subtle Animation */}
+        {/* Benefit Tags */}
         <div style={{ 
           display: "flex",
           flexWrap: "wrap",
@@ -147,13 +133,31 @@ export function Marquee() {
           position: relative;
           z-index: 10;
         }
+
+        /* Hover apenas em dispositivos com mouse — zero custo no touch */
+        @media (hover: hover) and (pointer: fine) {
+          .logo-card {
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                        box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.35s ease;
+          }
+          .logo-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 60px -15px rgba(0,0,0,0.25);
+            border-color: rgba(255,255,255,0.25);
+          }
+        }
+
         @media (max-width: 768px) {
           .marquee-section {
-            padding: 60px 0 !important;
+            padding: 50px 0 !important;
           }
-          div[style*="width: min(100%, 220px)"] {
+          .logo-card {
             width: calc(50% - 0.75rem) !important;
-            height: 100px !important;
+            height: 90px !important;
+            border-radius: 20px !important;
+            padding: 1rem !important;
+            transition: none !important; /* Zero jank no scroll mobile */
           }
         }
       `}</style>
