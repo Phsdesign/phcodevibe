@@ -11,9 +11,16 @@
      ════════════════════════════════════════════ */
   html, body {
     overflow-x: hidden !important;
-    /* Scroll suave nativo no mobile */
-    scroll-behavior: smooth !important;
+    /* Remover scroll-behavior smooth para evitar lag no touch */
+    scroll-behavior: auto !important;
     -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior-y: none !important; /* Previne o bounce effect que pode causar stuttering */
+  }
+
+  body {
+    position: relative !important;
+    overflow-y: auto !important;
+    height: auto !important;
   }
 
   .container {

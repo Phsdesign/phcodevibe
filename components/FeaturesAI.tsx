@@ -27,9 +27,18 @@ const SLIDES = [
 
 /* ─── Simple Smooth Card Component ─── */
 function SimpleSmoothCard({ children, className = "", dark = false }: { children: React.ReactNode, className?: string, dark?: boolean }) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   return (
     <motion.div
-      whileHover={{ scale: 1.02, y: -8 }}
+      whileHover={isMobile ? {} : { scale: 1.02, y: -8 }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       className={`spotlight-card ${dark ? "dark" : ""} ${className}`}
       style={{ cursor: "default" }}
@@ -187,7 +196,15 @@ function HUDLines() {
 
 export function FeaturesAI() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef(null);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -243,12 +260,12 @@ export function FeaturesAI() {
             </div>
             <div className="card-body-v3">
               <AnimatePresence mode="wait">
-                <motion.div key={currentSlide} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
-                  <h3 style={{ fontSize: "3rem", fontWeight: 800, marginBottom: "2rem", letterSpacing: "-0.04em" }}>{SLIDES[currentSlide].title}</h3>
-                  <p style={{ fontSize: "1.2rem", lineHeight: 1.6, color: "rgba(0,0,0,0.5)", maxWidth: "500px", minHeight: "100px" }}>{SLIDES[currentSlide].desc}</p>
+                <motion.div key={currentSlide} initial={isMobile ? { opacity: 1 } : { opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={isMobile ? { opacity: 1 } : { opacity: 0, x: -20 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
+                  <h3 style={{ fontSize: isMobile ? "1.75rem" : "3rem", fontWeight: 800, marginBottom: isMobile ? "1rem" : "2rem", letterSpacing: "-0.04em" }}>{SLIDES[currentSlide].title}</h3>
+                  <p style={{ fontSize: isMobile ? "0.95rem" : "1.2rem", lineHeight: 1.6, color: "rgba(0,0,0,0.5)", maxWidth: "500px", minHeight: "100px" }}>{SLIDES[currentSlide].desc}</p>
                 </motion.div>
               </AnimatePresence>
-              <div className="visual-indicator" style={{ display: "flex", gap: "10px", marginTop: "4rem" }}>
+              <div className="visual-indicator" style={{ display: "flex", gap: "10px", marginTop: isMobile ? "2rem" : "4rem" }}>
                 {SLIDES.map((_, i) => (
                   <div key={i} className={`v-bar-container ${currentSlide === i ? "active" : ""}`} onClick={() => setCurrentSlide(i)} style={{ position: "relative", width: "60px", height: "4px", borderRadius: "10px", overflow: "hidden", cursor: "pointer" }}>
                     <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.05)" }} />
@@ -270,8 +287,8 @@ export function FeaturesAI() {
               </div>
             </div>
             <div className="card-body-v3">
-              <h3 style={{ color: "#fff", fontSize: "3rem", fontWeight: 800, marginBottom: "2rem" }}>Estrutura Indestrutível</h3>
-              <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "1.2rem", lineHeight: 1.6 }}>Nada de sites lentos que perdem vendas. Sua marca terá uma presença digital rápida, segura e preparada para ser encontrada no Google 24h por dia.</p>
+              <h3 style={{ color: "#fff", fontSize: isMobile ? "1.75rem" : "3rem", fontWeight: 800, marginBottom: isMobile ? "1rem" : "2rem" }}>Estrutura Indestrutível</h3>
+              <p style={{ color: "rgba(255,255,255,0.5)", fontSize: isMobile ? "0.95rem" : "1.2rem", lineHeight: 1.6 }}>Nada de sites lentos que perdem vendas. Sua marca terá uma presença digital rápida, segura e preparada para ser encontrada no Google 24h por dia.</p>
               <div className="tech-pills">
                 <div className="pill-v3">VELOCIDADE MÁXIMA</div>
                 <div className="pill-v3">SEGURANÇA TOTAL</div>
@@ -295,19 +312,19 @@ export function FeaturesAI() {
 
         {/* PROCESSO ABSOLUTE */}
         <motion.div 
-          variants={containerVariants}
-          initial="hidden"
+          variants={isMobile ? {} : containerVariants}
+          initial={isMobile ? "visible" : "hidden"}
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: isMobile ? "0px" : "-100px" }}
           style={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            padding: "80px 60px",
+            padding: isMobile ? "2.5rem 1.5rem" : "80px 60px",
             background: "#000",
-            borderRadius: "48px",
+            borderRadius: isMobile ? "24px" : "48px",
             color: "#fff",
-            marginTop: "60px",
+            marginTop: isMobile ? "20px" : "60px",
             position: "relative",
             overflow: "hidden",
             width: "100%"
@@ -315,26 +332,26 @@ export function FeaturesAI() {
         >
           <ProcessCinematicBg />
 
-          <motion.div variants={stepVariants} style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px", zIndex: 2 }}>
+          <motion.div variants={isMobile ? {} : stepVariants} style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px", zIndex: 2 }}>
             <span style={{ fontSize: "10px", fontWeight: 900, opacity: 0.3, letterSpacing: "0.3em", marginBottom: "10px" }}>01</span>
-            <h4 style={{ fontSize: "2rem", fontWeight: 800, fontFamily: "serif", letterSpacing: "0.02em", marginBottom: "15px", color: "#fff" }}>IMERSÃO</h4>
-            <p style={{ fontSize: "0.95rem", color: "rgba(255,255,255,0.5)", lineHeight: 1.6, maxWidth: "280px" }}>Analisamos seu mercado e seus concorrentes para encontrar a brecha onde sua marca pode dominar.</p>
+            <h4 style={{ fontSize: isMobile ? "1.5rem" : "2rem", fontWeight: 800, fontFamily: "serif", letterSpacing: "0.02em", marginBottom: "15px", color: "#fff" }}>IMERSÃO</h4>
+            <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.5)", lineHeight: 1.6, maxWidth: isMobile ? "100%" : "280px" }}>Analisamos seu mercado e seus concorrentes para encontrar a brecha onde sua marca pode dominar.</p>
           </motion.div>
 
-          <motion.div variants={stepVariants} style={{ fontSize: "2rem", opacity: 0.2, padding: "0 20px", marginTop: "20px", zIndex: 2 }}>→</motion.div>
+          {!isMobile && <motion.div variants={stepVariants} style={{ fontSize: "2rem", opacity: 0.2, padding: "0 20px", marginTop: "20px", zIndex: 2 }}>→</motion.div>}
 
-          <motion.div variants={stepVariants} style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px", zIndex: 2 }}>
+          <motion.div variants={isMobile ? {} : stepVariants} style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px", zIndex: 2 }}>
             <span style={{ fontSize: "10px", fontWeight: 900, opacity: 0.3, letterSpacing: "0.3em", marginBottom: "10px" }}>02</span>
-            <h4 style={{ fontSize: "2rem", fontWeight: 800, fontFamily: "serif", letterSpacing: "0.02em", marginBottom: "15px", color: "#fff" }}>ARQUITETURA</h4>
-            <p style={{ fontSize: "0.95rem", color: "rgba(255,255,255,0.5)", lineHeight: 1.6, maxWidth: "280px" }}>Construímos a estética de elite e a estrutura técnica que o Google e seus clientes amam.</p>
+            <h4 style={{ fontSize: isMobile ? "1.5rem" : "2rem", fontWeight: 800, fontFamily: "serif", letterSpacing: "0.02em", marginBottom: "15px", color: "#fff" }}>ARQUITETURA</h4>
+            <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.5)", lineHeight: 1.6, maxWidth: isMobile ? "100%" : "280px" }}>Construímos a estética de elite e a estrutura técnica que o Google e seus clientes amam.</p>
           </motion.div>
 
-          <motion.div variants={stepVariants} style={{ fontSize: "2rem", opacity: 0.2, padding: "0 20px", marginTop: "20px", zIndex: 2 }}>→</motion.div>
+          {!isMobile && <motion.div variants={stepVariants} style={{ fontSize: "2rem", opacity: 0.2, padding: "0 20px", marginTop: "20px", zIndex: 2 }}>→</motion.div>}
 
-          <motion.div variants={stepVariants} style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px", zIndex: 2 }}>
+          <motion.div variants={isMobile ? {} : stepVariants} style={{ flex: 1, display: "flex", flexDirection: "column", gap: "10px", zIndex: 2 }}>
             <span style={{ fontSize: "10px", fontWeight: 900, opacity: 0.3, letterSpacing: "0.3em", marginBottom: "10px" }}>03</span>
-            <h4 style={{ fontSize: "2rem", fontWeight: 800, fontFamily: "serif", letterSpacing: "0.02em", marginBottom: "15px", color: "#fff" }}>DOMÍNIO</h4>
-            <p style={{ fontSize: "0.95rem", color: "rgba(255,255,255,0.5)", lineHeight: 1.6, maxWidth: "280px" }}>Lançamos sua nova presença digital configurada para converter e escalar seu faturamento.</p>
+            <h4 style={{ fontSize: isMobile ? "1.5rem" : "2rem", fontWeight: 800, fontFamily: "serif", letterSpacing: "0.02em", marginBottom: "15px", color: "#fff" }}>DOMÍNIO</h4>
+            <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.5)", lineHeight: 1.6, maxWidth: isMobile ? "100%" : "280px" }}>Lançamos sua nova presença digital configurada para converter e escalar seu faturamento.</p>
           </motion.div>
         </motion.div>
 

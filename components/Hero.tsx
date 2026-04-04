@@ -54,6 +54,14 @@ export function Hero() {
 
   const ROTATING_WORDS = ["Imbatíveis.", "Lendárias.", "Absolutas.", "Únicas."];
   const [wordIndex, setWordIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -64,29 +72,31 @@ export function Hero() {
 
   return (
     <section id="hero" className="hero-section" style={{ position: "relative", overflow: "hidden", minHeight: "100vh", width: "100%", display: "flex", alignItems: "center" }}>
-      {/* Background Video Implementation */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          zIndex: -1,
-          willChange: "transform",
-          transform: "translate3d(0,0,0)",
-        }}
-      >
-        <source src="/bg-hero.webm" type="video/webm" />
-        <source src="/bg-hero.mp4" type="video/mp4" />
-        Seu navegador não suporta vídeos HTML5.
-      </video>
+      {/* Background Video Implementation - Only on Desktop */}
+      {!isMobile && (
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            zIndex: -1,
+            willChange: "transform",
+            transform: "translate3d(0,0,0)",
+          }}
+        >
+          <source src="/bg-hero.webm" type="video/webm" />
+          <source src="/bg-hero.mp4" type="video/mp4" />
+          Seu navegador não suporta vídeos HTML5.
+        </video>
+      )}
 
       {/* Content */}
       <div className="container hero-reveal-container" style={{ textAlign: "center", position: "relative", zIndex: 1 }}>
