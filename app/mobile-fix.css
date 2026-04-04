@@ -7,28 +7,33 @@
 @media (max-width: 768px) {
 
   /* ════════════════════════════════════════════
-     0. BASE GLOBAL — DEFINITIVE MOBILE SCROLL FIX
+     0. BASE GLOBAL — DEFINITIVE ONE-SWIPE FIX
      ════════════════════════════════════════════ */
   html {
     overflow-x: hidden !important;
-    overflow-y: scroll !important; /* Força o eixo vertical sempre ativo */
+    overflow-y: auto !important; /* Único container de scroll */
     height: auto !important;
-    -webkit-overflow-scrolling: touch !important; /* Scroll suave nativo iOS */
-    position: relative !important;
-  }
-
-  body {
-    overflow-x: hidden !important;
-    overflow-y: visible !important; /* Deixa o conteúdo fluir para o html */
-    height: auto !important;
-    width: 100% !important;
-    position: relative !important;
-    touch-action: manipulation !important; /* Melhora performance de toque e scroll */
+    scroll-behavior: auto !important;
     -webkit-text-size-adjust: 100%;
   }
 
-  /* Reset de qualquer possível trava de scroll */
-  main, section {
+  body {
+    overflow: visible !important; /* Libera o scroll para o html */
+    position: relative !important;
+    height: auto !important;
+    min-height: 100% !important;
+    width: 100% !important;
+    touch-action: auto !important;
+    -webkit-overflow-scrolling: auto !important; /* Remove o modo 'touch' legado que causa o bug */
+  }
+
+  /* Forçar todas as seções a serem 'transparentes' ao scroll */
+  main, section, div {
+    -webkit-overflow-scrolling: auto !important;
+  }
+
+  /* Reset total de travas de altura */
+  .hero-section, #sobre, #features, #portfolio, #precos, #contato {
     overflow: visible !important;
     height: auto !important;
     min-height: auto !important;

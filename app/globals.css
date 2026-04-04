@@ -78,7 +78,6 @@ html, body {
   min-height: 100%;
   color: var(--text-primary);
   font-family: var(--font-body);
-  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   background-color: var(--bg);
   scroll-behavior: auto !important;
