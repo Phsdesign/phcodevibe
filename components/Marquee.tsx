@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 /**
  * Marquee — Premium Bento Style for Partners
@@ -11,49 +12,41 @@ const clientLogos = [
   {
     src: "/logos/2.png",
     name: "Mario Amaral",
-    // MANTIDA — OK como está
     imgStyle: { maxWidth: "80%", maxHeight: "80%" },
   },
   {
     src: "/logos/32.png",
     name: "Garen 44",
-    // Muito espaço transparente na imagem — scale forçado para dar presença
     imgStyle: { maxWidth: "100%", maxHeight: "100%", transform: "scale(2.0)" },
   },
   {
     src: "/logos/Ces_Sistemas branco - Oficial.png",
     name: "Ces Sistemas",
-    // MANTIDA — OK como está
     imgStyle: { maxWidth: "82%", maxHeight: "55%" },
   },
   {
     src: "/logos/Elleganza-Branco.png",
     name: "Elleganza",
-    // Muito espaço transparente — scale para ampliar o conteúdo visível
     imgStyle: { maxWidth: "100%", maxHeight: "100%", transform: "scale(2.2)" },
   },
   {
     src: "/logos/LOGO3.png",
     name: "Sushi Na House",
-    // Circular com espaço externo — aumentado para presença
     imgStyle: { maxWidth: "100%", maxHeight: "100%", transform: "scale(1.3)" },
   },
   {
     src: "/logos/Logo-PH-6.png",
     name: "Popeloni Hub",
-    // Super horizontal com muito espaço transparente — scale alto
     imgStyle: { maxWidth: "100%", maxHeight: "100%", transform: "scale(1.7)" },
   },
   {
     src: "/logos/Marca_04_branca.png",
     name: "Braslimp",
-    // Horizontal — scale moderado para melhor leitura
     imgStyle: { maxWidth: "80%", maxHeight: "60%" },
   },
   {
     src: "/logos/logoazul.png",
     name: "Slap",
-    // MANTIDA — ícone quadrado S
     imgStyle: { maxWidth: "65%", maxHeight: "65%" },
   },
 ];
@@ -73,7 +66,14 @@ const benefitTags = [
 export function Marquee() {
   return (
     <section id="marquee" className="marquee-section" style={{ padding: "100px 0", background: "#ffffff" }}>
-      <div className="container" style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 20px" }}>
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        className="container" 
+        style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 20px" }}
+      >
         {/* Section Header */}
         <div style={{ textAlign: "center", marginBottom: "5rem" }}>
           <div style={{
@@ -167,7 +167,7 @@ export function Marquee() {
             </span>
           ))}
         </div>
-      </div>
+      </motion.div>
 
       <style jsx>{`
         .marquee-section {

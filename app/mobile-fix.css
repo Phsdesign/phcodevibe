@@ -39,6 +39,20 @@
     min-height: auto !important;
   }
 
+  /* ── 5. SEGURANÇA DE VISIBILIDADE ── */
+  /* Força a exibição de elementos que podem ficar presos em opacidade 0 */
+  .animate-on-scroll,
+  .animate-fade-slide,
+  .spotlight-card motion.div,
+  .v3-title,
+  .v3-badge,
+  .process-box-v3,
+  .marquee-section motion.div {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+  }
+
   .container {
     padding: 0 1.25rem !important;
   }
