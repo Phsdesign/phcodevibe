@@ -11,52 +11,53 @@ const clientLogos = [
   {
     src: "/logos/2.png",
     name: "Mario Amaral",
-    // Logo quadrada branca — padding extra para não ocupar tudo
-    imgStyle: { maxWidth: "68%", maxHeight: "68%" },
+    // MANTIDA — OK como está
+    imgStyle: { maxWidth: "80%", maxHeight: "80%" },
   },
   {
     src: "/logos/32.png",
     name: "Garen 44",
-    // Horizontal normal
-    imgStyle: { maxWidth: "78%", maxHeight: "55%" },
+    // Muito espaço transparente na imagem — scale forçado para dar presença
+    imgStyle: { maxWidth: "100%", maxHeight: "100%", transform: "scale(2.0)" },
   },
   {
     src: "/logos/Ces_Sistemas branco - Oficial.png",
     name: "Ces Sistemas",
-    // Horizontal largo com texto e ícone
+    // MANTIDA — OK como está
     imgStyle: { maxWidth: "82%", maxHeight: "55%" },
   },
   {
     src: "/logos/Elleganza-Branco.png",
     name: "Elleganza",
-    // Horizontal, precisa de espaço vertical
-    imgStyle: { maxWidth: "72%", maxHeight: "60%" },
+    // Muito espaço transparente — scale para ampliar o conteúdo visível
+    imgStyle: { maxWidth: "100%", maxHeight: "100%", transform: "scale(2.2)" },
   },
   {
     src: "/logos/LOGO3.png",
     name: "Sushi Na House",
-    // Logo circular — reduzida para não dominar o card
-    imgStyle: { maxWidth: "60%", maxHeight: "60%" },
+    // Circular com espaço externo — aumentado para presença
+    imgStyle: { maxWidth: "100%", maxHeight: "100%", transform: "scale(1.3)" },
   },
   {
     src: "/logos/Logo-PH-6.png",
     name: "Popeloni Hub",
-    // Logo super horizontal com texto longo — precisa de mais largura
-    imgStyle: { maxWidth: "90%", maxHeight: "50%" },
+    // Super horizontal com muito espaço transparente — scale alto
+    imgStyle: { maxWidth: "100%", maxHeight: "100%", transform: "scale(1.7)" },
   },
   {
     src: "/logos/Marca_04_branca.png",
     name: "Braslimp",
-    // Horizontal com ícone e texto — bom tamanho
-    imgStyle: { maxWidth: "80%", maxHeight: "55%" },
+    // Horizontal — scale moderado para melhor leitura
+    imgStyle: { maxWidth: "80%", maxHeight: "60%" },
   },
   {
     src: "/logos/logoazul.png",
     name: "Slap",
-    // Ícone pequeno quadrado — deixar maior para ter presença visual
-    imgStyle: { maxWidth: "50%", maxHeight: "50%" },
+    // MANTIDA — ícone quadrado S
+    imgStyle: { maxWidth: "65%", maxHeight: "65%" },
   },
 ];
+
 
 const benefitTags = [
   "Soluções Escaláveis",

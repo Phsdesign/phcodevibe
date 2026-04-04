@@ -36,6 +36,7 @@ export function Team() {
               <motion.div
                 animate={{ scale: pedroHovered ? 1.05 : 1, filter: pedroHovered ? "grayscale(0)" : "grayscale(1)" }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
+                className="member-photo-inner"
                 style={{ width: "100%", height: "100%", position: "relative" }}
               >
                 <Image src="/person.png" alt="Pedro Henrique" fill quality={95} priority style={{ objectFit: "cover", objectPosition: "center top" }} />
@@ -90,7 +91,12 @@ export function Team() {
             className="portrait-container"
           >
             <div style={{ position: "relative", width: "100%", aspectRatio: "0.8", overflow: "hidden", borderRadius: "4px", background: "#f8f9fa" }}>
-              <motion.div animate={{ scale: luizHovered ? 1.05 : 1, filter: luizHovered ? "grayscale(0)" : "grayscale(1)" }} transition={{ duration: 0.6, ease: "easeOut" }} style={{ width: "100%", height: "100%", position: "relative" }}>
+              <motion.div 
+                animate={{ scale: luizHovered ? 1.05 : 1, filter: luizHovered ? "grayscale(0)" : "grayscale(1)" }} 
+                transition={{ duration: 0.6, ease: "easeOut" }} 
+                className="member-photo-inner"
+                style={{ width: "100%", height: "100%", position: "relative" }}
+              >
                 <Image src="/person-2.png" alt="Luiz Felipe" fill quality={95} style={{ objectFit: "cover", objectPosition: "center center" }} />
               </motion.div>
             </div>
@@ -115,6 +121,7 @@ export function Team() {
               <motion.div
                 animate={{ scale: claudioHovered ? 1.05 : 1, filter: claudioHovered ? "grayscale(0)" : "grayscale(1)" }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
+                className="member-photo-inner"
                 style={{ width: "100%", height: "100%", position: "relative" }}
               >
                 <Image src="/person-3.png" alt="Claudio Lisboa" fill quality={95} style={{ objectFit: "cover", objectPosition: "center top" }} />

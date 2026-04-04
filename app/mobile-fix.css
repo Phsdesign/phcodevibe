@@ -54,6 +54,12 @@
     will-change: auto !important; /* Explicitamente não reservar layer */
   }
 
+  /* Team Photos - Force color on mobile */
+  .member-photo-inner {
+    filter: grayscale(0) !important;
+    transform: none !important;
+  }
+
 
 
   /* ════════════════════════════════════════════
