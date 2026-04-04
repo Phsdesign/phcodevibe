@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { FloatingButtons } from "@/components/FloatingButtons";
 import { ScrollEffects } from "@/components/ScrollEffects";
 import "./globals.css";
+import "./mobile-fix.css";
 
 import Script from "next/script";
 

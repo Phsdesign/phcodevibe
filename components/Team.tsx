@@ -87,6 +87,7 @@ export function Team() {
             onMouseEnter={() => setLuizHovered(true)}
             onMouseLeave={() => setLuizHovered(false)}
             style={{ position: "relative", cursor: "crosshair" }}
+            className="portrait-container"
           >
             <div style={{ position: "relative", width: "100%", aspectRatio: "0.8", overflow: "hidden", borderRadius: "4px", background: "#f8f9fa" }}>
               <motion.div animate={{ scale: luizHovered ? 1.05 : 1, filter: luizHovered ? "grayscale(0)" : "grayscale(1)" }} transition={{ duration: 0.6, ease: "easeOut" }} style={{ width: "100%", height: "100%", position: "relative" }}>
