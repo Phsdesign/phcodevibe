@@ -7,30 +7,31 @@
 @media (max-width: 768px) {
 
   /* ════════════════════════════════════════════
-     0. BASE GLOBAL — RESTAURAR SCROLL NATIVO
+     0. BASE GLOBAL — DEFINITIVE MOBILE SCROLL FIX
      ════════════════════════════════════════════ */
   html {
     overflow-x: hidden !important;
-    overflow-y: auto !important;
+    overflow-y: scroll !important; /* Força o eixo vertical sempre ativo */
     height: auto !important;
-    scroll-behavior: auto !important;
-    -webkit-text-size-adjust: 100%;
+    -webkit-overflow-scrolling: touch !important; /* Scroll suave nativo iOS */
+    position: relative !important;
   }
 
   body {
     overflow-x: hidden !important;
-    overflow-y: visible !important;
-    position: relative !important;
+    overflow-y: visible !important; /* Deixa o conteúdo fluir para o html */
     height: auto !important;
     width: 100% !important;
-    touch-action: auto !important; /* Libera o reconhecimento imediato do toque */
-    overscroll-behavior-y: auto !important; /* Mantém o bounce natural do sistema */
+    position: relative !important;
+    touch-action: manipulation !important; /* Melhora performance de toque e scroll */
+    -webkit-text-size-adjust: 100%;
   }
 
-  /* Impedir que seções capturem o toque indevidamente */
+  /* Reset de qualquer possível trava de scroll */
   main, section {
     overflow: visible !important;
     height: auto !important;
+    min-height: auto !important;
   }
 
   .container {
@@ -253,10 +254,12 @@
     flex-direction: column;
     padding: 5rem 2rem 2rem;
     box-shadow: -10px 0 40px rgba(0, 0, 0, 0.1);
+    pointer-events: none; /* Bloqueia toque quando escondido */
   }
 
   .mobile-drawer.open {
     transform: translateX(0);
+    pointer-events: auto; /* Libera toque quando aberto */
   }
 
   .mobile-drawer-link {
