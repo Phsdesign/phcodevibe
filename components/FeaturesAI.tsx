@@ -393,9 +393,13 @@ export function FeaturesAI() {
         .m-author strong { font-size: 1.2rem; font-weight: 800; }
         .m-author span { font-size: 0.9rem; color: rgba(0,0,0,0.4); }
         @media (max-width: 1024px) {
+          .features-v3 { padding: 5rem 0 !important; }
+          .v3-header { margin-bottom: 4rem !important; }
           .v3-grid { grid-template-columns: 1fr; }
-          blockquote { font-size: 2rem; }
-          :global(.spotlight-card) { padding: 3rem; }
+          .v3-manifesto { grid-column: span 1 !important; padding: 4rem 0 !important; }
+          blockquote { font-size: 1.5rem !important; }
+          :global(.spotlight-card) { padding: 2rem !important; border-radius: 24px !important; }
+          .card-header-v3 { margin-bottom: 3rem !important; }
         }
       `}</style>
     </section>
