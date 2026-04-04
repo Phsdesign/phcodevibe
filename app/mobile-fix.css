@@ -11,16 +11,17 @@
      ════════════════════════════════════════════ */
   html, body {
     overflow-x: hidden !important;
-    /* Remover scroll-behavior smooth para evitar lag no touch */
+    /* Restaurar scroll nativo e fluido */
     scroll-behavior: auto !important;
     -webkit-overflow-scrolling: touch !important;
-    overscroll-behavior-y: none !important; /* Previne o bounce effect que pode causar stuttering */
+    height: auto !important;
+    width: 100% !important;
   }
 
   body {
     position: relative !important;
-    overflow-y: auto !important;
-    height: auto !important;
+    overflow-y: visible !important; /* Garante que o scroll do body flua naturalmente */
+    touch-action: pan-y !important; /* Força o reconhecimento de scroll vertical com um dedo */
   }
 
   .container {
