@@ -297,17 +297,6 @@ export function FeaturesAI() {
             </div>
           </SimpleSmoothCard>
 
-          <div className="v3-manifesto">
-            <div className="manifesto-wrap">
-              <div className="m-label">NOSSA FILOSOFIA</div>
-              <blockquote>"Um site bonito atrai o olhar, mas um site estratégico atrai o dinheiro. Minha missão é garantir que sua empresa seja a escolha óbvia do seu cliente."</blockquote>
-              <div className="m-author">
-                <strong>Pedro Henrique Silva</strong>
-                <span>Fundador @ PH Code Vibe</span>
-              </div>
-            </div>
-          </div>
-
         </div>
 
         {/* PROCESSO ABSOLUTE */}
@@ -325,6 +314,7 @@ export function FeaturesAI() {
             borderRadius: isMobile ? "24px" : "48px",
             color: "#fff",
             marginTop: isMobile ? "20px" : "60px",
+            marginBottom: isMobile ? "20px" : "60px",
             position: "relative",
             overflow: "hidden",
             width: "100%"
@@ -354,6 +344,17 @@ export function FeaturesAI() {
             <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.5)", lineHeight: 1.6, maxWidth: isMobile ? "100%" : "280px" }}>Lançamos sua nova presença digital configurada para converter e escalar seu faturamento.</p>
           </motion.div>
         </motion.div>
+
+        <div className="v3-manifesto">
+          <div className="manifesto-wrap">
+            <div className="m-label">NOSSA FILOSOFIA</div>
+            <blockquote>"Um site bonito atrai o olhar, mas um site estratégico atrai o dinheiro. Minha missão é garantir que sua empresa seja a escolha óbvia do seu cliente."</blockquote>
+            <div className="m-author">
+              <strong>Pedro Henrique Silva</strong>
+              <span>Fundador @ PH Code Vibe</span>
+            </div>
+          </div>
+        </div>
 
       </div>
 
