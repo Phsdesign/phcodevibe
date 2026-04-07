@@ -43,6 +43,7 @@
   /* Força a exibição de elementos que podem ficar presos em opacidade 0 */
   .animate-on-scroll,
   .animate-fade-slide,
+  .hero-reveal,
   .spotlight-card motion.div,
   .v3-title,
   .v3-badge,

@@ -68,6 +68,8 @@ export function Hero() {
   }, []);
 
   useEffect(() => {
+    if (typeof window !== "undefined" && window.innerWidth < 768) return; // Prevent LCP invalidation by DOM destruction on mobile
+
     const interval = setInterval(() => {
       setWordIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
     }, 2500);
