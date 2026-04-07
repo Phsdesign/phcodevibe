@@ -119,7 +119,7 @@ export function Hero() {
             Marcas
           </span>
           <span className="block hero-reveal" style={{ animationDelay: "200ms" }}>
-            <span className="inline-block animate-word-rotate hero-rotating-word">
+            <span key={wordIndex} className="inline-block animate-word-rotate hero-rotating-word">
               {ROTATING_WORDS[wordIndex]}
             </span>
           </span>
