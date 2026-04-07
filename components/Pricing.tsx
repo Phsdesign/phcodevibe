@@ -717,13 +717,14 @@ export function Pricing() {
                 Transparência &amp; Segurança
               </div>
               <h3 style={{ 
-                fontSize: "clamp(2.5rem, 4.5vw, 4rem)", 
+                fontSize: "clamp(2rem, 8vw, 4rem)", 
                 fontWeight: 900, 
                 color: "#ffffff",
                 lineHeight: 1.1,
                 letterSpacing: "-0.04em",
                 marginBottom: "1.8rem",
-                fontFamily: "var(--font-display), var(--font-inter), sans-serif"
+                fontFamily: "var(--font-display), var(--font-inter), sans-serif",
+                wordBreak: "break-word"
               }}>
                 COMO <br/><span style={{ color: "rgba(255,255,255,0.3)" }}>TRABALHAMOS</span>.
               </h3>
@@ -802,13 +803,15 @@ export function Pricing() {
               {/* Métodos de Pagamento Aceitos */}
               <div style={{ 
                 display: "flex", 
-                 alignItems: "center", 
-                 gap: "1.2rem", 
-                 marginTop: "1rem"
+                alignItems: isMobile ? "flex-start" : "center", 
+                flexDirection: isMobile ? "column" : "row",
+                flexWrap: "wrap",
+                gap: "1.2rem", 
+                marginTop: "1rem"
               }}>
                 <h4 style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.85rem", textTransform: "uppercase", letterSpacing: "0.15em", fontFamily: "var(--font-inter), sans-serif", margin: 0, fontWeight: 700 }}>Pagamentos via</h4>
                 
-                <div style={{ display: "flex", gap: "12px" }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "12px" }}>
                   <div style={{ 
                     padding: "0.6rem 1.5rem", 
                     background: "rgba(255,255,255,0.05)", 
