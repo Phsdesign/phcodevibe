@@ -52,7 +52,7 @@ export function Team() {
                 className="member-photo-inner"
                 style={{ width: "100%", height: "100%", position: "relative" }}
               >
-                <Image src="/person.png" alt="Pedro Henrique" fill quality={isMobile ? 80 : 95} priority style={{ objectFit: "cover", objectPosition: "center top" }} />
+                <Image src="/person.png" alt="Pedro Henrique" fill quality={isMobile ? 80 : 95} style={{ objectFit: "cover", objectPosition: "center top" }} />
               </motion.div>
             </div>
             <div className="desktop-only" style={{ marginTop: "2rem", display: "flex", alignItems: "center", gap: "12px", opacity: 0.4 }}>

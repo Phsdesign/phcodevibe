@@ -1,11 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export function Contact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,25 +41,27 @@ export function Contact() {
   return (
     <section id="contato" style={{ padding: "clamp(6rem, 10vw, 10rem) 0", width: "100%", background: "#000", position: "relative", overflow: "hidden" }}>
       {/* Background Video */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          zIndex: 0,
-          opacity: 0.7,
-        }}
-      >
-        <source src="/page-bg.webm" type="video/webm" />
-        <source src="/page-bg.mp4" type="video/mp4" />
-      </video>
+      {isDesktop && (
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            zIndex: 0,
+            opacity: 0.7,
+          }}
+        >
+          <source src="/page-bg.webm" type="video/webm" />
+          <source src="/page-bg.mp4" type="video/mp4" />
+        </video>
+      )}
 
       {/* Background Subtle Gradient Overlay */}
       <div 

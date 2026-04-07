@@ -55,12 +55,16 @@ export function Hero() {
   const ROTATING_WORDS = ["Imbatíveis.", "Lendárias.", "Absolutas.", "Únicas."];
   const [wordIndex, setWordIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      setIsDesktop(window.innerWidth >= 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
@@ -73,7 +77,7 @@ export function Hero() {
   return (
     <section id="hero" className="hero-section" style={{ position: "relative", overflow: isMobile ? "visible" : "hidden", minHeight: "100vh", width: "100%", display: "flex", alignItems: "center" }}>
       {/* Background Video Implementation - Only on Desktop */}
-      {!isMobile && (
+      {isDesktop && (
         <video
           autoPlay
           loop

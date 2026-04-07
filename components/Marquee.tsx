@@ -63,9 +63,31 @@ const benefitTags = [
   "Alta Performance",
 ];
 
+function BenefitTag({ text }: { text: string }) {
+  return (
+    <span className="benefit-tag" style={{
+      fontSize: "clamp(12px, 1.2vw, 13px)",
+      fontWeight: 500,
+      padding: "10px 22px",
+      borderRadius: "100px",
+      background: "#ffffff",
+      border: "1px solid rgba(0,0,0,0.06)",
+      color: "#4b5563", 
+      boxShadow: "0 2px 10px rgba(0,0,0,0.02)",
+      display: "inline-block",
+      whiteSpace: "nowrap",
+      fontFamily: "var(--font-body)",
+      transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
+      cursor: "default"
+    }}>
+      {text}
+    </span>
+  );
+}
+
 export function Marquee() {
   return (
-    <section id="marquee" className="marquee-section" style={{ padding: "100px 0", background: "#ffffff" }}>
+    <section id="marquee" className="marquee-section" style={{ padding: "120px 0", background: "#ffffff" }}>
       <motion.div 
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -145,27 +167,41 @@ export function Marquee() {
           ))}
         </div>
 
-        {/* Benefit Tags */}
+        {/* Benefit Tags — Layout em Nuvem Estilizado */}
         <div style={{
           display: "flex",
-          flexWrap: "wrap",
-          gap: "10px",
-          justifyContent: "center",
-          opacity: 0.6
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "12px",
+          marginTop: "2rem"
         }}>
-          {benefitTags.map((tag, i) => (
-            <span key={i} style={{
-              fontSize: "11px",
-              fontWeight: 600,
-              padding: "6px 16px",
-              borderRadius: "100px",
-              background: "#f8f9fa",
-              border: "1px solid rgba(0,0,0,0.05)",
-              color: "#0e1c29"
-            }}>
-              {tag}
-            </span>
-          ))}
+          {/* Top Row */}
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <BenefitTag text={benefitTags[0]} />
+          </div>
+          
+          {/* Mid-Top Row */}
+          <div style={{ display: "flex", justifyContent: "center", gap: "12px", flexWrap: "wrap" }}>
+            <BenefitTag text={benefitTags[1]} />
+            <BenefitTag text={benefitTags[2]} />
+          </div>
+
+          {/* Center Row */}
+          <div style={{ display: "flex", justifyContent: "center", gap: "12px", flexWrap: "wrap" }}>
+            <BenefitTag text={benefitTags[3]} />
+            <BenefitTag text={benefitTags[4]} />
+          </div>
+
+          {/* Mid-Bottom Row */}
+          <div style={{ display: "flex", justifyContent: "center", gap: "12px", flexWrap: "wrap" }}>
+            <BenefitTag text={benefitTags[5]} />
+            <BenefitTag text={benefitTags[6]} />
+          </div>
+
+          {/* Bottom Row */}
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <BenefitTag text={benefitTags[7]} />
+          </div>
         </div>
       </motion.div>
 
@@ -173,6 +209,13 @@ export function Marquee() {
         .marquee-section {
           position: relative;
           z-index: 10;
+        }
+
+        .benefit-tag:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 10px 20px rgba(0,0,0,0.06) !important;
+          border-color: rgba(0,0,0,0.12) !important;
+          color: #000000 !important;
         }
 
         /* Hover apenas em dispositivos com mouse real */
