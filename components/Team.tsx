@@ -35,7 +35,7 @@ export function Team() {
       <div className="container" style={{ maxWidth: "1200px" }}>
         
         {/* --- 01. PEDRO HENRIQUE --- */}
-        <div className="team-grid" style={{ marginBottom: isMobile ? "4rem" : "15rem", display: "grid", gridTemplateColumns: "1fr 1fr", gap: isMobile ? "40px" : "100px", alignItems: "center" }}>
+        <div className="team-grid" style={{ marginBottom: isMobile ? "4rem" : "15rem", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "40px" : "100px", alignItems: "center" }}>
           <motion.div 
             initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
@@ -66,7 +66,28 @@ export function Team() {
             <motion.h2 initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.3 }} style={{ fontSize: "clamp(2.5rem, 8vw, 5.5rem)", fontWeight: 900, lineHeight: 0.9, color: "#000", letterSpacing: "-0.04em", marginBottom: isMobile ? "1.5rem" : "3rem", textTransform: "uppercase" }}>
               Pedro <br /> <span style={{ position: "relative" }}>Henrique{!isMobile && <motion.div initial={{ width: 0 }} whileInView={{ width: "100%" }} transition={{ delay: 0.8, duration: 1.2 }} style={{ position: "absolute", bottom: "10%", left: 0, height: "4px", background: "#000", opacity: 0.1 }} />}</span>
             </motion.h2>
-            <motion.p initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.4 }} style={{ fontSize: isMobile ? "1rem" : "1.25rem", lineHeight: 1.6, color: "#000", opacity: 0.6, maxWidth: "480px", marginBottom: isMobile ? "2rem" : "4rem" }}>Especializado na criação de arquiteturas digitais onde o design atua como uma linguagem silenciosa de sofisticação e precisão. Menos ruído, mais conexão.</motion.p>
+            <motion.p initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.4 }} style={{ fontSize: isMobile ? "0.95rem" : "1.1rem", lineHeight: 1.6, color: "#000", opacity: 0.7, maxWidth: "520px", marginBottom: isMobile ? "2rem" : "3rem" }}>
+              Com 9 anos de experiência, atuo no desenvolvimento de projetos de alto nível. Construo ecossistemas digitais completos para marcas que não aceitam o amadorismo, entregando:
+            </motion.p>
+            
+            <motion.div initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.5 }} style={{ marginBottom: isMobile ? "2rem" : "4rem" }}>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "1rem" }}>
+                {[
+                  "Identidades Visuais de Autoridade",
+                  "Vídeos Motion de Alto Engajamento",
+                  "Landing Pages de Conversão Extrema",
+                  "Sistemas com Performance Impecável"
+                ].map((item, i) => (
+                  <li key={i} style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "0.85rem", fontWeight: 700, color: "#000", letterSpacing: "-0.01em" }}>
+                    <div style={{ width: "4px", height: "4px", background: "#000", borderRadius: "50%", opacity: 0.3 }} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <p style={{ marginTop: "2rem", fontSize: "0.9rem", fontWeight: 800, color: "#000", opacity: 0.4, letterSpacing: "0.05em" }}>
+                Para marcas que buscam liderança de mercado e conexão real.
+              </p>
+            </motion.div>
             <motion.div initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.5 }} style={{ display: "flex", gap: "2rem", alignItems: "center", flexWrap: "wrap" }}>
               <a href="https://instagram.com/phcodevibe" target="_blank" className="premium-link">Instagram</a>
               <span style={{ opacity: 0.1, color: "#000" }}>/</span>
@@ -78,13 +99,24 @@ export function Team() {
         </div>
 
         {/* --- 02. LUIZ FELIPE --- */}
-        <div className="team-grid inverted" style={{ marginBottom: isMobile ? "4rem" : "15rem", display: "grid", gridTemplateColumns: "1fr 1fr", gap: isMobile ? "40px" : "100px", alignItems: "center" }}>
+        <div className="team-grid inverted" style={{ marginBottom: isMobile ? "4rem" : "15rem", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "40px" : "100px", alignItems: "center" }}>
           <div className="content-container">
             <motion.div initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.2 }} style={{ fontSize: "12px", fontWeight: 700, color: "rgba(0,0,0,0.3)", letterSpacing: "0.3em", marginBottom: isMobile ? "1rem" : "3rem" }}>02 / THE ARCHITECT</motion.div>
             <motion.h2 initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.3 }} style={{ fontSize: "clamp(2.5rem, 8vw, 5.5rem)", fontWeight: 900, lineHeight: 0.9, color: "#000", letterSpacing: "-0.04em", marginBottom: isMobile ? "1.5rem" : "3rem", textTransform: "uppercase" }}>
               Luiz <br /> <span style={{ position: "relative" }}>Felipe{!isMobile && <motion.div initial={{ width: 0 }} whileInView={{ width: "100%" }} transition={{ delay: 0.8, duration: 1.2 }} style={{ position: "absolute", bottom: "10%", left: 0, height: "4px", background: "#000", opacity: 0.1 }} />}</span>
             </motion.h2>
-            <motion.p initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.4 }} style={{ fontSize: isMobile ? "1rem" : "1.25rem", lineHeight: 1.6, color: "#000", opacity: 0.6, maxWidth: "480px", marginBottom: isMobile ? "2rem" : "4rem" }}>Engenheiro Back-end focado na construção de sistemas invisíveis, porém indestrutíveis. Especialista em performance, segurança e escalabilidade de dados.</motion.p>
+            <motion.p initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.4 }} style={{ fontSize: isMobile ? "0.95rem" : "1.1rem", lineHeight: 1.6, color: "#000", opacity: 0.7, maxWidth: "520px", marginBottom: isMobile ? "2rem" : "3rem" }}>
+              A mente lógica por trás de cada estrutura invisível. Desenvolvedor Full-stack com raízes profundas na engenharia Back-end, constrói o alicerce onde o design de alto nível ganha vida.
+            </motion.p>
+            
+            <motion.div initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.5 }} style={{ marginBottom: isMobile ? "2rem" : "4rem" }}>
+              <p style={{ fontSize: "0.95rem", lineHeight: 1.6, color: "#000", opacity: 0.6, marginBottom: "1.5rem" }}>
+                Com expertise sólida em <span style={{ color: "#000", fontWeight: 700 }}>C#/.NET, Python, Java e arquitetura Docker</span>, Luiz transforma regras de negócio complexas em APIs RESTful de extrema velocidade e segurança.
+              </p>
+              <p style={{ fontSize: "0.9rem", fontWeight: 800, color: "#000", opacity: 0.4, letterSpacing: "0.05em" }}>
+                Da pesquisa avançada na Unidade EMBRAPII à execução de mercado, sua precisão garante sistemas escaláveis e indestrutíveis.
+              </p>
+            </motion.div>
             <motion.div initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.5 }} style={{ display: "flex", gap: "2rem", alignItems: "center", flexWrap: "wrap" }}>
               <a href="https://www.linkedin.com/in/luizlfc-dev" target="_blank" className="premium-link">LinkedIn</a>
               <span style={{ opacity: 0.1, color: "#000" }}>/</span>
