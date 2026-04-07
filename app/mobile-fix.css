@@ -479,7 +479,7 @@
 
   /* Spotlight cards */
   .features-v3 .spotlight-card,
-  :global(.spotlight-card) {
+  .spotlight-card {
     padding: 2rem !important;
     border-radius: 24px !important;
     width: 100% !important;
