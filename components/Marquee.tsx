@@ -161,7 +161,7 @@ export function Marquee() {
         </div>
       </motion.div>
 
-      <style jsx>{`
+      <style jsx global>{`
         .marquee-section {
           position: relative;
           z-index: 10;
