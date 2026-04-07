@@ -14,6 +14,7 @@ const links = [
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const ticking = useRef(false);
 
@@ -21,14 +22,27 @@ export function Navbar() {
     if (ticking.current) return;
     ticking.current = true;
     requestAnimationFrame(() => {
-      setScrolled(window.scrollY > 40);
+      const scrollY = window.scrollY;
+      setScrolled(scrollY > 40);
+      
+      // Esconde a navbar no desktop (lg: 1024px) após 800px de scroll
+      if (window.innerWidth >= 1024) {
+        setHidden(scrollY > 800);
+      } else {
+        setHidden(false);
+      }
+      
       ticking.current = false;
     });
   }, []);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleScroll); // Atualiza ao redimensionar
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
   }, [handleScroll]);
 
   // Lock body scroll when drawer is open
@@ -45,7 +59,10 @@ export function Navbar() {
 
   return (
     <>
-      <header role="banner" className={`navbar-header ${scrolled ? "navbar-scrolled" : ""}`}>
+      <header 
+        role="banner" 
+        className={`navbar-header ${scrolled ? "navbar-scrolled" : ""} ${hidden ? "navbar-hidden-desktop" : ""}`}
+      >
         <nav className="container navbar-nav">
           {/* Logo */}
           <Link href="/" className="navbar-logo-link" aria-label="Ir para a página inicial">

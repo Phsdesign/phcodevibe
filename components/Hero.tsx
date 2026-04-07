@@ -75,30 +75,41 @@ export function Hero() {
   }, [ROTATING_WORDS.length]);
 
   return (
-    <section id="hero" className="hero-section" style={{ position: "relative", overflow: isMobile ? "visible" : "hidden", minHeight: "100vh", width: "100%", display: "flex", alignItems: "center" }}>
+    <section id="hero" className="hero-section" style={{ position: "relative", overflow: isMobile ? "visible" : "hidden", minHeight: "100vh", width: "100%", display: "flex", alignItems: "center", background: "#ffffff" }}>
       {/* Background Video Implementation - Only on Desktop */}
       {isDesktop && (
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          style={{
+        <>
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              zIndex: -1,
+              willChange: "transform",
+              transform: "translate3d(0,0,0)",
+              filter: "brightness(1.1) contrast(0.9)", // Clareia o vídeo levemente
+            }}
+          >
+            <source src="/bg-hero-v2.mp4" type="video/mp4" />
+            Seu navegador não suporta vídeos HTML5.
+          </video>
+          {/* Overlay Branco para clarear ainda mais */}
+          <div style={{
             position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            zIndex: -1,
-            willChange: "transform",
-            transform: "translate3d(0,0,0)",
-          }}
-        >
-          <source src="/bg-hero-v2.mp4" type="video/mp4" />
-          Seu navegador não suporta vídeos HTML5.
-        </video>
+            inset: 0,
+            background: "rgba(255, 255, 255, 0.4)",
+            zIndex: 0,
+            pointerEvents: "none"
+          }} />
+        </>
       )}
 
       {/* Content */}
@@ -142,25 +153,24 @@ export function Hero() {
         </div>
 
         {/* Bento preview stats */}
-        <div className="hero-stats-grid" style={{ marginBottom: "2rem" }}>
-          <div className="neu-card hero-reveal hero-stat-tall" style={{ minHeight: "140px", animationDelay: "500ms" }}>
+        <div className="hero-stats-grid" style={{ marginBottom: "2rem", display: "flex", justifyContent: "center", gap: "1rem", flexWrap: "wrap" }}>
+          <div className="neu-card hero-reveal hero-stat-tall" style={{ minHeight: "160px", flex: "1 1 200px", maxWidth: "280px", animationDelay: "500ms", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
             <p ref={projectsCounter.elementRef} className="hero-stat-number">{projectsCounter.count}+</p>
             <p className="hero-stat-label">Projetos Lançados</p>
           </div>
-          <div className="neu-card hero-reveal hero-stat-dark" style={{ minHeight: "100px", animationDelay: "600ms" }}>
+          <div className="neu-card hero-reveal hero-stat-dark" style={{ minHeight: "160px", flex: "1 1 200px", maxWidth: "280px", animationDelay: "600ms", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", background: "#000" }}>
             <p ref={satisfactionCounter.elementRef} className="hero-stat-number" style={{ color: "#fff" }}>{satisfactionCounter.count}%</p>
             <p className="hero-stat-label" style={{ color: "rgba(255,255,255,0.6)" }}>Satisfação</p>
           </div>
-          <div className="neu-card hero-reveal hero-stat-light" style={{ minHeight: "100px", animationDelay: "700ms" }}>
-            <p ref={autoralCounter.elementRef} className="hero-stat-number" style={{ textAlign: "center" }}>{autoralCounter.count}%</p>
+          <div className="neu-card hero-reveal hero-stat-light" style={{ minHeight: "160px", flex: "1 1 200px", maxWidth: "280px", animationDelay: "700ms", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+            <p ref={autoralCounter.elementRef} className="hero-stat-number">{autoralCounter.count}%</p>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.375rem" }}>
               <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#000", display: "inline-block" }} />
-              <p className="hero-stat-label" style={{ textAlign: "center" }}>Design Autoral</p>
+              <p className="hero-stat-label">Design Autoral</p>
             </div>
           </div>
         </div>
       </div>
-
     </section>
   );
 }
