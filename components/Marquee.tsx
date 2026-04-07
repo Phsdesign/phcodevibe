@@ -63,23 +63,9 @@ const benefitTags = [
   "Alta Performance",
 ];
 
-function BenefitTag({ text }: { text: string }) {
+function BenefitTag({ text, delay }: { text: string; delay: number }) {
   return (
-    <span className="benefit-tag" style={{
-      fontSize: "clamp(12px, 1.2vw, 13px)",
-      fontWeight: 500,
-      padding: "10px 22px",
-      borderRadius: "100px",
-      background: "#ffffff",
-      border: "1px solid rgba(0,0,0,0.06)",
-      color: "#4b5563", 
-      boxShadow: "0 2px 10px rgba(0,0,0,0.02)",
-      display: "inline-block",
-      whiteSpace: "nowrap",
-      fontFamily: "var(--font-body)",
-      transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-      cursor: "default"
-    }}>
+    <span className="benefit-tag" style={{ "--delay": `${delay}s` } as React.CSSProperties}>
       {text}
     </span>
   );
@@ -168,40 +154,10 @@ export function Marquee() {
         </div>
 
         {/* Benefit Tags — Layout em Nuvem Estilizado */}
-        <div style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "12px",
-          marginTop: "2rem"
-        }}>
-          {/* Top Row */}
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <BenefitTag text={benefitTags[0]} />
-          </div>
-          
-          {/* Mid-Top Row */}
-          <div style={{ display: "flex", justifyContent: "center", gap: "12px", flexWrap: "wrap" }}>
-            <BenefitTag text={benefitTags[1]} />
-            <BenefitTag text={benefitTags[2]} />
-          </div>
-
-          {/* Center Row */}
-          <div style={{ display: "flex", justifyContent: "center", gap: "12px", flexWrap: "wrap" }}>
-            <BenefitTag text={benefitTags[3]} />
-            <BenefitTag text={benefitTags[4]} />
-          </div>
-
-          {/* Mid-Bottom Row */}
-          <div style={{ display: "flex", justifyContent: "center", gap: "12px", flexWrap: "wrap" }}>
-            <BenefitTag text={benefitTags[5]} />
-            <BenefitTag text={benefitTags[6]} />
-          </div>
-
-          {/* Bottom Row */}
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <BenefitTag text={benefitTags[7]} />
-          </div>
+        <div className="benefit-tags-container">
+          {benefitTags.map((tag, i) => (
+             <BenefitTag key={i} text={tag} delay={i * 0.15} />
+          ))}
         </div>
       </motion.div>
 
@@ -211,15 +167,57 @@ export function Marquee() {
           z-index: 10;
         }
 
-        .benefit-tag:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 10px 20px rgba(0,0,0,0.06) !important;
-          border-color: rgba(0,0,0,0.12) !important;
-          color: #000000 !important;
+        .benefit-tags-container {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          align-items: center;
+          gap: 16px;
+          margin: 2rem auto 0;
+          max-width: 850px;
+        }
+
+        .benefit-tag {
+          font-size: clamp(13px, 1.2vw, 15px);
+          font-weight: 600;
+          padding: 14px 28px;
+          border-radius: 100px;
+          background: linear-gradient(145deg, #ffffff, #f8f9fa);
+          border: 1px solid rgba(0,0,0,0.04);
+          color: #1f2937;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.03), inset 0 0 0 1px rgba(255,255,255,0.8);
+          display: inline-block;
+          white-space: nowrap;
+          font-family: var(--font-body);
+          cursor: default;
+          position: relative;
+          will-change: transform;
+        }
+
+        @keyframes pillFloat {
+          0% { transform: translateY(0px); }
+          50% { transform: translateY(-8px); }
+          100% { transform: translateY(0px); }
         }
 
         /* Hover apenas em dispositivos com mouse real */
         @media (hover: hover) and (pointer: fine) {
+          .benefit-tag {
+            animation: pillFloat 4s ease-in-out infinite;
+            animation-delay: var(--delay);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+          }
+
+          .benefit-tag:hover {
+            animation-play-state: paused;
+            transform: translateY(-4px) scale(1.05) !important;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08), inset 0 0 0 1px rgba(255,255,255,1) !important;
+            border-color: rgba(0,0,0,0.1) !important;
+            color: #000000 !important;
+            background: #ffffff !important;
+            z-index: 2;
+          }
+
           .logo-card {
             transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
                         box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
@@ -243,6 +241,25 @@ export function Marquee() {
             border-radius: 20px !important;
             padding: 1rem !important;
             transition: none !important;
+          }
+          .benefit-tags-container {
+            gap: 10px !important;
+            padding: 0 10px;
+          }
+          .benefit-tag {
+            padding: 10px 18px !important;
+            font-size: 12px !important;
+            border-radius: 50px !important;
+            animation: none !important; /* Sem animação no mobile */
+            transform: none !important;
+            width: calc(50% - 5px); /* Grade perfeita de 2 em 2 no celular */
+            text-align: center;
+            white-space: normal; /* Permite quebrar linha se o texto for muito longo */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 48px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
           }
         }
       `}</style>
