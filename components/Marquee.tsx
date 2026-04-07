@@ -192,10 +192,17 @@ export function Marquee() {
           cursor: default;
           position: relative;
           will-change: transform, opacity;
-          opacity: 0;
-          animation: pillEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-          animation-delay: calc(var(--delay) + 0.3s); /* Atraso base para esperar o painel subir */
+          opacity: 1; /* Garante visibilidade base */
           transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+        }
+
+        /* Animação apenas se não for mobile para evitar bugs de visibilidade */
+        @media (min-width: 769px) {
+          .benefit-tag {
+            opacity: 0;
+            animation: pillEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: calc(var(--delay) + 0.3s);
+          }
         }
 
         @keyframes pillEntrance {
