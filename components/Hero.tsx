@@ -105,7 +105,7 @@ export function Hero() {
       {/* Content */}
       <div className="container hero-reveal-container" style={{ textAlign: "center", position: "relative", zIndex: 1 }}>
         {/* Status Badge */}
-        <div className="animate-on-scroll orbai-badge hidden md:inline-flex" style={{ marginBottom: "2rem" }}>
+        <div className="hero-reveal orbai-badge hidden md:inline-flex" style={{ marginBottom: "2rem" }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2">
             <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z"/>
           </svg>
@@ -114,23 +114,23 @@ export function Hero() {
 
         {/* HERO TITLE */}
         <h1 className="hero-title">
-          <span className="block animate-fade-slide">Design de Elite.</span>
-          <span className="block animate-fade-slide" style={{ animationDelay: "100ms" }}>
+          <span className="block hero-reveal">Design de Elite.</span>
+          <span className="block hero-reveal" style={{ animationDelay: "100ms" }}>
             Marcas
           </span>
-          <span className="block animate-fade-slide" style={{ animationDelay: "200ms" }}>
+          <span className="block hero-reveal" style={{ animationDelay: "200ms" }}>
             <span key={wordIndex} className="inline-block animate-word-rotate hero-rotating-word">
               {ROTATING_WORDS[wordIndex]}
             </span>
           </span>
         </h1>
 
-        <p className="animate-on-scroll hero-subtitle" data-delay="200">
+        <p className="hero-reveal hero-subtitle" style={{ animationDelay: "200ms" }}>
           Criamos identidades digitais de alto luxo e tecnologia para marcas que buscam o topo do mercado.
         </p>
 
         {/* CTAs */}
-        <div className="animate-on-scroll hero-ctas" data-delay="400">
+        <div className="hero-reveal hero-ctas" style={{ animationDelay: "400ms" }}>
           <Link href="#portfolio" className="hero-cta-primary" aria-label="Ver portfólio de projetos">
             Ver Projetos
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -144,15 +144,15 @@ export function Hero() {
 
         {/* Bento preview stats */}
         <div className="hero-stats-grid" style={{ marginBottom: "2rem" }}>
-          <div className="neu-card animate-fade-slide-1 hero-stat-tall" style={{ minHeight: "140px" }}>
+          <div className="neu-card hero-reveal hero-stat-tall" style={{ minHeight: "140px", animationDelay: "500ms" }}>
             <p ref={projectsCounter.elementRef} className="hero-stat-number">{projectsCounter.count}+</p>
             <p className="hero-stat-label">Projetos Lançados</p>
           </div>
-          <div className="neu-card animate-fade-slide-2 hero-stat-dark" style={{ minHeight: "100px" }}>
+          <div className="neu-card hero-reveal hero-stat-dark" style={{ minHeight: "100px", animationDelay: "600ms" }}>
             <p ref={satisfactionCounter.elementRef} className="hero-stat-number" style={{ color: "#fff" }}>{satisfactionCounter.count}%</p>
             <p className="hero-stat-label" style={{ color: "rgba(255,255,255,0.6)" }}>Satisfação</p>
           </div>
-          <div className="neu-card animate-fade-slide-3 hero-stat-light" style={{ minHeight: "100px" }}>
+          <div className="neu-card hero-reveal hero-stat-light" style={{ minHeight: "100px", animationDelay: "700ms" }}>
             <p ref={autoralCounter.elementRef} className="hero-stat-number" style={{ textAlign: "center" }}>{autoralCounter.count}%</p>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.375rem" }}>
               <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#000", display: "inline-block" }} />
