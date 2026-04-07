@@ -566,6 +566,13 @@ section {
     filter: none !important;
     transition-duration: 0.6s !important;
   }
+
+  /* Completely disable initial load animation on Hero for Instant LCP */
+  .hero-reveal {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
   
   .glass, .btn-secondary {
     backdrop-filter: blur(8px) !important;

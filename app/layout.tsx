@@ -44,6 +44,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
+      <head>
+        <link rel="preload" href="/Fonts/Vamu.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
+        <link rel="preload" href="https://fonts.gstatic.com/s/plusjakartasans/v12/LDIbaomQNQcsA88c7O9yZ4KMCoOg4IA6-91aHEjcWuA_Tkn9TR_V.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+      </head>
       <body
         className={`${inter.variable} antialiased selection:bg-blue-500 selection:text-white`}
       >
