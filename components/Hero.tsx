@@ -96,8 +96,7 @@ export function Hero() {
             transform: "translate3d(0,0,0)",
           }}
         >
-          <source src="/bg-hero.webm" type="video/webm" />
-          <source src="/bg-hero.mp4" type="video/mp4" />
+          <source src="/bg-hero-v2.mp4" type="video/mp4" />
           Seu navegador não suporta vídeos HTML5.
         </video>
       )}
