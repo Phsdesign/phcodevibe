@@ -191,22 +191,20 @@ export function Marquee() {
           font-family: var(--font-body);
           cursor: default;
           position: relative;
-          will-change: transform;
+          will-change: transform, opacity;
+          opacity: 0;
+          animation: pillEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation-delay: calc(var(--delay) + 0.3s); /* Atraso base para esperar o painel subir */
+          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
         }
 
-        @keyframes pillFloat {
-          0% { transform: translateY(0px); }
-          50% { transform: translateY(-8px); }
-          100% { transform: translateY(0px); }
+        @keyframes pillEntrance {
+          0% { opacity: 0; transform: translateY(20px) scale(0.95); }
+          100% { opacity: 1; transform: translateY(0px) scale(1); }
         }
 
         /* Hover apenas em dispositivos com mouse real */
         @media (hover: hover) and (pointer: fine) {
-          .benefit-tag {
-            animation: pillFloat 4s ease-in-out infinite;
-            animation-delay: var(--delay);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-          }
 
           .benefit-tag:hover {
             animation-play-state: paused;
