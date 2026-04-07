@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Proposta Comercial — PH Code Vibe | Café na Casquinha</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --font:'Inter',system-ui,sans-serif;
+  --heading:'Outfit',system-ui,sans-serif;
+  --dark:#060504;
+  --card:rgba(255,255,255,0.025);
+  --border:rgba(255,255,255,0.07);
+  --accent:#D4A053;
+  --accent-d:#B8843A;
+  --accent-l:#E8C07A;
+  --white:#ffffff;
+  --muted:rgba(255,255,255,0.5);
+  --dim:rgba(255,255,255,0.25);
+}
+@media print{
+  .page{break-after:page;box-shadow:none!important;margin:0!important;border-radius:0!important}
+  body{background:#000}
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:#111;color:var(--white);overflow-x:hidden;line-height:1.6}
+h1,h2,h3,h4,h5,h6{font-family:var(--heading)}
+
+/* ===== PAGE CONTAINER ===== */
+.page{
+  width:1080px;
+  height:1920px;
+  margin:40px auto;
+  padding:100px 80px 80px 80px;
+  display:flex;
+  flex-direction:column;
+  background:linear-gradient(160deg,#0d0b09 0%,#080604 50%,#0a0806 100%);
+  border-radius:30px;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 32px 64px rgba(0,0,0,0.5);
+  page-break-after:always;
+}
+.page::before{
+  content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+  background:radial-gradient(ellipse at 20% 15%,rgba(212,160,83,0.035),transparent 55%),
+  radial-gradient(ellipse at 80% 85%,rgba(184,132,58,0.02),transparent 45%);
+  pointer-events:none;z-index:0;
+}
+.page > *{position:relative;z-index:1;}
+
+/* ===== HEADER ===== */
+.header-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-bottom:28px;border-bottom:1px solid var(--border);margin-bottom:48px;
+}
+.header-bar .brand{font-family:var(--heading);font-weight:700;font-size:28px}
+.header-bar .brand em{font-style:normal;color:var(--accent)}
+.page-num{font-size:20px;color:var(--dim);letter-spacing:0.1em}
+
+/* ===== FOOTER ===== */
+.footer-bar{
+  margin-top: auto;
+  display:flex;justify-content:space-between;
+  font-size:20px;color:var(--dim);letter-spacing:0.08em;
+  text-transform:uppercase;border-top:1px solid var(--border);padding-top:14px;
+  padding-bottom: 20px;
+  z-index:2;
+}
+
+/* ===== TYPOGRAPHY ===== */
+.badge{
+  display:inline-flex;align-items:center;gap:12px;
+  font-size:20px;text-transform:uppercase;letter-spacing:0.2em;
+  font-weight:700;color:var(--accent);margin-bottom:8px;
+}
+.badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.grad{
+  background:linear-gradient(135deg,var(--accent-l),var(--accent));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.section-title{font-size:3.6rem;font-weight:800;margin-bottom:44px;line-height:1.15}
+
+/* ===== CARDS ===== */
+.glass{
+  background:var(--card);backdrop-filter:blur(16px);
+  border:1px solid var(--border);border-radius:24px;padding:44px;
+}
+.service-card{
+  padding:32px 40px;border-radius:24px;
+  border:1px solid var(--border);background:var(--card);
+  position:relative;overflow:hidden;
+}
+.service-card::before{
+  content:'';position:absolute;top:0;left:0;width:4px;height:100%;
+  background:linear-gradient(to bottom,var(--accent-l),var(--accent-d));border-radius:0 4px 4px 0;
+}
+.service-card h4{font-family:var(--heading);font-size:1.8rem;font-weight:700;margin-bottom:4px}
+.service-card p{font-size:24px;color:var(--muted);line-height:1.5}
+
+/* ===== LISTS ===== */
+.check-list{list-style:none}
+.check-list li{
+  padding:10px 0;font-size:26px;color:var(--muted);
+  display:flex;align-items:flex-start;gap:16px;line-height:1.35;
+}
+.check-list li::before{content:'✓';color:var(--accent);font-weight:800;font-size:26px;margin-top:1px}
+
+/* ===== TAGS ===== */
+.tag{
+  display:inline-block;padding:6px 20px;border-radius:999px;
+  font-size:18px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;
+}
+.tag-gold{background:rgba(212,160,83,0.12);color:var(--accent-l);border:1px solid rgba(212,160,83,0.25)}
+.tag-green{background:rgba(34,197,94,0.08);color:#4ADE80;border:1px solid rgba(34,197,94,0.15)}
+.tag-red{background:rgba(239,68,68,0.08);color:#F87171;border:1px solid rgba(239,68,68,0.15)}
+
+/* ===== TABLE ===== */
+.invest-table{width:100%;border-collapse:collapse;font-size:26px}
+.invest-table th{
+  text-align:left;font-size:19px;text-transform:uppercase;
+  letter-spacing:0.1em;color:var(--dim);padding:20px 28px;border-bottom:1px solid var(--border);
+}
+.invest-table td{padding:22px 28px;border-bottom:1px solid var(--border)}
+.invest-table tr:last-child td{border-bottom:none}
+.invest-table .val{text-align:right;font-family:var(--heading);font-weight:700;color:var(--accent-l)}
+
+/* ===== MISC ===== */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.step-number{font-family:var(--heading);font-weight:800;font-size:2.6rem;color:var(--accent);min-width:52px}
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:24px 0}
+
+.cta-box{
+  padding:64px;border-radius:32px;
+  background:linear-gradient(135deg,rgba(212,160,83,0.07),rgba(184,132,58,0.03));
+  border:1px solid rgba(212,160,83,0.18);text-align:center;
+}
+.cta-btn{
+  display:inline-flex;align-items:center;gap:16px;
+  padding:28px 60px;background:linear-gradient(135deg,var(--accent),var(--accent-d));
+  border-radius:999px;font-size:28px;font-weight:700;
+  text-transform:uppercase;letter-spacing:0.08em;color:#fff;
+}
+
+.discount-badge{
+  display:inline-block;background:linear-gradient(135deg,#22C55E,#16A34A);
+  color:#fff;padding:8px 24px;border-radius:999px;
+  font-size:20px;font-weight:800;letter-spacing:0.05em;
+}
+
+.alert-item{
+  display:flex;gap:16px;align-items:flex-start;
+  padding:20px 28px;border-radius:16px;margin-bottom:14px;
+}
+.alert-item:last-child{margin-bottom:0}
+.alert-bad{background:rgba(239,68,68,0.04);border:1px solid rgba(239,68,68,0.1)}
+.alert-good{background:rgba(34,197,94,0.04);border:1px solid rgba(34,197,94,0.1)}
+.alert-item .icon{font-size:24px;min-width:32px;text-align:center;line-height:1.6}
+.alert-item strong{font-size:24px;display:block;margin-bottom:2px}
+.alert-item p{font-size:21px;color:var(--muted);line-height:1.45;margin:0}
+
+.trend-row{
+  display:flex;gap:16px;align-items:flex-start;
+  padding:18px 0;border-bottom:1px solid var(--border);
+}
+.trend-row:last-child{border-bottom:none}
+.trend-row .icon{font-size:28px;min-width:40px;text-align:center}
+.trend-row strong{font-size:24px;color:#fff;display:block;margin-bottom:2px}
+.trend-row p{font-size:21px;color:var(--muted);line-height:1.45;margin:0}
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- PÁGINA 01 — CAPA                                             -->
+<!-- ============================================================ -->
+<div class="page" style="justify-content:center;align-items:center;text-align:center">
+
+  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:10px;padding:0 20px">
+
+    <!-- Logo icon -->
+    <div style="width:160px;height:160px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-d));display:flex;align-items:center;justify-content:center;margin-bottom:32px;box-shadow:0 0 80px rgba(212,160,83,0.15)">
+      <span style="font-size:72px">☕</span>
+    </div>
+
+    <!-- Label -->
+    <div class="badge" style="justify-content:center"><span class="dot"></span>Proposta Comercial</div>
+
+    <!-- Title -->
+    <h1 style="font-size:4.8rem;font-weight:800;line-height:1.1;letter-spacing:-0.03em;margin-bottom:28px">
+      Transformação<br>Visual para<br><span class="grad">@cafecasq</span>
+    </h1>
+
+    <!-- Subtitle -->
+    <p style="font-size:30px;color:var(--muted);max-width:740px;margin:0 auto 48px;line-height:1.6">
+      Design humanizado para redes sociais, produção de fotos & vídeos, motion para telão e cardápio profissional para o <strong style="color:var(--accent-l)">Café na Casquinha</strong>.
+    </p>
+
+    <!-- Separator -->
+    <div style="width:60px;height:3px;background:var(--accent);border-radius:2px;margin-bottom:48px"></div>
+
+    <!-- Author -->
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <span style="font-size:20px;color:var(--dim);text-transform:uppercase;letter-spacing:0.25em">Preparado por</span>
+      <span style="font-family:var(--heading);font-weight:700;font-size:36px">PH Code <span class="grad">Vibe</span></span>
+    </div>
+
+    <!-- Date -->
+    <div style="display:flex;gap:24px;justify-content:center;font-size:22px;color:var(--dim);text-transform:uppercase;letter-spacing:0.15em;margin-top:20px">
+      <span>Abril 2026</span>
+      <span>•</span>
+      <span>Versão 1.0</span>
+    </div>
+  </div>
+
+  <div class="footer-bar">
+    <span>PH Code Vibe — Creative Studio</span>
+    <span>Página 01 / 09</span>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PÁGINA 02 — DIAGNÓSTICO DO PERFIL                            -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="header-bar">
+    <div class="brand">PH Code <em>Vibe</em></div>
+    <div class="page-num">02 / 09</div>
+  </div>
+
+  <div class="badge"><span class="dot"></span>01. Diagnóstico</div>
+  <h2 class="section-title">Análise do<br><span class="grad">@cafecasq</span></h2>
+
+  <!-- Métricas -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:32px">
+    <div style="text-align:center;padding:22px 12px;border-radius:20px;background:rgba(212,160,83,0.05);border:1px solid rgba(212,160,83,0.1)">
+      <div style="font-family:var(--heading);font-size:2.4rem;font-weight:800;color:var(--accent-l)">35</div>
+      <div style="font-size:18px;color:var(--dim);margin-top:2px">Posts</div>
+    </div>
+    <div style="text-align:center;padding:22px 12px;border-radius:20px;background:rgba(212,160,83,0.05);border:1px solid rgba(212,160,83,0.1)">
+      <div style="font-family:var(--heading);font-size:2.4rem;font-weight:800;color:var(--accent-l)">6.4K</div>
+      <div style="font-size:18px;color:var(--dim);margin-top:2px">Seguidores</div>
+    </div>
+    <div style="text-align:center;padding:22px 12px;border-radius:20px;background:rgba(212,160,83,0.05);border:1px solid rgba(212,160,83,0.1)">
+      <div style="font-family:var(--heading);font-size:2.4rem;font-weight:800;color:var(--accent-l)">16</div>
+      <div style="font-size:18px;color:var(--dim);margin-top:2px">Seguindo</div>
+    </div>
+  </div>
+
+  <!-- Bio -->
+  <div class="glass" style="padding:28px 36px;margin-bottom:32px">
+    <p style="font-size:22px;color:var(--muted);line-height:1.5">
+      <strong style="color:#fff">"Preparados para uma experiência crocante?"</strong><br>
+      Cafeteria & Sorveteria · Seg a Sáb 7:30–20h · Dom 14–20h<br>
+      Frapês, brownies, milkshakes, croissants, waffles, pastéis, açaí, donuts e mais.
+    </p>
+  </div>
+
+  <!-- Pontos -->
+  <h4 style="font-size:1.5rem;font-weight:700;margin-bottom:14px">Pontos Identificados</h4>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div class="alert-item alert-bad">
+      <div class="icon">⚠️</div>
+      <div><strong>Design sem padrão visual</strong><p>Publicações variam de estilo sem identidade única. Precisamos de consistência.</p></div>
+    </div>
+    <div class="alert-item alert-bad">
+      <div class="icon">⚠️</div>
+      <div><strong>Pouco conteúdo humanizado</strong><p>Faltam fotos com pessoas interagindo. A equipe precisa aparecer de forma natural.</p></div>
+    </div>
+    <div class="alert-item alert-bad">
+      <div class="icon">⚠️</div>
+      <div><strong>Poucos vídeos / Reels</strong><p>Reels de preparo e bastidores são essenciais para alcance orgânico hoje.</p></div>
+    </div>
+    <div class="alert-item alert-good">
+      <div class="icon">✅</div>
+      <div><strong>Produtos com alto potencial visual</strong><p>Frapês e waffles são excelente matéria-prima para conteúdo "food porn".</p></div>
+    </div>
+    <div class="alert-item alert-good">
+      <div class="icon">✅</div>
+      <div><strong>Já possui presença da equipe</strong><p>Já existe abertura para humanização, só precisa ser mais frequente.</p></div>
+    </div>
+  </div>
+
+  <div class="footer-bar"><span>Proposta — Café na Casquinha</span><span>Página 02 / 09</span></div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PÁGINA 03 — CONCORRÊNCIA & TRENDS                            -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="header-bar">
+    <div class="brand">PH Code <em>Vibe</em></div>
+    <div class="page-num">03 / 09</div>
+  </div>
+
+  <div class="badge"><span class="dot"></span>02. Análise de Mercado</div>
+  <h2 class="section-title">Concorrência &<br><span class="grad">Tendências</span></h2>
+
+  <!-- Concorrente -->
+  <div style="padding:32px 40px;border-radius:24px;border:1px solid rgba(239,68,68,0.12);background:rgba(239,68,68,0.025);margin-bottom:32px">
+    <div style="display:flex;align-items:center;gap:18px;margin-bottom:18px">
+      <div style="width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#EF4444,#DC2626);display:flex;align-items:center;justify-content:center">
+        <span style="font-size:24px">🍦</span>
+      </div>
+      <div>
+        <h4 style="font-size:1.7rem;font-weight:800;color:#F87171">Chiquinho Sorvetes</h4>
+        <span class="tag tag-red" style="font-size:14px;padding:4px 14px">Referência</span>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:18px">
+      <div style="text-align:center;padding:12px;border-radius:14px;background:rgba(239,68,68,0.05)">
+        <div style="font-family:var(--heading);font-size:1.8rem;font-weight:800;color:#F87171">1.000+</div>
+        <div style="font-size:16px;color:var(--dim)">Unidades</div>
+      </div>
+      <div style="text-align:center;padding:12px;border-radius:14px;background:rgba(239,68,68,0.05)">
+        <div style="font-family:var(--heading);font-size:1.8rem;font-weight:800;color:#F87171">45+</div>
+        <div style="font-size:16px;color:var(--dim)">Anos</div>
+      </div>
+      <div style="text-align:center;padding:12px;border-radius:14px;background:rgba(239,68,68,0.05)">
+        <div style="font-family:var(--heading);font-size:1.8rem;font-weight:800;color:#F87171">1M+</div>
+        <div style="font-size:16px;color:var(--dim)">Followers</div>
+      </div>
+    </div>
+
+    <p style="font-size:21px;color:var(--muted);line-height:1.5">
+      Identidade visual rígida, Reels de preparo, conteúdo com colaboradores e Digital Signage nos telões.
+    </p>
+  </div>
+
+  <!-- Trends -->
+  <h4 style="font-size:1.5rem;font-weight:700;margin-bottom:14px">🔥 Tendências — 2026</h4>
+
+  <div class="glass" style="padding:22px 36px">
+    <div class="trend-row">
+      <div class="icon">📸</div>
+      <div><strong>Fotos humanizadas</strong><p>Mãos segurando produto e pessoas provando gera conexão real.</p></div>
+    </div>
+    <div class="trend-row">
+      <div class="icon">🎬</div>
+      <div><strong>ASMR food (Reels)</strong><p>Som do preparo e calda escorrendo — formato de alto alcance.</p></div>
+    </div>
+    <div class="trend-row">
+      <div class="icon">🎨</div>
+      <div><strong>Design Editorial</strong><p>Estilo revista: foto real + tipografia forte para ar premium.</p></div>
+    </div>
+    <div class="trend-row">
+      <div class="icon">📺</div>
+      <div><strong>Motion em Telões</strong><p>Cardápio animado no ponto de venda para imersão total.</p></div>
+    </div>
+    <div class="trend-row">
+      <div class="icon">📝</div>
+      <div><strong>Copy com Alma</strong><p>Legendas que contam histórias e criam desejo real.</p></div>
+    </div>
+  </div>
+
+  <div class="footer-bar"><span>Proposta — Café na Casquinha</span><span>Página 03 / 09</span></div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PÁGINA 04 — PACOTE MENSAL (PARTE 1)                          -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="header-bar">
+    <div class="brand">PH Code <em>Vibe</em></div>
+    <div class="page-num">04 / 09</div>
+  </div>
+
+  <div class="badge"><span class="dot"></span>03. Pacote Mensal</div>
+  <h2 class="section-title">Conteúdo &<br><span class="grad">Produção</span></h2>
+
+  <p style="font-size:27px;color:var(--muted);margin-bottom:40px;line-height:1.6">
+    Parte 1: Produção de conteúdo visual profissional entregue todos os meses:
+  </p>
+
+  <div style="display:flex;flex-direction:column;gap:24px">
+
+    <div class="service-card">
+      <h4>📸 Sessão de Fotos Presencial</h4>
+      <p>Visita mensal <strong style="color:#fff">1x por mês</strong> para fotografar produtos com estilo humanizado (mãos, texturas, ângulos food porn).</p>
+    </div>
+
+    <div class="service-card">
+      <h4>🎥 Filmagem & Produção de Reels</h4>
+      <p>Captação e edição de <strong style="color:#fff">4 a 6 Reels por mês</strong> focados em preparo, montagem e bastidores da loja.</p>
+    </div>
+
+    <div class="service-card">
+      <h4>🎨 Design dos Posts para Feed</h4>
+      <p>Criação de <strong style="color:#fff">12 a 16 artes mensais</strong> com identidade visual padronizada e estilo premium editorial.</p>
+    </div>
+
+  </div>
+
+  <div class="footer-bar"><span>Proposta — Café na Casquinha</span><span>Página 04 / 09</span></div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PÁGINA 05 — PACOTE MENSAL (PARTE 2)                          -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="header-bar">
+    <div class="brand">PH Code <em>Vibe</em></div>
+    <div class="page-num">05 / 09</div>
+  </div>
+
+  <div class="badge"><span class="dot"></span>03. Pacote Mensal (Cont.)</div>
+  <h2 class="section-title">Estratégia &<br><span class="grad">Escrita</span></h2>
+
+  <p style="font-size:27px;color:var(--muted);margin-bottom:40px;line-height:1.4">
+    Parte 2: Engajamento e conexão estratégica com o público:
+  </p>
+
+  <div style="display:flex;flex-direction:column;gap:24px;margin-bottom:40px">
+
+    <div class="service-card">
+      <h4>📱 Stories com Design</h4>
+      <p>Criação de <strong style="color:#fff">8 a 12 stories estratégicos</strong> por mês (promoções, novidades e interações reais).</p>
+    </div>
+
+    <div class="service-card">
+      <h4>📝 Textos (Copywriting)</h4>
+      <p>Escrita de legendas com <strong style="color:#fff">personalidade e tom humanizado</strong>, focadas em criar desejo e converter seguidores.</p>
+    </div>
+
+  </div>
+
+  <div class="glass" style="padding:32px 40px">
+    <h4 style="font-size:1.6rem;font-weight:700;margin-bottom:12px">📌 Objetivo nos primeiros 90 dias</h4>
+    <p style="font-size:24px;color:var(--muted);line-height:1.5">
+      Construir uma <strong style="color:#fff">identidade visual forte</strong> que dê ao Café na Casquinha autoridade de franquia profissional.
+    </p>
+  </div>
+
+  <div class="footer-bar"><span>Proposta — Café na Casquinha</span><span>Página 05 / 09</span></div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PÁGINA 06 — SERVIÇOS AVULSOS                                 -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="header-bar">
+    <div class="brand">PH Code <em>Vibe</em></div>
+    <div class="page-num">06 / 09</div>
+  </div>
+
+  <div class="badge"><span class="dot"></span>04. Serviços Avulsos</div>
+  <h2 class="section-title">Vídeo Motion &<br><span class="grad">Cardápio</span></h2>
+
+  <p style="font-size:27px;color:var(--muted);margin-bottom:40px;line-height:1.6">
+    Melhoria da experiência física e ponto de venda (Pagamento Único):
+  </p>
+
+  <div class="glass" style="margin-bottom:28px;padding:32px 40px">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px">
+      <span style="font-size:34px">📺</span>
+      <h4 style="font-size:1.8rem;font-weight:700">Vídeo Motion para o Telão</h4>
+    </div>
+    <p style="font-size:23px;color:var(--muted);line-height:1.5;margin-bottom:16px">
+      Animação profissional em loop com fotos, preços e promoções.
+    </p>
+    <ul class="check-list" style="font-size:22px">
+      <li>Roteiro visual e design de todas as telas</li>
+      <li>Animações de transição suaves</li>
+      <li>Formato ideal para TV/Telão</li>
+    </ul>
+  </div>
+
+  <div class="glass" style="padding:32px 40px">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px">
+      <span style="font-size:34px">📋</span>
+      <h4 style="font-size:1.8rem;font-weight:700">Design do Cardápio</h4>
+    </div>
+    <p style="font-size:23px;color:var(--muted);line-height:1.5;margin-bottom:16px">
+      Layout profissional organizado por categorias com fotos reais.
+    </p>
+    <p style="font-size:21px;color:var(--dim);line-height:1.4">
+      Cobrado à parte devido à necessidade de refação completa ao mudar preços ou adicionar itens ao menu.
+    </p>
+  </div>
+
+  <div class="footer-bar"><span>Proposta — Café na Casquinha</span><span>Página 06 / 09</span></div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PÁGINA 07 — VALORES DE MERCADO                               -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="header-bar">
+    <div class="brand">PH Code <em>Vibe</em></div>
+    <div class="page-num">07 / 09</div>
+  </div>
+
+  <div class="badge"><span class="dot"></span>05. Referência</div>
+  <h2 class="section-title">Valores de<br><span class="grad">Mercado</span></h2>
+
+  <div class="glass" style="padding:36px 40px;margin-bottom:36px">
+    <table class="invest-table">
+      <thead>
+        <tr><th>Serviço</th><th style="text-align:right">Ref. Mercado</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Pacote Mensal</strong><br><span style="font-size:18px;color:var(--dim)">Design + foto + vídeo</span></td>
+          <td class="val">R$ 2.500+</td>
+        </tr>
+        <tr>
+          <td><strong>Motion Telão</strong><br><span style="font-size:18px;color:var(--dim)">Pagamento único</span></td>
+          <td class="val">R$ 2.000+</td>
+        </tr>
+        <tr>
+          <td><strong>Design Cardápio</strong><br><span style="font-size:18px;color:var(--dim)">Pagamento único</span></td>
+          <td class="val">R$ 800+</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="glass" style="padding:36px 40px">
+    <h4 style="font-size:1.5rem;font-weight:700;margin-bottom:16px">📊 Visão de Futuro</h4>
+    <p style="font-size:24px;color:var(--muted);line-height:1.6">
+      Para crescer e franquear o Café na Casquinha, o investimento em imagem deve acompanhar a qualidade do produto desde o início.
+    </p>
+  </div>
+
+  <div class="footer-bar"><span>Proposta — Café na Casquinha</span><span>Página 07 / 09</span></div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PÁGINA 08 — INVESTIMENTO                                     -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="header-bar">
+    <div class="brand">PH Code <em>Vibe</em></div>
+    <div class="page-num">08 / 09</div>
+  </div>
+
+  <div class="badge"><span class="dot"></span>06. Investimento</div>
+  <h2 class="section-title">Quanto Você<br><span class="grad">Investe</span></h2>
+
+  <div class="glass" style="margin-bottom:24px;padding:36px 44px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <h4 style="font-size:1.7rem;font-weight:700">📦 Pacote Mensal</h4>
+      <span class="discount-badge">-50% OFF</span>
+    </div>
+    <div style="display:flex;align-items:baseline;gap:16px">
+      <span style="font-family:var(--heading);font-size:1.6rem;color:var(--dim);text-decoration:line-through">R$ 3.000</span>
+      <span style="font-family:var(--heading);font-size:3.2rem;font-weight:800;color:var(--accent-l)">R$ 1.500<small style="font-size:20px">/mês</small></span>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:24px">
+    <div class="glass" style="padding:28px 32px">
+      <h4 style="font-size:1.3rem;font-weight:700;margin-bottom:6px">Vídeo Motion</h4>
+      <div style="font-family:var(--heading);font-size:2.2rem;font-weight:800;color:var(--accent-l)">R$ 1.500</div>
+      <span style="font-size:18px;color:var(--dim)">Único</span>
+    </div>
+    <div class="glass" style="padding:28px 32px">
+      <h4 style="font-size:1.3rem;font-weight:700;margin-bottom:6px">Cardápio</h4>
+      <div style="font-family:var(--heading);font-size:2.2rem;font-weight:800;color:var(--accent-l)">R$ 700</div>
+      <span style="font-size:18px;color:var(--dim)">Único</span>
+    </div>
+  </div>
+
+  <div style="padding:32px 40px;border-radius:24px;background:rgba(212,160,83,0.04);border:1px solid rgba(212,160,83,0.15)">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;text-align:center">
+      <div>
+        <div style="font-size:18px;color:var(--dim)">1º Mês Total</div>
+        <div style="font-family:var(--heading);font-size:2.6rem;font-weight:800;color:var(--accent-l)">R$ 3.700</div>
+      </div>
+      <div>
+        <div style="font-size:18px;color:var(--dim)">Meses Seguintes</div>
+        <div style="font-family:var(--heading);font-size:2.6rem;font-weight:800;color:var(--accent-l)">R$ 1.500</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bar"><span>Proposta — Café na Casquinha</span><span>Página 08 / 09</span></div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PÁGINA 09 — CTA / CONTATO                                    -->
+<!-- ============================================================ -->
+<div class="page" style="justify-content:center;align-items:center;text-align:center">
+
+  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:10px;padding:0 20px">
+    <div class="badge" style="justify-content:center"><span class="dot"></span>Próximos Passos</div>
+    <h2 style="font-size:3.8rem;font-weight:800;margin-bottom:24px;line-height:1.15">Vamos Começar?</h2>
+    <div class="cta-box" style="max-width:780px;width:100%;margin-bottom:48px">
+      <h3 style="font-family:var(--heading);font-weight:800;font-size:2.4rem">Aceitar Proposta</h3>
+      <div class="cta-btn" style="margin-top:30px">📩 Entrar em Contato</div>
+    </div>
+    <div style="display:flex;gap:40px;font-size:22px;color:var(--muted);margin-bottom:20px">
+      <div>📱 WhatsApp</div>
+      <div>🌐 Instagram</div>
+    </div>
+    <span style="font-family:var(--heading);font-weight:700;font-size:32px">PH Code <span class="grad">Vibe</span></span>
+  </div>
+
+  <div class="footer-bar"><span>PH Code Vibe — Creative Studio</span><span>Página 09 / 09</span></div>
+</div>
+
+</body>
+</html>

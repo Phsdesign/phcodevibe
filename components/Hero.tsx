@@ -68,8 +68,6 @@ export function Hero() {
   }, []);
 
   useEffect(() => {
-    if (typeof window !== "undefined" && window.innerWidth < 768) return; // Prevent LCP invalidation by DOM destruction on mobile
-
     const interval = setInterval(() => {
       setWordIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
     }, 2500);
@@ -121,7 +119,7 @@ export function Hero() {
             Marcas
           </span>
           <span className="block hero-reveal" style={{ animationDelay: "200ms" }}>
-            <span key={wordIndex} className="inline-block animate-word-rotate hero-rotating-word">
+            <span className="inline-block animate-word-rotate hero-rotating-word">
               {ROTATING_WORDS[wordIndex]}
             </span>
           </span>

@@ -122,11 +122,6 @@
     will-change: auto !important;
   }
 
-  /* ── 8. HERO SPECIFIC ── */
-  .hero-rotating-word {
-    animation-iteration-count: 1 !important;
-  }
-
   /* ── 9. TEAM PHOTOS — Coloridas no mobile ── */
   .member-photo-inner {
     filter: grayscale(0) !important;
