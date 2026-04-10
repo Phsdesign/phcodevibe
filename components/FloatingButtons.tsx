@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import DarkModeToggle from "./DarkModeToggle";
 
 export function FloatingButtons() {
   const scrollToTop = () => {
@@ -11,6 +12,7 @@ export function FloatingButtons() {
 
   return (
     <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-50">
+      <DarkModeToggle />
       {/* Scroll to Top Button */}
       <button
         onClick={scrollToTop}

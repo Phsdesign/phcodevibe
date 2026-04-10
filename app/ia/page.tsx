@@ -52,7 +52,7 @@ export default function AIAutomation() {
                   fontWeight: 800, 
                   letterSpacing: "-0.06em", 
                   lineHeight: 0.9, 
-                  color: "#0e1c29", 
+                  color: "var(--text-primary)", 
                   marginBottom: "2.5rem" 
                 }}
               >
@@ -106,7 +106,7 @@ export default function AIAutomation() {
                 style={{ 
                   width: "100%", 
                   aspectRatio: "1", 
-                  background: "#ffffff", 
+                  background: "var(--bg)", 
                   borderRadius: "40px", 
                   border: "1px solid rgba(0,0,0,0.04)", 
                   boxShadow: "0 40px 100px -20px rgba(0,0,0,0.06)",
@@ -128,7 +128,7 @@ export default function AIAutomation() {
                     zIndex: 1
                   }}
                 >
-                  <pre style={{ fontSize: "0.75rem", color: "#000", fontFamily: "monospace", opacity: 0.6 }}>
+                  <pre style={{ fontSize: "0.75rem", color: "var(--text-primary)", fontFamily: "monospace", opacity: 0.6 }}>
                     {`{
   "system": "ORBAI",
   "status": "scaling",

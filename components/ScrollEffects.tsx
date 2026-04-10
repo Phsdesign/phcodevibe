@@ -21,9 +21,19 @@ export function ScrollEffects() {
           const progress = Math.min(Math.max(window.scrollY / scrollHeight, 0), 1);
 
           const root = document.documentElement;
+          // IMPORTANT: Se o modo escuro estiver ativado, pare o override do scroll!
+          if (root.classList.contains('dark')) {
+            document.body.style.backgroundColor = '';
+            root.style.removeProperty('--text-primary');
+            root.style.removeProperty('--text-secondary');
+            lastBg.current = '';
+            ticking.current = false;
+            return;
+          }
+
           root.style.setProperty("--scroll-progress", progress.toString());
 
-          // Background Transition (White to Black)
+          // Background Transition (White to Black) - Only if NOT in dark mode
           const easeProgress = Math.pow(progress, 1.5);
           const colorValue = Math.floor(255 * (1 - easeProgress));
           const newBg = `rgb(${colorValue},${colorValue},${colorValue})`;
@@ -32,14 +42,6 @@ export function ScrollEffects() {
           if (newBg !== lastBg.current) {
             document.body.style.backgroundColor = newBg;
             lastBg.current = newBg;
-          }
-
-          if (progress > 0.6) {
-            root.style.setProperty("--text-primary", "#ffffff");
-            root.style.setProperty("--text-secondary", "rgba(255, 255, 255, 0.7)");
-          } else {
-            root.style.setProperty("--text-primary", "#0e1c29");
-            root.style.setProperty("--text-secondary", "rgba(0, 0, 0, 0.6)");
           }
 
           ticking.current = false;

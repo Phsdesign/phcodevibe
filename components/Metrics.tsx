@@ -9,28 +9,28 @@ const valuePillars = [
     title: "Autoridade Visual Absoluta",
     desc: "Não é apenas 'bonito'. É design que impõe respeito no primeiro segundo. Transformamos sua presença digital em uma declaração de poder que separa sua marca do resto do ruído.",
     details: ["Design UI/UX de Elite", "Motion Design Cinematográfico", "Identidade Visual de Impacto"],
-    color: "#0e1c29"
+    color: "var(--text-primary)"
   },
   {
     id: "02",
     title: "Engenharia de Performance",
     desc: "Sites que carregam antes do usuário piscar. Utilizamos infraestrutura global e código limpo para garantir que seu negócio nunca perca uma venda por lentidão ou instabilidade.",
     details: ["Deploy Global (Vercel/Cloudflare)", "Otimização Core Web Vitals", "Código Nativo de Alta Performance"],
-    color: "#0e1c29"
+    color: "var(--text-primary)"
   },
   {
     id: "03",
     title: "Conversão Estratégica",
     desc: "Cada pixel tem uma função: vender. Aplicamos psicologia do usuário e fluxos de navegação otimizados para transformar visitantes em clientes fiéis de forma orgânica.",
     details: ["Copywriting Persuasivo", "Funis de Vendas Integrados", "Análise de Dados e Heatmaps"],
-    color: "#0e1c29"
+    color: "var(--text-primary)"
   },
   {
     id: "04",
     title: "Ecossistema Inteligente",
     desc: "Integramos IA e automações que trabalham para você 24/7. Seu site deixa de ser um cartão de visitas e passa a ser uma máquina de eficiência operacional.",
     details: ["Automações com IA", "Integrações de Sistemas", "Escalabilidade Sem Limites"],
-    color: "#0e1c29"
+    color: "var(--text-primary)"
   }
 ];
 
@@ -46,7 +46,7 @@ export function Metrics() {
   }, []);
 
   return (
-    <section id="metricas" style={{ padding: isDesktop ? "120px 0" : "80px 0", background: "#ffffff", overflow: "hidden" }}>
+    <section id="metricas" style={{ padding: isDesktop ? "120px 0" : "80px 0", background: "var(--bg)", overflow: "hidden" }}>
       <div className="container" style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 20px" }}>
         
         {/* Header Estratégico */}
@@ -54,7 +54,8 @@ export function Metrics() {
           <div style={{
             fontSize: "14px",
             fontWeight: 700,
-            color: "#666",
+            color: "var(--text-secondary)",
+            opacity: 0.6,
             letterSpacing: "0.2em",
             textTransform: "uppercase",
             marginBottom: "1.5rem"
@@ -64,15 +65,15 @@ export function Metrics() {
           <h2 style={{
             fontSize: "clamp(2rem, 6vw, 4.5rem)",
             fontWeight: 800,
-            color: "#0e1c29",
+            color: "var(--text-primary)",
             letterSpacing: "-0.05em",
             lineHeight: 1,
             marginBottom: "2rem"
           }}>
             Onde o valor real <br /> 
-            <span style={{ color: "rgba(14, 28, 41, 0.15)" }}>encontra o código.</span>
+            <span style={{ color: "var(--border-color)" }}>encontra o código.</span>
           </h2>
-          <p style={{ fontSize: isDesktop ? "1.25rem" : "1.1rem", color: "#666", lineHeight: 1.6, maxWidth: "600px" }}>
+          <p style={{ fontSize: isDesktop ? "1.25rem" : "1.1rem", color: "var(--text-secondary)", opacity: 0.8, lineHeight: 1.6, maxWidth: "600px" }}>
             Métricas são importantes, mas autoridade e escala são o que definem o jogo. Nosso método foca em 4 pilares fundamentais.
           </p>
         </div>
@@ -91,8 +92,8 @@ export function Metrics() {
               style={{
                 position: "relative",
                 padding: isDesktop ? "60px 0" : "40px 0",
-                borderTop: "1px solid rgba(0,0,0,0.06)",
-                borderBottom: index === valuePillars.length - 1 ? "1px solid rgba(0,0,0,0.06)" : "none",
+                borderTop: "1px solid var(--border-color)",
+                borderBottom: index === valuePillars.length - 1 ? "1px solid var(--border-color)" : "none",
                 cursor: "pointer",
                 transition: "all 0.4s ease"
               }}
@@ -109,7 +110,7 @@ export function Metrics() {
                 <div style={{
                   fontSize: isDesktop ? "1.5rem" : "1.2rem",
                   fontWeight: 800,
-                  color: (hoveredIndex === index || !isDesktop) ? "#0e1c29" : "rgba(0,0,0,0.1)",
+                  color: (hoveredIndex === index || !isDesktop) ? "var(--text-primary)" : "var(--border-color)",
                   transition: "color 0.4s ease",
                   fontFamily: "monospace",
                   marginBottom: isDesktop ? 0 : "0.5rem"
@@ -122,7 +123,7 @@ export function Metrics() {
                   <h3 style={{
                     fontSize: isDesktop ? "clamp(1.5rem, 3vw, 2.5rem)" : "1.75rem",
                     fontWeight: 800,
-                    color: "#0e1c29",
+                    color: "var(--text-primary)",
                     marginBottom: "1rem",
                     letterSpacing: "-0.02em"
                   }}>
@@ -130,7 +131,8 @@ export function Metrics() {
                   </h3>
                   <p style={{
                     fontSize: "1.1rem",
-                    color: "#666",
+                    color: "var(--text-secondary)",
+                    opacity: 0.7,
                     lineHeight: 1.6,
                     maxWidth: "600px",
                     marginBottom: isDesktop ? 0 : "1.5rem"
@@ -154,11 +156,11 @@ export function Metrics() {
                     <div key={dIndex} style={{
                       fontSize: "10px",
                       fontWeight: 700,
-                      color: "#0e1c29",
-                      background: "#f8f9fa",
+                      color: "var(--text-primary)",
+                      background: "var(--bg-secondary)",
                       padding: "6px 12px",
                       borderRadius: "100px",
-                      border: "1px solid rgba(0,0,0,0.05)",
+                      border: "1px solid var(--border-color)",
                       alignSelf: "flex-start",
                       letterSpacing: "0.05em"
                     }}>
@@ -179,7 +181,7 @@ export function Metrics() {
                   bottom: 0,
                   left: 0,
                   right: 0,
-                  background: "linear-gradient(to top, #f8f9fa 0%, transparent 100%)",
+                  background: "linear-gradient(to top, var(--bg-secondary) 0%, transparent 100%)",
                   zIndex: 1,
                   pointerEvents: "none"
                 }}

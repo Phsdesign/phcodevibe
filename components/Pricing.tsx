@@ -91,7 +91,7 @@ export function Pricing() {
   }, []);
 
   return (
-    <section id="precos" style={{ padding: "10rem 0", width: "100%", background: "#ffffff", overflow: isMobile ? "visible" : "hidden" }}>
+    <section id="precos" style={{ padding: "10rem 0", width: "100%", background: "var(--bg)", overflow: isMobile ? "visible" : "hidden" }}>
       <style jsx global>{`
         @keyframes premium-glow {
           0%, 100% { opacity: 0.4; filter: blur(40px); }
@@ -119,20 +119,20 @@ export function Pricing() {
         }
         
         .premium-card-glass {
-          background: rgba(10, 10, 10, 0.95);
+          background: var(--bg-card);
           backdrop-filter: blur(24px);
           -webkit-backdrop-filter: blur(24px);
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          border: 1px solid var(--border-color);
           border-radius: 40px;
           position: relative;
           z-index: 2;
           transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-          box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.8);
+          box-shadow: var(--shadow-lg);
         }
 
         .cta-premium-glass {
-          background: #ffffff;
-          color: #000000;
+          background: var(--text-primary);
+          color: var(--bg);
           padding: 1.6rem 4.5rem;
           border-radius: 100px;
           font-weight: 900;
@@ -140,7 +140,7 @@ export function Pricing() {
           letter-spacing: 0.12em;
           text-transform: uppercase;
           transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-          border: 1px solid #ffffff;
+          border: 1px solid var(--text-primary);
           text-decoration: none;
           display: inline-block;
           position: relative;
@@ -161,9 +161,10 @@ export function Pricing() {
 
         .cta-premium-glass:hover {
           background: transparent;
-          color: #ffffff;
+          color: var(--text-primary);
+          border-color: var(--text-primary);
           transform: translateY(-8px) scale(1.05);
-          box-shadow: 0 30px 60px rgba(255, 255, 255, 0.15);
+          box-shadow: 0 30px 60px var(--accent-glow);
           animation-play-state: paused;
         }
 
@@ -213,20 +214,20 @@ export function Pricing() {
             <div style={{ display: "center", justifyContent: "center", marginBottom: "4rem" }}>
               <div style={{
                 padding: "10px 24px",
-                background: "rgba(255, 255, 255, 0.1)",
-                border: "1px solid rgba(255, 255, 255, 0.2)",
+                background: "var(--bg-secondary)",
+                border: "1px solid var(--border-color)",
                 borderRadius: "100px",
                 fontFamily: "monospace",
                 fontSize: "0.7rem",
                 fontWeight: 800,
                 letterSpacing: "0.25em",
-                color: "#ffffff",
+                color: "var(--text-primary)",
                 animation: "availability-glow 3s infinite ease-in-out",
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "10px",
               }}>
-                <span style={{ width: "8px", height: "8px", background: "#ffffff", borderRadius: "50%", boxShadow: "0 0 10px #fff" }} />
+                <span style={{ width: "8px", height: "8px", background: "var(--accent)", borderRadius: "50%", boxShadow: "0 0 10px var(--accent)" }} />
                 DISPONIBILIDADE LIMITADA: MARÇO 2026
               </div>
             </div>
@@ -234,7 +235,7 @@ export function Pricing() {
             <h2 style={{ 
               fontFamily: "var(--font-display)", 
               fontSize: "clamp(2.5rem, 7vw, 5.5rem)", 
-              color: "#fff", 
+              color: "var(--text-primary)", 
               fontWeight: 900, 
               letterSpacing: "-0.05em",
               marginBottom: "1.5rem",
@@ -256,19 +257,19 @@ export function Pricing() {
                 AUTORIDADE.
               </span>
             </h2>
-            <p style={{ color: "rgba(255, 255, 255, 0.5)", fontSize: "1.2rem", marginBottom: "5rem", fontWeight: 500, letterSpacing: "0.03em", maxWidth: "600px", margin: "0 auto 5rem" }}>
+            <p style={{ color: "var(--text-primary)", opacity: 0.5, fontSize: "1.2rem", marginBottom: "5rem", fontWeight: 500, letterSpacing: "0.03em", maxWidth: "600px", margin: "0 auto 5rem" }}>
               Oferta exclusiva de lançamento: Design de elite para marcas que buscam o topo absoluto.
             </p>
 
             <div style={{ marginBottom: "6rem" }}>
-              <div style={{ opacity: 0.25, fontSize: "1.6rem", fontWeight: 800, textDecoration: "line-through", color: "#fff", marginBottom: "0.5rem", letterSpacing: "0.15em" }}>
+              <div style={{ opacity: 0.25, fontSize: "1.6rem", fontWeight: 800, textDecoration: "line-through", color: "var(--text-primary)", marginBottom: "0.5rem", letterSpacing: "0.15em" }}>
                 R$ 1.500
               </div>
-              <div style={{ fontSize: "clamp(5.5rem, 14vw, 10rem)", fontWeight: 900, lineHeight: 0.8, letterSpacing: "-0.06em", color: "#fff", fontFamily: "var(--font-display)" }}>
+              <div style={{ fontSize: "clamp(5.5rem, 14vw, 10rem)", fontWeight: 900, lineHeight: 0.8, letterSpacing: "-0.06em", color: "var(--text-primary)", fontFamily: "var(--font-display)" }}>
                 <span style={{ fontSize: "2rem", verticalAlign: "top", marginRight: "12px", opacity: 0.4, fontWeight: 800 }}>R$</span>
                 997
               </div>
-              <div style={{ color: "#ffffff", fontWeight: 700, fontSize: "0.9rem", letterSpacing: "0.3em", marginTop: "1rem", opacity: 0.6 }}>
+              <div style={{ color: "var(--text-primary)", fontWeight: 700, fontSize: "0.9rem", letterSpacing: "0.3em", marginTop: "1rem", opacity: 0.6 }}>
                 CONDIÇÃO ÚNICA & LIMITADA
               </div>
             </div>
@@ -290,8 +291,8 @@ export function Pricing() {
                 "Suporte Prioritário VIP"
               ].map((item, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-                  <div style={{ width: "6px", height: "6px", background: "#fff", borderRadius: "1px", opacity: 0.5, transform: "rotate(45deg)" }} />
-                  <span style={{ fontSize: "0.95rem", color: "rgba(255, 255, 255, 0.7)", fontWeight: 600 }}>{item}</span>
+                  <div style={{ width: "6px", height: "6px", background: "var(--text-primary)", borderRadius: "1px", opacity: 0.5, transform: "rotate(45deg)" }} />
+                  <span style={{ fontSize: "0.95rem", color: "var(--text-primary)", opacity: 0.7, fontWeight: 600 }}>{item}</span>
                 </div>
               ))}
             </div>
@@ -319,7 +320,7 @@ export function Pricing() {
             background: "rgba(0,0,0,0.03)",
             border: "1px solid rgba(0,0,0,0.08)",
             borderRadius: "100px",
-            color: "#000000",
+            color: "var(--text-primary)",
             fontSize: "0.75rem",
             fontWeight: 900,
             letterSpacing: "0.3em",
@@ -345,18 +346,18 @@ export function Pricing() {
                 onMouseEnter={() => setHoveredIndex(i)}
                 onMouseLeave={() => setHoveredIndex(null)}
                 style={{
-                  background: isCenter ? "#0b0b0b" : "#ffffff",
-                  color: isCenter ? "#ffffff" : "#000000",
+                  background: isCenter ? "var(--text-primary)" : "var(--bg)",
+                  color: isCenter ? "var(--bg)" : "var(--text-primary)",
                   borderRadius: "40px",
                   padding: isMobile ? "3rem 1.5rem" : "4.5rem 2.8rem",
-                  border: isCenter ? "1px solid rgba(255,255,255,0.15)" : "1px solid rgba(0,0,0,0.08)",
+                  border: "1px solid var(--border-color)",
                   display: "flex",
                   flexDirection: "column",
                   transition: "all 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
                   transform: isHovered && !isMobile ? "translateY(-15px) scale(1.02)" : "none",
                   boxShadow: isHovered && !isMobile
-                    ? (isCenter ? "0 50px 100px -20px rgba(0,0,0,0.5)" : "0 40px 80px -20px rgba(0,0,0,0.12)") 
-                    : "0 10px 30px rgba(0,0,0,0.03)",
+                    ? "var(--shadow-lg)"
+                    : "var(--shadow-sm)",
                   position: "relative",
                   overflow: "hidden"
                 }}
@@ -374,19 +375,20 @@ export function Pricing() {
                 )}
 
                 <div style={{ marginBottom: "2.5rem", position: "relative", zIndex: 2 }}>
-                  <div style={{ 
-                    fontSize: "0.75rem", 
-                    fontWeight: 900, 
-                    textTransform: "uppercase", 
-                    letterSpacing: "0.3em", 
-                    marginBottom: "1.8rem", 
-                    color: isCenter ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.4)" 
-                  }}>
+                    <div style={{ 
+                      fontSize: "0.75rem", 
+                      fontWeight: 900, 
+                      textTransform: "uppercase", 
+                      letterSpacing: "0.3em", 
+                      marginBottom: "1.8rem", 
+                      color: "inherit",
+                      opacity: 0.5 
+                    }}>
                     {p.name}
                   </div>
                   <div style={{ display: "flex", alignItems: "baseline", gap: "0.5rem", marginBottom: "1.2rem" }}>
-                    <span style={{ fontSize: "1.2rem", fontWeight: 800, color: isCenter ? "#fff" : "#000", opacity: 0.4 }}>R$</span>
-                    <p style={{ fontSize: "3.8rem", fontWeight: 900, letterSpacing: "-0.04em", color: isCenter ? "#fff" : "#000", fontFamily: "var(--font-display)", lineHeight: 1 }}>{p.price}</p>
+                    <span style={{ fontSize: "1.2rem", fontWeight: 800, color: "inherit", opacity: 0.4 }}>R$</span>
+                    <p style={{ fontSize: "3.8rem", fontWeight: 900, letterSpacing: "-0.04em", color: "inherit", fontFamily: "var(--font-display)", lineHeight: 1 }}>{p.price}</p>
                   </div>
                   <p style={{ 
                     fontSize: "1rem", 
@@ -412,8 +414,8 @@ export function Pricing() {
                       gap: "12px",
                       padding: "1.4rem",
                       borderRadius: "20px",
-                      background: isCenter ? "#ffffff" : "#000000",
-                      color: isCenter ? "#000000" : "#ffffff",
+                      background: isCenter ? "var(--bg)" : "var(--text-primary)",
+                      color: isCenter ? "var(--text-primary)" : "var(--bg)",
                       fontWeight: 900,
                       fontSize: "0.9rem",
                       letterSpacing: "0.05em",
@@ -496,7 +498,7 @@ export function Pricing() {
             background: "rgba(0,0,0,0.03)",
             border: "1px solid rgba(0,0,0,0.08)",
             borderRadius: "100px",
-            color: "#000000",
+            color: "var(--text-primary)",
             fontSize: "0.75rem",
             fontWeight: 900,
             letterSpacing: "0.3em",
@@ -522,18 +524,18 @@ export function Pricing() {
                 onMouseEnter={() => setHoveredWebIndex(i)}
                 onMouseLeave={() => setHoveredWebIndex(null)}
                 style={{
-                  background: isCenter ? "#0b0b0b" : "#ffffff",
-                  color: isCenter ? "#ffffff" : "#000000",
+                  background: isCenter ? "var(--text-primary)" : "var(--bg)",
+                  color: isCenter ? "var(--bg)" : "var(--text-primary)",
                   borderRadius: "40px",
                   padding: isMobile ? "3rem 1.5rem" : "4.5rem 2.8rem",
-                  border: isCenter ? "1px solid rgba(255,255,255,0.15)" : "1px solid rgba(0,0,0,0.08)",
+                  border: "1px solid var(--border-color)",
                   display: "flex",
                   flexDirection: "column",
                   transition: "all 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
                   transform: isHovered && !isMobile ? "translateY(-15px) scale(1.02)" : "none",
                   boxShadow: isHovered && !isMobile
-                    ? (isCenter ? "0 50px 100px -20px rgba(0,0,0,0.5)" : "0 40px 80px -20px rgba(0,0,0,0.12)") 
-                    : "0 10px 30px rgba(0,0,0,0.03)",
+                    ? "var(--shadow-lg)"
+                    : "var(--shadow-sm)",
                   position: "relative",
                   overflow: "hidden"
                 }}
@@ -589,8 +591,8 @@ export function Pricing() {
                       gap: "12px",
                       padding: "1.4rem",
                       borderRadius: "20px",
-                      background: isCenter ? "#ffffff" : "#000000",
-                      color: isCenter ? "#000000" : "#ffffff",
+                      background: isCenter ? "var(--bg)" : "var(--text-primary)",
+                      color: isCenter ? "var(--text-primary)" : "var(--bg)",
                       fontWeight: 900,
                       fontSize: "0.9rem",
                       letterSpacing: "0.05em",
@@ -674,13 +676,13 @@ export function Pricing() {
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             style={{
-              background: "#050505",
+              background: "var(--bg-card)",
               borderRadius: isMobile ? "24px" : "40px",
               padding: isMobile ? "2.5rem 1.5rem" : "5rem",
               position: "relative",
               overflow: "hidden",
-              border: "1px solid rgba(255,255,255,0.08)",
-              boxShadow: "0 30px 60px -15px rgba(0,0,0,0.5)",
+              border: "1px solid var(--border-color)",
+              boxShadow: "var(--shadow-lg)",
               display: "flex",
               flexDirection: isMobile ? "column" : "row",
               gap: isMobile ? "3rem" : "4rem",
@@ -703,10 +705,10 @@ export function Pricing() {
               <div style={{
                 display: "inline-block",
                 padding: "8px 24px",
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.1)",
+                background: "var(--bg-secondary)",
+                border: "1px solid var(--border-color)",
                 borderRadius: "100px",
-                color: "#ffffff",
+                color: "var(--text-primary)",
                 fontSize: "0.7rem",
                 fontFamily: "var(--font-inter), sans-serif",
                 fontWeight: 900,
@@ -719,17 +721,18 @@ export function Pricing() {
               <h3 style={{ 
                 fontSize: "clamp(2rem, 8vw, 4rem)", 
                 fontWeight: 900, 
-                color: "#ffffff",
+                color: "var(--text-primary)",
                 lineHeight: 1.1,
                 letterSpacing: "-0.04em",
                 marginBottom: "1.8rem",
                 fontFamily: "var(--font-display), var(--font-inter), sans-serif",
                 wordBreak: "break-word"
               }}>
-                COMO <br/><span style={{ color: "rgba(255,255,255,0.3)" }}>TRABALHAMOS</span>.
+                COMO <br/><span style={{ opacity: 0.3 }}>TRABALHAMOS</span>.
               </h3>
               <p style={{ 
-                color: "rgba(255,255,255,0.6)", 
+                color: "var(--text-primary)", 
+                opacity: 0.6,
                 fontSize: "1.1rem", 
                 lineHeight: 1.8, 
                 maxWidth: "420px",
@@ -737,21 +740,21 @@ export function Pricing() {
                 fontFamily: "var(--font-inter), sans-serif",
                 marginBottom: "2rem"
               }}>
-                Atendemos demandas para construção de <span style={{ color: "#fff", fontWeight: 600 }}>Landing Pages</span> e <span style={{ color: "#fff", fontWeight: 600 }}>Sites Completos</span>. Para garantir a segurança mútua, oficializamos todas as parcerias por contrato formal.
+                Atendemos demandas para construção de <span style={{ color: "var(--text-primary)", fontWeight: 800 }}>Landing Pages</span> e <span style={{ color: "var(--text-primary)", fontWeight: 800 }}>Sites Completos</span>. Para garantir a segurança mútua, oficializamos todas as parcerias por contrato formal.
               </p>
               
               {/* Prazos Information Block */}
               <div style={{
                 padding: "1.5rem",
-                background: "rgba(255,255,255,0.03)",
-                borderLeft: "3px solid #ffffff",
+                background: "var(--bg-secondary)",
+                borderLeft: "3px solid var(--text-primary)",
                 borderRadius: "0 16px 16px 0",
                 maxWidth: "420px"
               }}>
-                <h4 style={{ color: "#ffffff", fontSize: "0.95rem", fontWeight: 700, fontFamily: "var(--font-inter), sans-serif", marginBottom: "0.5rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                <h4 style={{ color: "var(--text-primary)", fontSize: "0.95rem", fontWeight: 700, fontFamily: "var(--font-inter), sans-serif", marginBottom: "0.5rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>
                   Prazos Personalizados
                 </h4>
-                <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.95rem", lineHeight: 1.6, fontWeight: 400, fontFamily: "var(--font-inter), sans-serif", margin: 0 }}>
+                <p style={{ color: "var(--text-primary)", opacity: 0.5, fontSize: "0.95rem", lineHeight: 1.6, fontWeight: 400, fontFamily: "var(--font-inter), sans-serif", margin: 0 }}>
                   Não trabalhamos com "linhas de montagem". Cada projeto possui um cronograma de entrega exclusivo definido no início, garantindo tempo hábil para um nível extremo de detalhe.
                 </p>
               </div>
@@ -768,18 +771,18 @@ export function Pricing() {
             }}>
               {/* Opção 1 */}
               <div style={{
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(255,255,255,0.08)",
+                background: "var(--bg-secondary)",
+                border: "1px solid var(--border-color)",
                 padding: "2.2rem",
                 borderRadius: "24px",
                 backdropFilter: "blur(10px)"
               }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "1rem" }}>
-                  <div style={{ width: "12px", height: "12px", borderRadius: "50%", background: "#ffffff", boxShadow: "0 0 15px rgba(255,255,255,0.5)", flexShrink: 0 }} />
-                  <h4 style={{ color: "#ffffff", fontSize: "1.25rem", fontWeight: 700, fontFamily: "var(--font-inter), sans-serif", margin: 0 }}>Modelo 50/50</h4>
+                  <div style={{ width: "12px", height: "12px", borderRadius: "50%", background: "var(--accent)", boxShadow: "0 0 15px var(--accent)", flexShrink: 0 }} />
+                  <h4 style={{ color: "var(--text-primary)", fontSize: "1.25rem", fontWeight: 700, fontFamily: "var(--font-inter), sans-serif", margin: 0 }}>Modelo 50/50</h4>
                 </div>
-                <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "1rem", lineHeight: 1.6, fontFamily: "var(--font-inter), sans-serif", fontWeight: 400, margin: 0 }}>
-                  <strong style={{color:"rgba(255,255,255,0.8)", fontWeight: 600}}>50%</strong> atua como start e garantia de alocação da equipe. Os <strong style={{color:"rgba(255,255,255,0.8)", fontWeight: 600}}>50%</strong> restantes são liberados unicamente na entrega e aprovação final.
+                <p style={{ color: "var(--text-primary)", opacity: 0.5, fontSize: "1rem", lineHeight: 1.6, fontFamily: "var(--font-inter), sans-serif", fontWeight: 400, margin: 0 }}>
+                  <strong style={{color:"var(--text-primary)", fontWeight: 800}}>50%</strong> atua como start e garantia de alocação da equipe. Os <strong style={{color:"var(--text-primary)", fontWeight: 800}}>50%</strong> restantes são liberados unicamente na entrega e aprovação final.
                 </p>
               </div>
 

@@ -8,7 +8,7 @@ export default function Motion() {
   useScrollObserver();
 
   return (
-    <main style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", background: "#ffffff" }}>
+    <main style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", background: "var(--bg)" }}>
       <Navbar />
 
       <section
@@ -33,7 +33,7 @@ export default function Motion() {
               <span>Serviços</span>
             </div>
           </div>
-          <h1 className="animate-fade-slide-1" style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.1, color: "#0e1c29", marginBottom: "2rem" }}>
+          <h1 className="animate-fade-slide-1" style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.1, color: "var(--text-primary)", marginBottom: "2rem" }}>
             Motion Design
           </h1>
           <p className="animate-fade-slide-2" style={{ fontSize: "1.1rem", color: "rgba(0,0,0,0.5)", lineHeight: 1.8, marginBottom: "3rem" }}>

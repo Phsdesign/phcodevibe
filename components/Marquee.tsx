@@ -73,7 +73,7 @@ function BenefitTag({ text, delay }: { text: string; delay: number }) {
 
 export function Marquee() {
   return (
-    <section id="marquee" className="marquee-section" style={{ padding: "120px 0", background: "#ffffff" }}>
+    <section id="marquee" className="marquee-section" style={{ padding: "120px 0", background: "var(--bg)" }}>
       <motion.div 
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -90,8 +90,9 @@ export function Marquee() {
             fontWeight: 800,
             textTransform: "uppercase",
             letterSpacing: "0.4em",
-            color: "rgba(0,0,0,0.25)",
-            border: "1px solid rgba(0,0,0,0.05)",
+            color: "var(--text-primary)",
+            opacity: 0.3,
+            border: "1px solid var(--border-color)",
             padding: "8px 24px",
             borderRadius: "100px",
             marginBottom: "1.5rem"
@@ -102,7 +103,7 @@ export function Marquee() {
             fontSize: "clamp(1.5rem, 4vw, 2.5rem)",
             fontWeight: 800,
             letterSpacing: "-0.03em",
-            color: "#0e1c29"
+            color: "var(--text-primary)"
           }}>
             Marcas que confiam na nossa vibração.
           </h2>
@@ -128,9 +129,9 @@ export function Marquee() {
                 alignItems: "center",
                 justifyContent: "center",
                 padding: "1.5rem",
-                background: "#000000",
+                background: "var(--text-primary)",
                 borderRadius: "32px",
-                border: "1px solid rgba(255,255,255,0.1)",
+                border: "1px solid var(--glass-border)",
                 overflow: "hidden",
               } as React.CSSProperties}
             >
@@ -144,7 +145,7 @@ export function Marquee() {
                   objectFit: "contain",
                   width: "100%",
                   height: "100%",
-                  filter: "brightness(0) invert(1)",
+                  filter: "brightness(0) invert(var(--invert-value, 1))",
                   // Aplicar o tamanho calibrado individualmente
                   ...logo.imgStyle,
                 }}
@@ -182,10 +183,10 @@ export function Marquee() {
           font-weight: 600;
           padding: 14px 28px;
           border-radius: 100px;
-          background: linear-gradient(145deg, #ffffff, #f8f9fa);
-          border: 1px solid rgba(0,0,0,0.04);
-          color: #1f2937;
-          box-shadow: 0 4px 20px rgba(0,0,0,0.03), inset 0 0 0 1px rgba(255,255,255,0.8);
+          background: var(--bg-secondary);
+          border: 1px solid var(--border-color);
+          color: var(--text-primary);
+          box-shadow: var(--shadow-sm);
           display: inline-block;
           white-space: nowrap;
           font-family: var(--font-body);
@@ -216,10 +217,10 @@ export function Marquee() {
           .benefit-tag:hover {
             animation-play-state: paused;
             transform: translateY(-4px) scale(1.05) !important;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.08), inset 0 0 0 1px rgba(255,255,255,1) !important;
-            border-color: rgba(0,0,0,0.1) !important;
-            color: #000000 !important;
-            background: #ffffff !important;
+            box-shadow: var(--shadow-md) !important;
+            border-color: var(--text-primary) !important;
+            color: var(--bg) !important;
+            background: var(--text-primary) !important;
             z-index: 2;
           }
 

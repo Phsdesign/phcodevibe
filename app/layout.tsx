@@ -49,7 +49,7 @@ export default function RootLayout({
         <link rel="preload" href="https://fonts.gstatic.com/s/plusjakartasans/v12/LDIbaomQNQcsA88c7O9yZ4KMCoOg4IA6-91aHEjcWuA_Tkn9TR_V.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
       </head>
       <body
-        className={`${inter.variable} antialiased selection:bg-blue-500 selection:text-white`}
+        className={`${inter.variable} antialiased selection:bg-blue-500 selection:text-white transition-colors duration-300`}
       >
         <ScrollEffects />
         <FloatingButtons />

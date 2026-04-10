@@ -31,7 +31,7 @@ export function Team() {
     : { once: true, margin: "-50px" };
 
   return (
-    <section id="sobre" ref={containerRef} style={{ background: "#ffffff", padding: isMobile ? "4rem 0" : "10rem 0", overflow: isMobile ? "visible" : "hidden" }}>
+    <section id="sobre" ref={containerRef} style={{ background: "var(--bg)", padding: isMobile ? "4rem 0" : "10rem 0", overflow: isMobile ? "visible" : "hidden" }}>
       <div className="container" style={{ maxWidth: "1200px" }}>
         
         {/* --- 01. PEDRO HENRIQUE --- */}
@@ -45,7 +45,7 @@ export function Team() {
             onMouseLeave={() => !isMobile && setPedroHovered(false)}
             style={{ position: "relative", cursor: "crosshair" }}
           >
-            <div style={{ position: "relative", width: "100%", aspectRatio: "0.8", overflow: "hidden", borderRadius: "4px", background: "#f8f9fa" }}>
+            <div style={{ position: "relative", width: "100%", aspectRatio: "0.8", overflow: "hidden", borderRadius: "4px", background: "var(--bg-secondary)" }}>
               <motion.div
                 animate={isMobile ? {} : { scale: pedroHovered ? 1.05 : 1, filter: pedroHovered ? "grayscale(0)" : "grayscale(1)" }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
@@ -56,17 +56,17 @@ export function Team() {
               </motion.div>
             </div>
             <div className="desktop-only" style={{ marginTop: "2rem", display: "flex", alignItems: "center", gap: "12px", opacity: 0.4 }}>
-              <div style={{ width: "6px", height: "6px", background: "#000", borderRadius: "50%" }} />
-              <span style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.2em", fontFamily: "monospace", color: "#000" }}>DESIGN 2026 // PHCODEVIBE</span>
+              <div style={{ width: "6px", height: "6px", background: "var(--text-primary)", borderRadius: "50%" }} />
+              <span style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.2em", fontFamily: "monospace", color: "var(--text-primary)" }}>DESIGN 2026 // PHCODEVIBE</span>
             </div>
           </motion.div>
 
           <div className="content-container">
-            <motion.div initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.2 }} style={{ fontSize: "12px", fontWeight: 700, color: "rgba(0,0,0,0.3)", letterSpacing: "0.3em", marginBottom: isMobile ? "1rem" : "3rem" }}>01 / THE VISIONARY</motion.div>
-            <motion.h2 initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.3 }} style={{ fontSize: "clamp(2.5rem, 8vw, 5.5rem)", fontWeight: 900, lineHeight: 0.9, color: "#000", letterSpacing: "-0.04em", marginBottom: isMobile ? "1.5rem" : "3rem", textTransform: "uppercase" }}>
-              Pedro <br /> <span style={{ position: "relative" }}>Henrique{!isMobile && <motion.div initial={{ width: 0 }} whileInView={{ width: "100%" }} transition={{ delay: 0.8, duration: 1.2 }} style={{ position: "absolute", bottom: "10%", left: 0, height: "4px", background: "#000", opacity: 0.1 }} />}</span>
+            <motion.div initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.2 }} style={{ fontSize: "12px", fontWeight: 700, color: "var(--text-primary)", opacity: 0.5, letterSpacing: "0.3em", marginBottom: isMobile ? "1rem" : "3rem" }}>01 / THE VISIONARY</motion.div>
+            <motion.h2 initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.3 }} style={{ fontSize: "clamp(2.5rem, 8vw, 5.5rem)", fontWeight: 900, lineHeight: 0.9, color: "var(--text-primary)", letterSpacing: "-0.04em", marginBottom: isMobile ? "1.5rem" : "3rem", textTransform: "uppercase" }}>
+              Pedro <br /> <span style={{ position: "relative" }}>Henrique{!isMobile && <motion.div initial={{ width: 0 }} whileInView={{ width: "100%" }} transition={{ delay: 0.8, duration: 1.2 }} style={{ position: "absolute", bottom: "10%", left: 0, height: "4px", background: "var(--text-primary)", opacity: 0.1 }} />}</span>
             </motion.h2>
-            <motion.p initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.4 }} style={{ fontSize: isMobile ? "0.95rem" : "1.1rem", lineHeight: 1.6, color: "#000", opacity: 0.7, maxWidth: "520px", marginBottom: isMobile ? "2rem" : "3rem" }}>
+            <motion.p initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.4 }} style={{ fontSize: isMobile ? "0.95rem" : "1.1rem", lineHeight: 1.6, color: "var(--text-primary)", opacity: 0.7, maxWidth: "520px", marginBottom: isMobile ? "2rem" : "3rem" }}>
               Com 9 anos de experiência, atuo no desenvolvimento de projetos de alto nível. Construo ecossistemas digitais completos para marcas que não aceitam o amadorismo, entregando:
             </motion.p>
             
@@ -78,21 +78,21 @@ export function Team() {
                   "Landing Pages de Conversão Extrema",
                   "Sistemas com Performance Impecável"
                 ].map((item, i) => (
-                  <li key={i} style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "0.85rem", fontWeight: 700, color: "#000", letterSpacing: "-0.01em" }}>
-                    <div style={{ width: "4px", height: "4px", background: "#000", borderRadius: "50%", opacity: 0.3 }} />
+                  <li key={i} style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "0.85rem", fontWeight: 700, color: "var(--text-primary)", letterSpacing: "-0.01em" }}>
+                    <div style={{ width: "4px", height: "4px", background: "var(--text-primary)", borderRadius: "50%", opacity: 0.3 }} />
                     {item}
                   </li>
                 ))}
               </ul>
-              <p style={{ marginTop: "2rem", fontSize: "0.9rem", fontWeight: 800, color: "#000", opacity: 0.4, letterSpacing: "0.05em" }}>
+              <p style={{ marginTop: "2rem", fontSize: "0.9rem", fontWeight: 800, color: "var(--text-primary)", opacity: 0.4, letterSpacing: "0.05em" }}>
                 Para marcas que buscam liderança de mercado e conexão real.
               </p>
             </motion.div>
             <motion.div initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.5 }} style={{ display: "flex", gap: "2rem", alignItems: "center", flexWrap: "wrap" }}>
               <a href="https://instagram.com/phcodevibe" target="_blank" className="premium-link">Instagram</a>
-              <span style={{ opacity: 0.1, color: "#000" }}>/</span>
+              <span style={{ opacity: 0.1, color: "var(--text-primary)" }}>/</span>
               <a href="https://behance.net/phcodevibe" target="_blank" className="premium-link">Behance</a>
-              <span style={{ opacity: 0.1, color: "#000" }}>/</span>
+              <span style={{ opacity: 0.1, color: "var(--text-primary)" }}>/</span>
               <a href="https://github.com/phcodevibe" target="_blank" className="premium-link">GitHub</a>
             </motion.div>
           </div>
@@ -101,27 +101,27 @@ export function Team() {
         {/* --- 02. LUIZ FELIPE --- */}
         <div className="team-grid inverted" style={{ marginBottom: isMobile ? "4rem" : "15rem", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "40px" : "100px", alignItems: "center" }}>
           <div className="content-container">
-            <motion.div initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.2 }} style={{ fontSize: "12px", fontWeight: 700, color: "rgba(0,0,0,0.3)", letterSpacing: "0.3em", marginBottom: isMobile ? "1rem" : "3rem" }}>02 / THE ARCHITECT</motion.div>
-            <motion.h2 initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.3 }} style={{ fontSize: "clamp(2.5rem, 8vw, 5.5rem)", fontWeight: 900, lineHeight: 0.9, color: "#000", letterSpacing: "-0.04em", marginBottom: isMobile ? "1.5rem" : "3rem", textTransform: "uppercase" }}>
-              Luiz <br /> <span style={{ position: "relative" }}>Felipe{!isMobile && <motion.div initial={{ width: 0 }} whileInView={{ width: "100%" }} transition={{ delay: 0.8, duration: 1.2 }} style={{ position: "absolute", bottom: "10%", left: 0, height: "4px", background: "#000", opacity: 0.1 }} />}</span>
+            <motion.div initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.2 }} style={{ fontSize: "12px", fontWeight: 700, color: "var(--text-primary)", opacity: 0.5, letterSpacing: "0.3em", marginBottom: isMobile ? "1rem" : "3rem" }}>02 / THE ARCHITECT</motion.div>
+            <motion.h2 initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.3 }} style={{ fontSize: "clamp(2.5rem, 8vw, 5.5rem)", fontWeight: 900, lineHeight: 0.9, color: "var(--text-primary)", letterSpacing: "-0.04em", marginBottom: isMobile ? "1.5rem" : "3rem", textTransform: "uppercase" }}>
+              Luiz <br /> <span style={{ position: "relative" }}>Felipe{!isMobile && <motion.div initial={{ width: 0 }} whileInView={{ width: "100%" }} transition={{ delay: 0.8, duration: 1.2 }} style={{ position: "absolute", bottom: "10%", left: 0, height: "4px", background: "var(--text-primary)", opacity: 0.1 }} />}</span>
             </motion.h2>
-            <motion.p initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.4 }} style={{ fontSize: isMobile ? "0.95rem" : "1.1rem", lineHeight: 1.6, color: "#000", opacity: 0.7, maxWidth: "520px", marginBottom: isMobile ? "2rem" : "3rem" }}>
+            <motion.p initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.4 }} style={{ fontSize: isMobile ? "0.95rem" : "1.1rem", lineHeight: 1.6, color: "var(--text-primary)", opacity: 0.7, maxWidth: "520px", marginBottom: isMobile ? "2rem" : "3rem" }}>
               A mente lógica por trás de cada estrutura invisível. Desenvolvedor Full-stack com raízes profundas na engenharia Back-end, constrói o alicerce onde o design de alto nível ganha vida.
             </motion.p>
             
             <motion.div initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.5 }} style={{ marginBottom: isMobile ? "2rem" : "4rem" }}>
-              <p style={{ fontSize: "0.95rem", lineHeight: 1.6, color: "#000", opacity: 0.6, marginBottom: "1.5rem" }}>
-                Com expertise sólida em <span style={{ color: "#000", fontWeight: 700 }}>C#/.NET, Python, Java e arquitetura Docker</span>, Luiz transforma regras de negócio complexas em APIs RESTful de extrema velocidade e segurança.
+              <p style={{ fontSize: "0.95rem", lineHeight: 1.6, color: "var(--text-primary)", opacity: 0.6, marginBottom: "1.5rem" }}>
+                Com expertise sólida em <span style={{ color: "var(--text-primary)", fontWeight: 700 }}>C#/.NET, Python, Java e arquitetura Docker</span>, Luiz transforma regras de negócio complexas em APIs RESTful de extrema velocidade e segurança.
               </p>
-              <p style={{ fontSize: "0.9rem", fontWeight: 800, color: "#000", opacity: 0.4, letterSpacing: "0.05em" }}>
+              <p style={{ fontSize: "0.9rem", fontWeight: 800, color: "var(--text-primary)", opacity: 0.4, letterSpacing: "0.05em" }}>
                 Da pesquisa avançada na Unidade EMBRAPII à execução de mercado, sua precisão garante sistemas escaláveis e indestrutíveis.
               </p>
             </motion.div>
             <motion.div initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.5 }} style={{ display: "flex", gap: "2rem", alignItems: "center", flexWrap: "wrap" }}>
               <a href="https://www.linkedin.com/in/luizlfc-dev" target="_blank" className="premium-link">LinkedIn</a>
-              <span style={{ opacity: 0.1, color: "#000" }}>/</span>
+              <span style={{ opacity: 0.1, color: "var(--text-primary)" }}>/</span>
               <a href="https://www.instagram.com/luizlfc.py/" target="_blank" className="premium-link">Instagram</a>
-              <span style={{ opacity: 0.1, color: "#000" }}>/</span>
+              <span style={{ opacity: 0.1, color: "var(--text-primary)" }}>/</span>
               <a href="https://luizlfc-dev.github.io/" target="_blank" className="premium-link">Website</a>
             </motion.div>
           </div>
@@ -136,7 +136,7 @@ export function Team() {
             style={{ position: "relative", cursor: "crosshair" }}
             className="portrait-container"
           >
-            <div style={{ position: "relative", width: "100%", aspectRatio: "0.8", overflow: "hidden", borderRadius: "4px", background: "#f8f9fa" }}>
+            <div style={{ position: "relative", width: "100%", aspectRatio: "0.8", overflow: "hidden", borderRadius: "4px", background: "var(--bg-secondary)" }}>
               <motion.div 
                 animate={isMobile ? {} : { scale: luizHovered ? 1.05 : 1, filter: luizHovered ? "grayscale(0)" : "grayscale(1)" }} 
                 transition={{ duration: 0.6, ease: "easeOut" }} 
@@ -147,8 +147,8 @@ export function Team() {
               </motion.div>
             </div>
             <div className="desktop-only" style={{ marginTop: "2rem", display: "flex", alignItems: "center", gap: "12px", opacity: 0.4, justifyContent: "flex-end" }}>
-              <span style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.2em", fontFamily: "monospace", color: "#000" }}>BACKEND // DESIGN 2026</span>
-              <div style={{ width: "6px", height: "6px", background: "#000", borderRadius: "50%" }} />
+              <span style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.2em", fontFamily: "monospace", color: "var(--text-primary)" }}>BACKEND // DESIGN 2026</span>
+              <div style={{ width: "6px", height: "6px", background: "var(--text-primary)", borderRadius: "50%" }} />
             </div>
           </motion.div>
         </div>
@@ -164,7 +164,7 @@ export function Team() {
             onMouseLeave={() => !isMobile && setClaudioHovered(false)}
             style={{ position: "relative", cursor: "crosshair" }}
           >
-            <div style={{ position: "relative", width: "100%", aspectRatio: "0.8", overflow: "hidden", borderRadius: "4px", background: "#f8f9fa" }}>
+            <div style={{ position: "relative", width: "100%", aspectRatio: "0.8", overflow: "hidden", borderRadius: "4px", background: "var(--bg-secondary)" }}>
               <motion.div
                 animate={isMobile ? {} : { scale: claudioHovered ? 1.05 : 1, filter: claudioHovered ? "grayscale(0)" : "grayscale(1)" }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
@@ -175,22 +175,22 @@ export function Team() {
               </motion.div>
             </div>
             <div className="desktop-only" style={{ marginTop: "2rem", display: "flex", alignItems: "center", gap: "12px", opacity: 0.4 }}>
-              <div style={{ width: "6px", height: "6px", background: "#000", borderRadius: "50%" }} />
-              <span style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.2em", fontFamily: "monospace", color: "#000" }}>GROWTH // DESIGN 2026</span>
+              <div style={{ width: "6px", height: "6px", background: "var(--text-primary)", borderRadius: "50%" }} />
+              <span style={{ fontSize: "10px", fontWeight: 700, letterSpacing: "0.2em", fontFamily: "monospace", color: "var(--text-primary)" }}>GROWTH // DESIGN 2026</span>
             </div>
           </motion.div>
 
           <div className="content-container">
-            <motion.div initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.2 }} style={{ fontSize: "12px", fontWeight: 700, color: "rgba(0,0,0,0.3)", letterSpacing: "0.3em", marginBottom: isMobile ? "1rem" : "3rem" }}>03 / THE STRATEGIST</motion.div>
-            <motion.h2 initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.3 }} style={{ fontSize: "clamp(2.5rem, 8vw, 5.5rem)", fontWeight: 900, lineHeight: 0.9, color: "#000", letterSpacing: "-0.04em", marginBottom: isMobile ? "1.5rem" : "3rem", textTransform: "uppercase" }}>
-              Claudio <br /> <span style={{ position: "relative" }}>Lisboa{!isMobile && <motion.div initial={{ width: 0 }} whileInView={{ width: "100%" }} transition={{ delay: 0.8, duration: 1.2 }} style={{ position: "absolute", bottom: "10%", left: 0, height: "4px", background: "#000", opacity: 0.1 }} />}</span>
+            <motion.div initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.2 }} style={{ fontSize: "12px", fontWeight: 700, color: "var(--text-primary)", opacity: 0.5, letterSpacing: "0.3em", marginBottom: isMobile ? "1rem" : "3rem" }}>03 / THE STRATEGIST</motion.div>
+            <motion.h2 initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.3 }} style={{ fontSize: "clamp(2.5rem, 8vw, 5.5rem)", fontWeight: 900, lineHeight: 0.9, color: "var(--text-primary)", letterSpacing: "-0.04em", marginBottom: isMobile ? "1.5rem" : "3rem", textTransform: "uppercase" }}>
+              Claudio <br /> <span style={{ position: "relative" }}>Lisboa{!isMobile && <motion.div initial={{ width: 0 }} whileInView={{ width: "100%" }} transition={{ delay: 0.8, duration: 1.2 }} style={{ position: "absolute", bottom: "10%", left: 0, height: "4px", background: "var(--text-primary)", opacity: 0.1 }} />}</span>
             </motion.h2>
-            <motion.p initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.4 }} style={{ fontSize: isMobile ? "1rem" : "1.25rem", lineHeight: 1.6, color: "#000", opacity: 0.6, maxWidth: "480px", marginBottom: isMobile ? "2rem" : "4rem" }}>Estrategista de Growth Marketing focado em escala acelerada e aquisição de alto impacto. Transforma dados em tração e audiência em faturamento recorrente.</motion.p>
+            <motion.p initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.4 }} style={{ fontSize: isMobile ? "1rem" : "1.25rem", lineHeight: 1.6, color: "var(--text-primary)", opacity: 0.6, maxWidth: "480px", marginBottom: isMobile ? "2rem" : "4rem" }}>Estrategista de Growth Marketing focado em escala acelerada e aquisição de alto impacto. Transforma dados em tração e audiência em faturamento recorrente.</motion.p>
             <motion.div initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.5 }} style={{ display: "flex", gap: "2rem", alignItems: "center", flexWrap: "wrap" }}>
               <a href="#" target="_blank" className="premium-link">Instagram</a>
-              <span style={{ opacity: 0.1, color: "#000" }}>/</span>
+              <span style={{ opacity: 0.1, color: "var(--text-primary)" }}>/</span>
               <a href="#" target="_blank" className="premium-link">LinkedIn</a>
-              <span style={{ opacity: 0.1, color: "#000" }}>/</span>
+              <span style={{ opacity: 0.1, color: "var(--text-primary)" }}>/</span>
               <a href="#" target="_blank" className="premium-link">Growth Case</a>
             </motion.div>
           </div>
@@ -199,8 +199,8 @@ export function Team() {
       </div>
 
       <style jsx>{`
-        .premium-link { font-size: 14px; font-weight: 700; color: #000; text-decoration: none; position: relative; transition: all 0.3s ease; }
-        .premium-link::after { content: ""; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: #000; transition: width 0.3s ease; }
+        .premium-link { font-size: 14px; font-weight: 700; color: var(--text-primary); text-decoration: none; position: relative; transition: all 0.3s ease; }
+        .premium-link::after { content: ""; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--text-primary); transition: width 0.3s ease; }
         .premium-link:hover::after { width: 100%; }
         @media (max-width: 968px) {
           .team-grid { grid-template-columns: 1fr !important; gap: 60px !important; text-align: center; }

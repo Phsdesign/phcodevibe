@@ -40,7 +40,7 @@ export default function UiUx() {
                 style={{ 
                   width: "100%", 
                   aspectRatio: "1.2", 
-                  background: "#ffffff", 
+                  background: "var(--bg)", 
                   borderRadius: "40px", 
                   border: "1px solid rgba(0,0,0,0.04)", 
                   boxShadow: "0 40px 100px -20px rgba(0,0,0,0.06)",
@@ -85,7 +85,7 @@ export default function UiUx() {
                   fontWeight: 800, 
                   letterSpacing: "-0.06em", 
                   lineHeight: 0.9, 
-                  color: "#0e1c29", 
+                  color: "var(--text-primary)", 
                   marginBottom: "2.5rem" 
                 }}
               >

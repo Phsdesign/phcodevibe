@@ -32,17 +32,13 @@ export function FeaturesAI() {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener("resize", checkMobile);
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % SLIDES.length);
-    }, 5000);
     return () => {
       window.removeEventListener("resize", checkMobile);
-      clearInterval(timer);
     };
   }, []);
 
   return (
-    <section id="features" style={{ background: "#ffffff", padding: isMobile ? "3rem 0" : "8rem 0", width: "100%", overflow: "visible" }}>
+    <section id="features" style={{ background: "var(--bg)", padding: isMobile ? "3rem 0" : "8rem 0", width: "100%", overflow: "visible" }}>
       <div style={{ maxWidth: "1440px", margin: "0 auto", padding: "0 20px" }}>
         
         {/* HEADER */}
@@ -50,23 +46,36 @@ export function FeaturesAI() {
           <div style={{ display: "inline-block", background: "#000", color: "#fff", padding: "8px 20px", borderRadius: "100px", fontSize: "10px", fontWeight: "800", marginBottom: "1.5rem" }}>
             ESTRATEGISTA DE MARCAS & CRESCIMENTO DIGITAL
           </div>
-          <h2 style={{ fontSize: isMobile ? "2.5rem" : "5rem", fontWeight: "900", color: "#000", lineHeight: "1.1", margin: 0 }}>
+          <h2 style={{ fontSize: isMobile ? "2.5rem" : "5rem", fontWeight: "900", color: "var(--text-primary)", lineHeight: "1.1", margin: 0 }}>
             Domine o seu Mercado.
           </h2>
         </div>
 
         {/* CARDS PRINCIPAIS */}
         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "20px", marginBottom: "40px" }}>
-          <div style={{ background: "#f8f8f8", padding: "2rem", borderRadius: "24px", border: "1px solid #eee" }}>
-            <span style={{ fontSize: "2rem", fontWeight: "900", color: "#ddd", display: "block", marginBottom: "1rem" }}>{SLIDES[currentSlide].index}</span>
-            <h3 style={{ fontSize: "1.5rem", fontWeight: "800", color: "#000", marginBottom: "1rem" }}>{SLIDES[currentSlide].title}</h3>
-            <p style={{ fontSize: "1rem", color: "#666", lineHeight: "1.5" }}>{SLIDES[currentSlide].desc}</p>
+          <div style={{ 
+            background: "var(--bg-card)", 
+            padding: "2rem", 
+            borderRadius: "24px", 
+            border: "1px solid var(--border-color)",
+            boxShadow: "var(--shadow-sm)"
+          }}>
+            <span style={{ fontSize: "2rem", fontWeight: "900", color: "var(--text-primary)", opacity: 0.2, display: "block", marginBottom: "1rem" }}>{SLIDES[currentSlide].index}</span>
+            <h3 style={{ fontSize: "1.5rem", fontWeight: "800", color: "var(--text-primary)", marginBottom: "1rem" }}>{SLIDES[currentSlide].title}</h3>
+            <p style={{ fontSize: "1rem", color: "var(--text-secondary)", opacity: 0.8, lineHeight: "1.5" }}>{SLIDES[currentSlide].desc}</p>
           </div>
 
-          <div style={{ background: "#111", padding: "2rem", borderRadius: "24px", color: "#fff" }}>
-            <span style={{ fontSize: "2rem", fontWeight: "900", color: "#333", display: "block", marginBottom: "1rem" }}>02</span>
-            <h3 style={{ fontSize: "1.5rem", fontWeight: "800", color: "#fff", marginBottom: "1rem" }}>Estrutura Indestrutível</h3>
-            <p style={{ fontSize: "1rem", color: "#aaa", lineHeight: "1.5" }}>Sites rápidos e seguros. Sua marca preparada para vender 24h por dia no Google.</p>
+          <div style={{ 
+            background: "var(--bg-card)", 
+            padding: "2rem", 
+            borderRadius: "24px", 
+            color: "var(--text-primary)",
+            border: "1px solid var(--border-color)",
+            boxShadow: "var(--shadow-sm)"
+          }}>
+            <span style={{ fontSize: "2rem", fontWeight: "900", color: "var(--text-primary)", opacity: 0.2, display: "block", marginBottom: "1rem" }}>02</span>
+            <h3 style={{ fontSize: "1.5rem", fontWeight: "800", color: "var(--text-primary)", marginBottom: "1rem" }}>Estrutura Indestrutível</h3>
+            <p style={{ fontSize: "1rem", color: "var(--text-secondary)", opacity: 0.8, lineHeight: "1.5" }}>Sites rápidos e seguros. Sua marca preparada para vender 24h por dia no Google.</p>
           </div>
         </div>
 
@@ -104,10 +113,10 @@ export function FeaturesAI() {
         {/* MANIFESTO */}
         <div style={{ textAlign: "center", padding: "4rem 0", marginTop: "2rem" }}>
           <span style={{ fontSize: "10px", fontWeight: "900", color: "#999", letterSpacing: "0.3em" }}>NOSSA FILOSOFIA</span>
-          <blockquote style={{ fontSize: isMobile ? "1.4rem" : "2.5rem", fontWeight: "400", fontStyle: "italic", margin: "2rem auto", color: "#000", maxWidth: "800px", lineHeight: "1.4" }}>
+          <blockquote style={{ fontSize: isMobile ? "1.4rem" : "2.5rem", fontWeight: "400", fontStyle: "italic", margin: "2rem auto", color: "var(--text-primary)", maxWidth: "800px", lineHeight: "1.4" }}>
             "Um site bonito atrai o olhar, mas um site estratégico atrai o dinheiro."
           </blockquote>
-          <div style={{ fontSize: "1rem", color: "#000" }}>
+          <div style={{ fontSize: "1rem", color: "var(--text-primary)" }}>
             <strong>Pedro Henrique Silva</strong><br />
             <span style={{ color: "#666" }}>Fundador @ PH Code Vibe</span>
           </div>

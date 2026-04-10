@@ -9,7 +9,7 @@ export default function PaginaPortfolio() {
   useScrollObserver();
 
   return (
-    <main style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", background: "#ffffff" }}>
+    <main style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", background: "var(--bg)" }}>
       <Navbar />
 
       <div style={{ width: "100%", paddingTop: "6rem" }}>

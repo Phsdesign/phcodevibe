@@ -37,7 +37,7 @@ export function FounderNote() {
       ref={sectionRef} 
       className="fn-section" 
       style={{ 
-        background: "#ffffff", 
+        background: "var(--bg)", 
         contain: "paint",
         position: "relative",
         zIndex: 2
@@ -46,7 +46,7 @@ export function FounderNote() {
       <div className="fn-container">
         <div className="fn-quote-wrapper">
           <h3 className="fn-quote">
-            <span style={{ color: "rgba(0,0,0,0.15)", marginRight: "8px" }}>&ldquo;</span>
+            <span style={{ color: "var(--text-primary)", opacity: 0.15, marginRight: "8px" }}>&ldquo;</span>
             {words.map((word, i) => {
               const isBold = boldWords.some(bw => word.toLowerCase().includes(bw));
               return (
@@ -65,7 +65,7 @@ export function FounderNote() {
                 </span>
               );
             })}
-            <span style={{ color: "rgba(0,0,0,0.15)", marginLeft: "4px" }}>&rdquo;</span>
+            <span style={{ color: "var(--text-primary)", opacity: 0.15, marginLeft: "4px" }}>&rdquo;</span>
           </h3>
         </div>
 

@@ -75,7 +75,7 @@ export function Hero() {
   }, [ROTATING_WORDS.length]);
 
   return (
-    <section id="hero" className="hero-section" style={{ position: "relative", overflow: isMobile ? "visible" : "hidden", minHeight: "100vh", width: "100%", display: "flex", alignItems: "center", background: "#ffffff" }}>
+    <section id="hero" className="hero-section" style={{ position: "relative", overflow: isMobile ? "visible" : "hidden", minHeight: "100vh", width: "100%", display: "flex", alignItems: "center", background: "var(--bg)" }}>
       {/* Background Video Implementation - Only on Desktop */}
       {isDesktop && (
         <>
@@ -95,7 +95,7 @@ export function Hero() {
               zIndex: -1,
               willChange: "transform",
               transform: "translate3d(0,0,0)",
-              filter: "brightness(1.1) contrast(0.9)", // Clareia o vídeo levemente
+              filter: "var(--hero-video-filter)", // Dinâmico via CSS vars
             }}
           >
             <source src="/bg-hero-v2.mp4" type="video/mp4" />
@@ -105,68 +105,69 @@ export function Hero() {
           <div style={{
             position: "absolute",
             inset: 0,
-            background: "rgba(255, 255, 255, 0.4)",
+            background: "var(--glass)",
             zIndex: 0,
-            pointerEvents: "none"
+            pointerEvents: "none",
+            opacity: 0.5
           }} />
         </>
       )}
 
       {/* Content */}
       <div className="container hero-reveal-container" style={{ textAlign: "center", position: "relative", zIndex: 1 }}>
-        {/* Status Badge */}
-        <div className="hero-reveal orbai-badge hidden md:inline-flex" style={{ marginBottom: "2rem" }}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2">
+        {/* STATUS BADGE */}
+        <div className="hero-reveal orbai-badge hidden md:inline-flex" style={{ marginBottom: "2rem", color: "var(--text-primary)", borderColor: "var(--border-color)" }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
             <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z"/>
           </svg>
-          <span>Design & Experiências High-End</span>
+          <span style={{ color: "var(--text-primary)" }}>Design & Experiências High-End</span>
         </div>
 
         {/* HERO TITLE */}
-        <h1 className="hero-title">
-          <span className="block hero-reveal">Design de Elite.</span>
-          <span className="block hero-reveal" style={{ animationDelay: "100ms" }}>
+        <h1 className="hero-title" style={{ color: "var(--text-primary)" }}>
+          <span className="block hero-reveal" style={{ color: "var(--text-primary)" }}>Design de Elite.</span>
+          <span className="block hero-reveal" style={{ animationDelay: "100ms", color: "var(--text-primary)" }}>
             Marcas
           </span>
-          <span className="block hero-reveal" style={{ animationDelay: "200ms" }}>
-            <span key={wordIndex} className="inline-block animate-word-rotate hero-rotating-word">
+          <span className="block hero-reveal" style={{ animationDelay: "200ms", color: "var(--text-primary)" }}>
+            <span key={wordIndex} className="inline-block animate-word-rotate hero-rotating-word" style={{ color: "var(--text-primary)" }}>
               {ROTATING_WORDS[wordIndex]}
             </span>
           </span>
         </h1>
 
-        <p className="hero-reveal hero-subtitle" style={{ animationDelay: "200ms" }}>
+        <p className="hero-reveal hero-subtitle" style={{ animationDelay: "200ms", color: "var(--text-primary)", opacity: 0.7 }}>
           Criamos identidades digitais de alto luxo e tecnologia para marcas que buscam o topo do mercado.
         </p>
 
         {/* CTAs */}
         <div className="hero-reveal hero-ctas" style={{ animationDelay: "400ms" }}>
-          <Link href="#portfolio" className="hero-cta-primary" aria-label="Ver portfólio de projetos">
+          <Link href="#portfolio" className="hero-cta-primary" aria-label="Ver portfólio de projetos" style={{ background: "var(--text-primary)", color: "var(--bg)" }}>
             Ver Projetos
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M7 17L17 7M17 7H7M17 7V17"/>
             </svg>
           </Link>
-          <a href="https://wa.me/5549991031743" target="_blank" rel="noopener noreferrer" className="hero-cta-secondary" aria-label="Falar conosco no WhatsApp">
+          <a href="https://wa.me/5549991031743" target="_blank" rel="noopener noreferrer" className="hero-cta-secondary" aria-label="Falar conosco no WhatsApp" style={{ color: "var(--text-primary)", borderColor: "var(--border-color)" }}>
             Ver Serviços
           </a>
         </div>
 
         {/* Bento preview stats */}
         <div className="hero-stats-grid" style={{ marginBottom: "2rem", display: "flex", justifyContent: "center", gap: "1rem", flexWrap: "wrap" }}>
-          <div className="neu-card hero-reveal hero-stat-tall" style={{ minHeight: "160px", flex: "1 1 200px", maxWidth: "280px", animationDelay: "500ms", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-            <p ref={projectsCounter.elementRef} className="hero-stat-number">{projectsCounter.count}+</p>
-            <p className="hero-stat-label">Projetos Lançados</p>
+          <div className="neu-card hero-reveal hero-stat-tall" style={{ minHeight: "160px", flex: "1 1 200px", maxWidth: "280px", animationDelay: "500ms", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", background: "var(--bg-card)", borderColor: "var(--border-color)" }}>
+            <p ref={projectsCounter.elementRef} className="hero-stat-number" style={{ color: "var(--text-primary)" }}>{projectsCounter.count}+</p>
+            <p className="hero-stat-label" style={{ color: "var(--text-primary)", opacity: 0.6 }}>Projetos Lançados</p>
           </div>
-          <div className="neu-card hero-reveal hero-stat-dark" style={{ minHeight: "160px", flex: "1 1 200px", maxWidth: "280px", animationDelay: "600ms", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", background: "#000" }}>
-            <p ref={satisfactionCounter.elementRef} className="hero-stat-number" style={{ color: "#fff" }}>{satisfactionCounter.count}%</p>
-            <p className="hero-stat-label" style={{ color: "rgba(255,255,255,0.6)" }}>Satisfação</p>
+          <div className="neu-card hero-reveal hero-stat-dark" style={{ minHeight: "160px", flex: "1 1 200px", maxWidth: "280px", animationDelay: "600ms", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", background: "var(--text-primary)", color: "var(--bg)", borderColor: "var(--border-color)" }}>
+            <p ref={satisfactionCounter.elementRef} className="hero-stat-number" style={{ color: "var(--bg)" }}>{satisfactionCounter.count}%</p>
+            <p className="hero-stat-label" style={{ color: "var(--bg)", opacity: 0.6 }}>Satisfação</p>
           </div>
-          <div className="neu-card hero-reveal hero-stat-light" style={{ minHeight: "160px", flex: "1 1 200px", maxWidth: "280px", animationDelay: "700ms", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-            <p ref={autoralCounter.elementRef} className="hero-stat-number">{autoralCounter.count}%</p>
+          <div className="neu-card hero-reveal hero-stat-light" style={{ minHeight: "160px", flex: "1 1 200px", maxWidth: "280px", animationDelay: "700ms", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", background: "var(--bg-card)", borderColor: "var(--border-color)" }}>
+            <p ref={autoralCounter.elementRef} className="hero-stat-number" style={{ color: "var(--text-primary)" }}>{autoralCounter.count}%</p>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.375rem" }}>
-              <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#000", display: "inline-block" }} />
-              <p className="hero-stat-label">Design Autoral</p>
+              <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "var(--text-primary)", display: "inline-block" }} />
+              <p className="hero-stat-label" style={{ color: "var(--text-primary)", opacity: 0.6 }}>Design Autoral</p>
             </div>
           </div>
         </div>

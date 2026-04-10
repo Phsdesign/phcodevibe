@@ -202,7 +202,7 @@
     display: block;
     width: 16px;
     height: 2px;
-    background: #0e1c29;
+    background: var(--text-primary);
     border-radius: 2px;
     position: relative;
     transition: all 0.3s ease;
@@ -215,7 +215,7 @@
     left: 0;
     width: 100%;
     height: 2px;
-    background: #0e1c29;
+    background: var(--text-primary);
     border-radius: 2px;
     transition: all 0.3s ease;
   }
@@ -262,7 +262,7 @@
     right: 0;
     width: 280px;
     height: 100dvh;
-    background: #ffffff;
+    background: var(--bg);
     z-index: 100;
     transform: translateX(100%);
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -270,6 +270,7 @@
     padding: 5rem 2rem 2rem;
     box-shadow: -10px 0 40px rgba(0, 0, 0, 0.1);
     pointer-events: none; /* Bloqueia toque quando escondido */
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
   }
 
   .mobile-drawer.open {
@@ -284,9 +285,9 @@
     padding: 1rem 0;
     font-size: 1.1rem;
     font-weight: 600;
-    color: #0e1c29;
+    color: var(--text-primary);
     text-decoration: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    border-bottom: 1px solid var(--border-color);
     transition: all 0.2s ease;
   }
 

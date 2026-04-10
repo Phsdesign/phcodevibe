@@ -18,7 +18,7 @@ export default function Home() {
   useScrollObserver();
 
   return (
-    <main style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", background: "#ffffff" }}>
+    <main style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", background: "var(--bg)" }}>
       <Navbar />
       <Hero />
       <FeaturesAI />
@@ -42,10 +42,10 @@ export default function Home() {
             alignItems: "center",
             gap: "12px",
             padding: "1.2rem 3rem",
-            background: "#ffffff",
+            background: "var(--bg)",
             border: "1px solid rgba(0,0,0,0.1)",
             borderRadius: "100px",
-            color: "#000000",
+            color: "var(--text-primary)",
             fontSize: "0.85rem",
             fontWeight: 900,
             letterSpacing: "0.2em",
