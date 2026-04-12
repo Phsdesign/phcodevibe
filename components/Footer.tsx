@@ -11,16 +11,16 @@ export function Footer() {
         style={{ 
           maxWidth: "1400px", 
           margin: "0 auto", 
-          background: "var(--bg)", 
+          background: "#000", /* Fundo preto fixo no footer para impacto visual */
           borderRadius: "clamp(2rem, 5vw, 4rem)",
-          border: "1px solid var(--border-color)",
+          border: "1px solid rgba(255,255,255,0.1)",
           padding: "clamp(4rem, 10vw, 8rem) clamp(1.5rem, 6vw, 5rem) clamp(2rem, 4vw, 3rem)",
           position: "relative",
           overflow: "hidden",
-          boxShadow: "var(--shadow-md)"
+          boxShadow: "0 40px 100px rgba(0,0,0,0.5)"
         }}
       >
-        {/* Background Large Text Overlay (Refined) */}
+        {/* Background Large Text Overlay */}
         <div 
           style={{ 
             position: "absolute", 
@@ -29,7 +29,7 @@ export function Footer() {
             transform: "translateY(-50%)",
             fontSize: "clamp(10rem, 30vw, 40rem)", 
             fontWeight: 900, 
-            color: "var(--text-primary)", 
+            color: "#fff", 
             opacity: 0.03,
             userSelect: "none",
             letterSpacing: "-0.08em",
@@ -47,8 +47,9 @@ export function Footer() {
             <div 
               className="orbai-badge"
               style={{ 
-                background: "var(--bg-secondary)", 
+                background: "var(--bg)", 
                 border: "1px solid var(--border-color)",
+                color: "var(--text-primary)"
               }}
             >
               <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#4ade80", boxShadow: "0 0 10px #4ade80" }}></span>
@@ -64,12 +65,12 @@ export function Footer() {
                   fontWeight: 800, 
                   letterSpacing: "-0.055em", 
                   lineHeight: 0.9, 
-                  color: "var(--text-primary)",
+                  color: "#fff",
                   marginBottom: "2rem"
                 }}
               >
                 Transformando visão em <br />
-                <span style={{ opacity: 0.1 }}>realidade absoluta.</span>
+                <span style={{ opacity: 0.2 }}>realidade absoluta.</span>
               </h2>
             </div>
             
@@ -79,12 +80,19 @@ export function Footer() {
                   href="https://wa.me/5549991031743"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-primary"
+                  className="btn-shine-mini"
                   style={{
-                    padding: "1.25rem 2.5rem",
-                    borderRadius: "18px",
-                    fontWeight: 700,
-                    fontSize: "1rem"
+                    padding: "1rem 2.2rem",
+                    borderRadius: "100px",
+                    fontWeight: 800,
+                    fontSize: "0.9rem",
+                    background: "#fff",
+                    color: "#000",
+                    textDecoration: "none",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.05em",
+                    boxShadow: "0 10px 20px rgba(255,255,255,0.1)",
+                    transition: "all 0.3s ease"
                   }}
                 >
                   Começar Projeto
@@ -95,18 +103,18 @@ export function Footer() {
         </div>
 
         {/* Separator */}
-        <div style={{ width: "100%", height: "1px", background: "var(--border-color)", marginBottom: "clamp(4rem, 8vw, 6rem)", position: "relative", zIndex: 1 }} />
+        <div style={{ width: "100%", height: "1px", background: "rgba(255,255,255,0.1)", marginBottom: "clamp(4rem, 8vw, 6rem)", position: "relative", zIndex: 1 }} />
 
         {/* Footer Content Grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-24 relative z-10">
           {/* Brand & Mission */}
           <div className="md:col-span-5 animate-fade-slide">
             <div style={{ display: "flex", alignItems: "center", gap: "0.875rem", marginBottom: "2rem" }}>
-              <Image src="/logoicon.svg" alt="Logo" width={36} height={36} />
-              <span style={{ fontWeight: 800, fontSize: "1.5rem", letterSpacing: "-0.04em" }}>PH CODE VIBE</span>
+              <Image src="/logoicon.svg" alt="Logo" width={32} height={32} />
+              <span style={{ fontWeight: 900, fontSize: "1.4rem", letterSpacing: "-0.02em", color: "#fff" }}>PH CODE VIBE</span>
             </div>
             
-            <p style={{ color: "var(--text-primary)", opacity: 0.5, fontSize: "1.125rem", lineHeight: 1.6, maxWidth: "400px", fontWeight: 500 }}>
+            <p style={{ color: "#fff", opacity: 0.6, fontSize: "1.05rem", lineHeight: 1.6, maxWidth: "400px", fontWeight: 400 }}>
               Arquitetando o futuro digital através de design de elite e engenharia de precisão. Menos ruído, mais conexão absoluta.
             </p>
           </div>
@@ -114,46 +122,46 @@ export function Footer() {
           {/* Links Sections */}
           <div className="md:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8">
             <div className="animate-fade-slide-1">
-              <h4 style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.15em", color: "var(--text-primary)", opacity: 0.25, marginBottom: "2rem" }}>
+              <h4 style={{ fontSize: "0.7rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.2em", color: "#fff", opacity: 0.3, marginBottom: "2rem" }}>
                 Navegação
               </h4>
-              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-                <li><Link href="/sobre" style={{ textDecoration: "none", color: "var(--text-primary)", fontWeight: 600, fontSize: "0.9375rem", opacity: 0.6, transition: "opacity 0.2s" }} onMouseEnter={(e) => e.currentTarget.style.opacity = "1"} onMouseLeave={(e) => e.currentTarget.style.opacity = "0.6"}>Studio</Link></li>
-                <li><Link href="/portfolio" style={{ textDecoration: "none", color: "var(--text-primary)", fontWeight: 600, fontSize: "0.9375rem", opacity: 0.6, transition: "opacity 0.2s" }} onMouseEnter={(e) => e.currentTarget.style.opacity = "1"} onMouseLeave={(e) => e.currentTarget.style.opacity = "0.6"}>Showcase</Link></li>
-                <li><Link href="/contato" style={{ textDecoration: "none", color: "var(--text-primary)", fontWeight: 600, fontSize: "0.9375rem", opacity: 0.6, transition: "opacity 0.2s" }} onMouseEnter={(e) => e.currentTarget.style.opacity = "1"} onMouseLeave={(e) => e.currentTarget.style.opacity = "0.6"}>Briefing</Link></li>
+              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "1rem" }}>
+                <li><Link href="/sobre" style={{ textDecoration: "none", color: "#fff", fontWeight: 600, fontSize: "0.9rem", opacity: 0.7, transition: "opacity 0.2s" }}>Studio</Link></li>
+                <li><Link href="/portfolio" style={{ textDecoration: "none", color: "#fff", fontWeight: 600, fontSize: "0.9rem", opacity: 0.7, transition: "opacity 0.2s" }}>Showcase</Link></li>
+                <li><Link href="/contato" style={{ textDecoration: "none", color: "#fff", fontWeight: 600, fontSize: "0.9rem", opacity: 0.7, transition: "opacity 0.2s" }}>Briefing</Link></li>
               </ul>
             </div>
 
             <div className="animate-fade-slide-2">
-              <h4 style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.15em", color: "var(--text-primary)", opacity: 0.25, marginBottom: "2rem" }}>
+              <h4 style={{ fontSize: "0.7rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.2em", color: "#fff", opacity: 0.3, marginBottom: "2rem" }}>
                 Social
               </h4>
-              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-                <li><a href="https://instagram.com/phcodevibe" target="_blank" style={{ textDecoration: "none", color: "var(--text-primary)", fontWeight: 600, fontSize: "0.9375rem", opacity: 0.6, transition: "opacity 0.2s" }} onMouseEnter={(e) => e.currentTarget.style.opacity = "1"} onMouseLeave={(e) => e.currentTarget.style.opacity = "0.6"}>Instagram</a></li>
-                <li><a href="https://behance.net/henriquedesignn" target="_blank" style={{ textDecoration: "none", color: "var(--text-primary)", fontWeight: 600, fontSize: "0.9375rem", opacity: 0.6, transition: "opacity 0.2s" }} onMouseEnter={(e) => e.currentTarget.style.opacity = "1"} onMouseLeave={(e) => e.currentTarget.style.opacity = "0.6"}>Behance</a></li>
+              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "1rem" }}>
+                <li><a href="https://instagram.com/phcodevibe" target="_blank" style={{ textDecoration: "none", color: "#fff", fontWeight: 600, fontSize: "0.9rem", opacity: 0.7 }}>Instagram</a></li>
+                <li><a href="https://behance.net/henriquedesignn" target="_blank" style={{ textDecoration: "none", color: "#fff", fontWeight: 600, fontSize: "0.9rem", opacity: 0.7 }}>Behance</a></li>
               </ul>
             </div>
 
             <div className="animate-fade-slide-3 sm:col-span-1 col-span-2">
-              <h4 style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.15em", color: "var(--text-primary)", opacity: 0.25, marginBottom: "2rem" }}>
+              <h4 style={{ fontSize: "0.7rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.2em", color: "#fff", opacity: 0.3, marginBottom: "2rem" }}>
                 Legal
               </h4>
-              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-                <li><Link href="/privacidade" style={{ textDecoration: "none", color: "var(--text-primary)", opacity: 0.4, fontWeight: 500, fontSize: "0.875rem" }}>Privacy</Link></li>
-                <li><Link href="/termos" style={{ textDecoration: "none", color: "var(--text-primary)", opacity: 0.4, fontWeight: 500, fontSize: "0.875rem" }}>Terms</Link></li>
+              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "1rem" }}>
+                <li><Link href="/privacidade" style={{ textDecoration: "none", color: "#fff", opacity: 0.5, fontWeight: 500, fontSize: "0.85rem" }}>Privacy</Link></li>
+                <li><Link href="/termos" style={{ textDecoration: "none", color: "#fff", opacity: 0.5, fontWeight: 500, fontSize: "0.85rem" }}>Terms</Link></li>
               </ul>
             </div>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div style={{ borderTop: "1px solid var(--border-color)", marginTop: "clamp(4rem, 8vw, 6rem)", paddingTop: "2.5rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1.5rem", position: "relative", zIndex: 1 }}>
-          <p style={{ fontSize: "0.875rem", color: "var(--text-primary)", opacity: 0.3, fontWeight: 600, letterSpacing: "-0.01em" }}>
-            © 2025 PH CODE VIBE. MADE BY <span style={{ color: "var(--text-primary)" }}>PEDRO HENRIQUE</span>.
+        <div style={{ borderTop: "1px solid rgba(255,255,255,0.1)", marginTop: "clamp(4rem, 8vw, 6rem)", paddingTop: "2.5rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1.5rem", position: "relative", zIndex: 1 }}>
+          <p style={{ fontSize: "0.8rem", color: "#fff", opacity: 0.4, fontWeight: 500, letterSpacing: "0.02em" }}>
+            © 2025 PH CODE VIBE. MADE BY <span style={{ fontWeight: 700 }}>PEDRO HENRIQUE</span>.
           </p>
           <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
-            <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#4ade80" }} />
-            <span style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--text-primary)" }}>System Operational</span>
+            <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#4ade80" }} />
+            <span style={{ fontSize: "0.65rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.15em", color: "#fff", opacity: 0.5 }}>System Operational</span>
           </div>
         </div>
       </div>

@@ -116,11 +116,11 @@ export function Hero() {
       {/* Content */}
       <div className="container hero-reveal-container" style={{ textAlign: "center", position: "relative", zIndex: 1 }}>
         {/* STATUS BADGE */}
-        <div className="hero-reveal orbai-badge hidden md:inline-flex" style={{ marginBottom: "2rem", color: "var(--text-primary)", borderColor: "var(--border-color)" }}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+        <div className="hero-reveal orbai-badge hidden md:inline-flex" style={{ marginBottom: "2rem", background: "var(--bg-secondary)", color: "var(--text-primary)", borderColor: "var(--border-color)" }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ color: "var(--text-primary)" }}>
             <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z"/>
           </svg>
-          <span style={{ color: "var(--text-primary)" }}>Design & Experiências High-End</span>
+          <span style={{ color: "var(--text-primary)", fontWeight: 700 }}>Design & Experiências High-End</span>
         </div>
 
         {/* HERO TITLE */}

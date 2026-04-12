@@ -6,28 +6,22 @@ import Link from "next/link";
 import { portfolioData } from "@/data/portfolioData";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /* ═══════════════════════════════════════════════
    IMMERSIVE PROJECT PAGE — Premium Optimized
    ═══════════════════════════════════════════════ */
 
-/* ── Force scroll to top on mount + route change ── */
 function useScrollToTop() {
   const { slug } = useParams();
   useEffect(() => {
-    // Instant scroll — no animation, no delay
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
-    // Double-tap after paint to catch late hydration
-    requestAnimationFrame(() => {
-      window.scrollTo(0, 0);
-    });
+    requestAnimationFrame(() => { window.scrollTo(0, 0); });
   }, [slug]);
 }
 
-/* ── Scroll Reveal Hook (GPU-optimized) ── */
 function useReveal(threshold = 0.12) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -48,7 +42,6 @@ function useReveal(threshold = 0.12) {
   return ref;
 }
 
-/* ── Throttled Parallax Hook (rAF-based, no jank) ── */
 function useParallax(speed = 0.04) {
   const ref = useRef<HTMLDivElement>(null);
   const ticking = useRef(false);
@@ -56,7 +49,6 @@ function useParallax(speed = 0.04) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    // Skip parallax on mobile for performance
     if (window.innerWidth < 768) return;
 
     const handler = () => {
@@ -64,9 +56,7 @@ function useParallax(speed = 0.04) {
       ticking.current = true;
       requestAnimationFrame(() => {
         const rect = el.getBoundingClientRect();
-        const center = rect.top + rect.height / 2;
-        const viewCenter = window.innerHeight / 2;
-        const offset = (center - viewCenter) * speed;
+        const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * speed;
         el.style.transform = `translate3d(0, ${offset}px, 0)`;
         ticking.current = false;
       });
@@ -78,19 +68,16 @@ function useParallax(speed = 0.04) {
   return ref;
 }
 
-/* ── Gallery Image Component (optimized) ── */
 function GalleryImage({
   src,
   alt,
   index,
-  total,
-  onOpen,
+  total
 }: {
   src: string;
   alt: string;
   index: number;
   total: number;
-  onOpen: (i: number) => void;
 }) {
   const revealRef = useReveal(0.08);
   const parallaxRef = useParallax(0.03);
@@ -102,10 +89,7 @@ function GalleryImage({
       className={`proj-gallery-item ${isWide ? "proj-gallery-wide" : "proj-gallery-regular"}`}
       style={{ transitionDelay: `${(index % 4) * 60}ms` }}
     >
-      <div
-        className="proj-image-container"
-        onClick={() => onOpen(index)}
-      >
+      <div className="proj-image-container" style={{ cursor: "default" }}>
         <div ref={parallaxRef} className="proj-image-parallax">
           <Image
             src={src}
@@ -116,124 +100,15 @@ function GalleryImage({
             style={{ objectFit: "cover" }}
           />
         </div>
-
-        {/* Image number badge */}
-        <div className="proj-image-number">
+        <div className="proj-image-number" style={{ background: "#000", color: "#fff", border: "1px solid rgba(255,255,255,0.1)" }}>
           {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
         </div>
-
-        {/* Hover overlay */}
-        <div className="proj-image-hover-overlay">
-          <div className="proj-zoom-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="11" cy="11" r="8"/>
-              <path d="M21 21l-4.35-4.35"/>
-              <path d="M11 8v6M8 11h6"/>
-            </svg>
-          </div>
-        </div>
-
-        {/* Bottom gradient */}
         <div className="proj-image-gradient" />
       </div>
     </div>
   );
 }
 
-/* ── Lightbox Component (touch swipe support) ── */
-function Lightbox({
-  images,
-  currentIndex,
-  onClose,
-  onNext,
-  onPrev,
-}: {
-  images: string[];
-  currentIndex: number;
-  onClose: () => void;
-  onNext: () => void;
-  onPrev: () => void;
-}) {
-  const touchStartX = useRef(0);
-  const touchEndX = useRef(0);
-
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-      if (e.key === "ArrowRight") onNext();
-      if (e.key === "ArrowLeft") onPrev();
-    };
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", handler);
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", handler);
-    };
-  }, [onClose, onNext, onPrev]);
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    touchEndX.current = e.changedTouches[0].clientX;
-    const diff = touchStartX.current - touchEndX.current;
-    if (Math.abs(diff) > 50) {
-      if (diff > 0) onNext();
-      else onPrev();
-    }
-  };
-
-  return (
-    <div className="proj-lightbox" onClick={onClose}>
-      <div
-        className="proj-lightbox-content"
-        onClick={(e) => e.stopPropagation()}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-      >
-        <button className="proj-lightbox-close" onClick={onClose} aria-label="Fechar">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-            <path d="M18 6L6 18M6 6l12 12"/>
-          </svg>
-        </button>
-
-        <div className="proj-lightbox-counter">
-          {currentIndex + 1} / {images.length}
-        </div>
-
-        <div className="proj-lightbox-image-wrapper">
-          <Image
-            key={currentIndex}
-            src={images[currentIndex]}
-            alt={`Imagem ${currentIndex + 1}`}
-            fill
-            sizes="90vw"
-            priority
-            style={{ objectFit: "contain" }}
-            className="proj-lightbox-image"
-          />
-        </div>
-
-        {currentIndex > 0 && (
-          <button className="proj-lightbox-nav proj-lightbox-prev" onClick={onPrev} aria-label="Anterior">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-              <path d="M15 18l-6-6 6-6"/>
-            </svg>
-          </button>
-        )}
-        {currentIndex < images.length - 1 && (
-          <button className="proj-lightbox-nav proj-lightbox-next" onClick={onNext} aria-label="Próximo">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-              <path d="M9 18l6-6-6-6"/>
-            </svg>
-          </button>
-        )}
-      </div>
-    </div>
-  );
-}
-
-/* ── Next / Prev Project Navigation ── */
 function ProjectNav({ currentSlug }: { currentSlug: string }) {
   const currentIdx = portfolioData.findIndex((p) => p.slug === currentSlug);
   const prev = currentIdx > 0 ? portfolioData[currentIdx - 1] : null;
@@ -244,27 +119,27 @@ function ProjectNav({ currentSlug }: { currentSlug: string }) {
     <div ref={revealRef} className="proj-gallery-item proj-nav-section">
       <div className="proj-nav-grid">
         {prev ? (
-          <Link href={`/portfolio/${prev.slug}`} className="proj-nav-card" scroll={true}>
-            <span className="proj-nav-label">
+          <Link href={`/portfolio/${prev.slug}`} className="proj-nav-card" style={{ background: "#000", borderColor: "rgba(255,255,255,0.1)" }} scroll={true}>
+            <span className="proj-nav-label" style={{ color: "#fff", opacity: 0.4 }}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M19 12H5m0 0l7 7m-7-7l7-7"/>
               </svg>
               Projeto Anterior
             </span>
-            <span className="proj-nav-title">{prev.title}</span>
-            <span className="proj-nav-cat">{prev.category}</span>
+            <span className="proj-nav-title" style={{ color: "#fff" }}>{prev.title}</span>
+            <span className="proj-nav-cat" style={{ color: "#fff", opacity: 0.4 }}>{prev.category}</span>
           </Link>
         ) : <div />}
         {next ? (
-          <Link href={`/portfolio/${next.slug}`} className="proj-nav-card proj-nav-card-right" scroll={true}>
-            <span className="proj-nav-label">
+          <Link href={`/portfolio/${next.slug}`} className="proj-nav-card proj-nav-card-right" style={{ background: "#000", borderColor: "rgba(255,255,255,0.1)" }} scroll={true}>
+            <span className="proj-nav-label" style={{ color: "#fff", opacity: 0.4 }}>
               Próximo Projeto
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M5 12h14m0 0l-7-7m7 7l-7 7"/>
               </svg>
             </span>
-            <span className="proj-nav-title">{next.title}</span>
-            <span className="proj-nav-cat">{next.category}</span>
+            <span className="proj-nav-title" style={{ color: "#fff" }}>{next.title}</span>
+            <span className="proj-nav-cat" style={{ color: "#fff", opacity: 0.4 }}>{next.category}</span>
           </Link>
         ) : <div />}
       </div>
@@ -272,51 +147,24 @@ function ProjectNav({ currentSlug }: { currentSlug: string }) {
   );
 }
 
-/* ═══════════════════════════════════════════════
-   MAIN PAGE COMPONENT
-   ═══════════════════════════════════════════════ */
 export default function ProjectPage({ slug: propSlug }: { slug?: string }) {
   const params = useParams();
   const slug = propSlug || params?.slug;
   const router = useRouter();
   const project = portfolioData.find((p) => p.slug === slug);
 
-  /* Force scroll to top on every page load / route change */
   useScrollToTop();
 
-  /* Throttled scroll progress (rAF) */
   const [scrollProgress, setScrollProgress] = useState(0);
-  const scrollTicking = useRef(false);
   useEffect(() => {
     const handler = () => {
-      if (scrollTicking.current) return;
-      scrollTicking.current = true;
-      requestAnimationFrame(() => {
-        const total = document.documentElement.scrollHeight - window.innerHeight;
-        setScrollProgress(total > 0 ? window.scrollY / total : 0);
-        scrollTicking.current = false;
-      });
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(total > 0 ? window.scrollY / total : 0);
     };
     window.addEventListener("scroll", handler, { passive: true });
     return () => window.removeEventListener("scroll", handler);
   }, []);
 
-  /* Lightbox state */
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const openLightbox = useCallback((i: number) => setLightboxIndex(i), []);
-  const closeLightbox = useCallback(() => setLightboxIndex(null), []);
-  const nextImage = useCallback(() => {
-    if (lightboxIndex !== null && project && lightboxIndex < project.mockups.length - 1) {
-      setLightboxIndex(lightboxIndex + 1);
-    }
-  }, [lightboxIndex, project]);
-  const prevImage = useCallback(() => {
-    if (lightboxIndex !== null && lightboxIndex > 0) {
-      setLightboxIndex(lightboxIndex - 1);
-    }
-  }, [lightboxIndex]);
-
-  /* Reveal refs */
   const heroRevealRef = useReveal(0.05);
   const challengeRef = useReveal();
   const solutionRef = useReveal();
@@ -330,19 +178,18 @@ export default function ProjectPage({ slug: propSlug }: { slug?: string }) {
   const currentIdx = portfolioData.findIndex((p) => p.slug === slug);
 
   return (
-    <main className="proj-page-main">
+    <main className="proj-page-main" style={{ background: "var(--bg)", color: "var(--text-primary)" }}>
       <Navbar />
 
-      {/* Scroll Progress Bar — GPU composited */}
       <div
         className="proj-scroll-progress"
-        style={{ transform: `scaleX(${scrollProgress})` }}
+        style={{ transform: `scaleX(${scrollProgress})`, background: "var(--text-primary)" }}
       />
 
       {/* ── HERO SECTION ── */}
-      <section className="proj-hero">
+      <section className="proj-hero" style={{ background: "var(--bg)" }}>
         <div className="container">
-          <Link href="/#portfolio" className="proj-back-link">
+          <Link href="/#portfolio" className="proj-back-link" style={{ color: "var(--text-primary)", opacity: 0.4 }}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M19 12H5m0 0l7 7m-7-7l7-7"/>
             </svg>
@@ -351,18 +198,17 @@ export default function ProjectPage({ slug: propSlug }: { slug?: string }) {
 
           <div ref={heroRevealRef} className="proj-gallery-item">
             <div className="proj-category-badge">
-              <span>{project.category}</span>
+              <span style={{ background: "var(--bg-secondary)", borderColor: "var(--border-color)", color: "var(--text-primary)" }}>{project.category}</span>
             </div>
-            <h1 className="proj-title">{project.title}</h1>
+            <h1 className="proj-title" style={{ color: "var(--text-primary)" }}>{project.title}</h1>
             <div className="proj-meta-row">
-              <div className="proj-meta-item">
+              <div className="proj-meta-item" style={{ color: "var(--text-primary)" }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <rect x="2" y="2" width="20" height="20" rx="2"/>
-                  <path d="M2 16l5-5 4 4 4-6 7 7"/>
+                  <rect x="2" y="2" width="20" height="20" rx="2"/><path d="M2 16l5-5 4 4 4-6 7 7"/>
                 </svg>
                 <span>{project.mockups.length} imagens</span>
               </div>
-              <div className="proj-meta-item">
+              <div className="proj-meta-item" style={{ color: "var(--text-primary)" }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z"/>
                 </svg>
@@ -373,9 +219,9 @@ export default function ProjectPage({ slug: propSlug }: { slug?: string }) {
         </div>
       </section>
 
-      {/* ── HERO IMAGE — Full Width Cinematic ── */}
+      {/* ── HERO IMAGE ── */}
       <section className="proj-hero-image-section">
-        <div className="proj-hero-image-wrapper" onClick={() => openLightbox(0)}>
+        <div className="proj-hero-image-wrapper" style={{ cursor: "default", boxShadow: "0 20px 60px rgba(0,0,0,0.3)" }}>
           <Image
             src={project.mockups[0]}
             alt={`${project.title} Hero`}
@@ -385,36 +231,27 @@ export default function ProjectPage({ slug: propSlug }: { slug?: string }) {
             style={{ objectFit: "cover" }}
           />
           <div className="proj-hero-image-overlay" />
-          <div className="proj-hero-image-scroll-hint">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-              <path d="M12 5v14m0 0l-6-6m6 6l6-6"/>
-            </svg>
-            <span>Scroll para explorar</span>
-          </div>
         </div>
       </section>
 
       {/* ── CHALLENGE SECTION ── */}
-      <section className="proj-text-section">
+      <section className="proj-text-section" style={{ background: "var(--bg)" }}>
         <div className="container">
           <div ref={challengeRef} className="proj-gallery-item proj-text-block">
             <div className="proj-section-label">
-              <div className="proj-section-line" />
-              <span>O Desafio</span>
+              <div className="proj-section-line" style={{ background: "var(--text-primary)" }} />
+              <span style={{ color: "var(--text-primary)" }}>O Desafio</span>
             </div>
-            <p className="proj-text-content">{project.challenge}</p>
+            <p className="proj-text-content" style={{ color: "var(--text-primary)", opacity: 0.7 }}>{project.challenge}</p>
           </div>
         </div>
       </section>
 
-      {/* ── GALLERY — Immersive Masonry ── */}
-      <section className="proj-gallery-section">
+      {/* ── GALLERY ── */}
+      <section className="proj-gallery-section" style={{ background: "var(--bg-secondary)" }}>
         <div className="container" style={{ maxWidth: "1280px" }}>
           <div className="proj-gallery-header">
-            <h2 className="proj-gallery-title">Galeria do Projeto</h2>
-            <p className="proj-gallery-subtitle">
-              Clique em qualquer imagem para visualizar em tela cheia
-            </p>
+            <h2 className="proj-gallery-title" style={{ color: "var(--text-primary)" }}>Galeria do Projeto</h2>
           </div>
           <div className="proj-masonry-grid">
             {project.mockups.slice(1).map((mockup, idx) => (
@@ -424,7 +261,6 @@ export default function ProjectPage({ slug: propSlug }: { slug?: string }) {
                 alt={`${project.title} — Mockup ${idx + 2}`}
                 index={idx + 1}
                 total={project.mockups.length}
-                onOpen={openLightbox}
               />
             ))}
           </div>
@@ -432,22 +268,22 @@ export default function ProjectPage({ slug: propSlug }: { slug?: string }) {
       </section>
 
       {/* ── SOLUTION SECTION ── */}
-      <section className="proj-solution-section">
+      <section className="proj-solution-section" style={{ background: "var(--bg)" }}>
         <div className="container">
           <div ref={solutionRef} className="proj-gallery-item proj-solution-block">
             <div className="proj-section-label">
-              <div className="proj-section-line" />
-              <span>A Solução</span>
+              <div className="proj-section-line" style={{ background: "var(--text-primary)" }} />
+              <span style={{ color: "var(--text-primary)" }}>A Solução</span>
             </div>
-            <p className="proj-solution-text">{project.solution}</p>
+            <p className="proj-solution-text" style={{ color: "var(--text-primary)", opacity: 0.7 }}>{project.solution}</p>
             <div style={{ marginTop: "3rem", display: "flex", flexWrap: "wrap", gap: "1rem" }}>
-              <Link href="/#contato" className="proj-cta-primary">
+              <Link href="/#contato" className="proj-cta-primary" style={{ background: "#000", color: "#fff", padding: "1rem 2rem", borderRadius: "100px", fontWeight: 700 }}>
                 <span>Iniciar Projeto Semelhante</span>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M7 17L17 7M17 7H7M17 7V17"/>
                 </svg>
               </Link>
-              <Link href="/#portfolio" className="proj-cta-secondary">
+              <Link href="/#portfolio" className="proj-cta-secondary" style={{ color: "var(--text-primary)", borderColor: "var(--border-color)", padding: "1rem 2rem", borderRadius: "100px" }}>
                 Ver Mais Projetos
               </Link>
             </div>
@@ -456,24 +292,13 @@ export default function ProjectPage({ slug: propSlug }: { slug?: string }) {
       </section>
 
       {/* ── NEXT / PREV PROJECT ── */}
-      <section style={{ padding: "4rem 0 2rem", background: "#fff" }}>
+      <section style={{ padding: "4rem 0 2rem", background: "var(--bg)" }}>
         <div className="container" style={{ maxWidth: "1280px" }}>
           <ProjectNav currentSlug={project.slug} />
         </div>
       </section>
 
       <Footer />
-
-      {/* ── LIGHTBOX ── */}
-      {lightboxIndex !== null && (
-        <Lightbox
-          images={project.mockups}
-          currentIndex={lightboxIndex}
-          onClose={closeLightbox}
-          onNext={nextImage}
-          onPrev={prevImage}
-        />
-      )}
     </main>
   );
 }
