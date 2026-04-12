@@ -7,34 +7,40 @@ const regularPlans = [
   {
     name: "Plano Start",
     price: "1.500",
-    desc: "O essencial para sua presença digital profissional.",
+    desc: "Ideal para profissionais que buscam uma conversão direta com estética minimalista.",
+    cta: "Começar Meu Projeto",
     features: [
-      "Landing Page de Alta Conversão",
-      "SEO Base (Indexação Google)",
-      "Copywriting focado em Vendas",
-      "Botão Direto para WhatsApp",
+      "Estrutura de até 5 Sessões",
+      "Design Minimalista & Premium",
+      "Copywriting Persuasivo",
+      "Otimização Mobile Nativa",
+      "Botão WhatsApp Flutuante",
     ],
   },
   {
     name: "Plano Personalizado",
     price: "5.000+",
-    desc: "Sistemas complexos e experiências imersivas sob medida.",
+    desc: "Ecossistemas digitais robustos e experiências ultra-imersivas sob medida.",
+    cta: "Falar com Especialista",
     features: [
       "Tudo do plano Elite",
-      "Motion Design Integrado (Lottie)",
-      "Otimização Core Web Vitals",
-      "Consultoria de Estratégia Digital",
+      "Sistemas de Agendamento/Pagamento",
+      "Motion Design Avançado (Lottie)",
+      "Otimização de Conversão (CRO)",
+      "Consultoria de UX & Marca",
     ],
   },
   {
     name: "Plano Elite",
     price: "3.000",
-    desc: "O equilíbrio perfeito entre design premium e resultados.",
+    desc: "Autoridade visual e performance para marcas que exigem o melhor do mercado.",
+    cta: "Construir Minha Autoridade",
     features: [
       "Tudo do plano Start",
-      "Design Exclusivo (Sem Templates)",
-      "Animations & Micro-interactions",
-      "SEO Avançado & Performance",
+      "Sessões Ilimitadas",
+      "Design Exclusive e Autoral",
+      "Animações & Micro-interações",
+      "SEO Avançado (Google Rank)",
     ],
   },
 ];
@@ -44,6 +50,7 @@ const websitePlans = [
     name: "Site Start",
     price: "4.800",
     desc: "A base sólida para empresas que precisam de presença digital profissional e elegante.",
+    cta: "Iniciar Meu Site",
     features: [
       "Até 4 Páginas Exclusivas",
       "Design Minimalista e Premium",
@@ -56,6 +63,7 @@ const websitePlans = [
     name: "Custom & Saas",
     price: "15.000+",
     desc: "Engenharia digital sob medida para ecossistemas complexos e softwares.",
+    cta: "Projetar Ecossistema",
     features: [
       "Páginas e Fluxos Ilimitados",
       "Painel de Controle Customizado",
@@ -68,6 +76,7 @@ const websitePlans = [
     name: "Site Elite",
     price: "8.500",
     desc: "Autoridade máxima e experiência imersiva para marcas líderes de mercado.",
+    cta: "Dominar o Mercado",
     features: [
       "Até 10 Páginas Personalizadas",
       "Motion Design Avançado",
@@ -116,6 +125,44 @@ export function Pricing() {
         @keyframes chrome-shine {
           0% { background-position: 200% center; }
           100% { background-position: -200% center; }
+        }
+
+        @keyframes silver-neon-pulse {
+          0%, 100% { 
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.4), inset -1px -1px 3px rgba(255,255,255,0.2), 0 0 8px rgba(192, 192, 192, 0.3);
+            filter: brightness(1);
+          }
+          50% { 
+            box-shadow: inset 1px 1px 3px rgba(0,0,0,0.2), inset -2px -2px 6px rgba(255,255,255,0.4), 0 0 15px rgba(255, 255, 255, 0.6);
+            filter: brightness(1.4);
+          }
+        }
+
+        .feature-dot-3d {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: radial-gradient(circle at 30% 30%, #ffffff 0%, #a1a1a1 50%, #666 100%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          position: relative;
+          animation: silver-neon-pulse 4s infinite ease-in-out;
+          border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .feature-dot-3d::after {
+          content: "";
+          position: absolute;
+          width: 4px;
+          height: 4px;
+          background: white;
+          border-radius: 50%;
+          top: 20%;
+          left: 20%;
+          filter: blur(1px);
+          opacity: 0.8;
         }
         
         .premium-card-glass {
@@ -393,7 +440,8 @@ export function Pricing() {
                   <p style={{ 
                     fontSize: "1rem", 
                     lineHeight: 1.6, 
-                    color: isCenter ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.6)", 
+                    color: "inherit", 
+                    opacity: 0.7,
                     minHeight: "3.5rem",
                     fontWeight: 500
                   }}>
@@ -443,7 +491,8 @@ export function Pricing() {
 
                 <div style={{ 
                   height: "1px", 
-                  background: isCenter ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.06)", 
+                  background: "currentColor",
+                  opacity: 0.1,
                   marginBottom: "2.5rem",
                   position: "relative",
                   zIndex: 2 
@@ -465,20 +514,12 @@ export function Pricing() {
                       alignItems: "center", 
                       gap: "14px", 
                       fontSize: "0.9rem", 
-                      color: isCenter ? "rgba(255,255,255,0.6)" : "rgba(0,0,0,0.6)",
+                      color: "inherit",
+                      opacity: 0.7,
                       fontWeight: 500 
                     }}>
-                      <div style={{
-                        width: "18px",
-                        height: "18px",
-                        borderRadius: "50%",
-                        background: isCenter ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.05)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0
-                      }}>
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4">
+                      <div className="feature-dot-3d">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="5" style={{ position: "relative", zIndex: 2, opacity: 0.8 }}>
                           <polyline points="20 6 9 17 4 12" />
                         </svg>
                       </div>
@@ -559,18 +600,20 @@ export function Pricing() {
                     textTransform: "uppercase", 
                     letterSpacing: "0.3em", 
                     marginBottom: "1.8rem", 
-                    color: isCenter ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.4)" 
+                    color: "inherit",
+                    opacity: 0.5 
                   }}>
                     {p.name}
                   </div>
                   <div style={{ display: "flex", alignItems: "baseline", gap: "0.5rem", marginBottom: "1.2rem" }}>
-                    <span style={{ fontSize: "1.2rem", fontWeight: 800, color: isCenter ? "#fff" : "#000", opacity: 0.4 }}>R$</span>
-                    <p style={{ fontSize: "3.8rem", fontWeight: 900, letterSpacing: "-0.04em", color: isCenter ? "#fff" : "#000", fontFamily: "var(--font-display)", lineHeight: 1 }}>{p.price}</p>
+                    <span style={{ fontSize: "1.2rem", fontWeight: 800, color: "inherit", opacity: 0.4 }}>R$</span>
+                    <p style={{ fontSize: "3.8rem", fontWeight: 900, letterSpacing: "-0.04em", color: "inherit", fontFamily: "var(--font-display)", lineHeight: 1 }}>{p.price}</p>
                   </div>
                   <p style={{ 
                     fontSize: "1rem", 
                     lineHeight: 1.6, 
-                    color: isCenter ? "rgba(255,255,255,0.7)" : "rgba(0,0,0,0.6)", 
+                    color: "inherit", 
+                    opacity: 0.7,
                     minHeight: "3.5rem",
                     fontWeight: 500
                   }}>
@@ -620,7 +663,8 @@ export function Pricing() {
 
                 <div style={{ 
                   height: "1px", 
-                  background: isCenter ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.06)", 
+                  background: "currentColor",
+                  opacity: 0.1,
                   marginBottom: "2.5rem",
                   position: "relative",
                   zIndex: 2 
@@ -642,20 +686,12 @@ export function Pricing() {
                       alignItems: "center", 
                       gap: "14px", 
                       fontSize: "0.9rem", 
-                      color: isCenter ? "rgba(255,255,255,0.6)" : "rgba(0,0,0,0.6)",
+                      color: "inherit",
+                      opacity: 0.7,
                       fontWeight: 500 
                     }}>
-                      <div style={{
-                        width: "18px",
-                        height: "18px",
-                        borderRadius: "50%",
-                        background: isCenter ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.05)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0
-                      }}>
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4">
+                      <div className="feature-dot-3d">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="5" style={{ position: "relative", zIndex: 2, opacity: 0.8 }}>
                           <polyline points="20 6 9 17 4 12" />
                         </svg>
                       </div>
@@ -719,16 +755,17 @@ export function Pricing() {
                 Transparência &amp; Segurança
               </div>
               <h3 style={{ 
-                fontSize: "clamp(2rem, 8vw, 4rem)", 
-                fontWeight: 900, 
+                fontSize: "clamp(2.5rem, 6vw, 4.2rem)", 
+                fontWeight: 950, 
                 color: "var(--text-primary)",
-                lineHeight: 1.1,
-                letterSpacing: "-0.04em",
+                lineHeight: 1,
+                letterSpacing: "-0.05em",
                 marginBottom: "1.8rem",
                 fontFamily: "var(--font-display), var(--font-inter), sans-serif",
-                wordBreak: "break-word"
+                textTransform: "uppercase"
               }}>
-                COMO <br/><span style={{ opacity: 0.3 }}>TRABALHAMOS</span>.
+                COMO <br/>
+                <span style={{ opacity: 0.3, whiteSpace: "nowrap" }}>TRABALHAMOS.</span>
               </h3>
               <p style={{ 
                 color: "var(--text-primary)", 
@@ -788,17 +825,18 @@ export function Pricing() {
 
               {/* Opção 2 */}
               <div style={{
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(255,255,255,0.08)",
+                background: "var(--bg-secondary)",
+                opacity: 0.8,
+                border: "1px solid var(--border-color)",
                 padding: "2.2rem",
                 borderRadius: "24px",
                 backdropFilter: "blur(10px)"
               }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "1rem" }}>
-                  <div style={{ width: "12px", height: "12px", borderRadius: "50%", background: "transparent", border: "2px solid rgba(255,255,255,0.4)", flexShrink: 0 }} />
-                  <h4 style={{ color: "#ffffff", fontSize: "1.25rem", fontWeight: 700, fontFamily: "var(--font-inter), sans-serif", margin: 0 }}>100% Antecipado</h4>
+                  <div style={{ width: "12px", height: "12px", borderRadius: "50%", background: "transparent", border: "2px solid var(--text-primary)", opacity: 0.4, flexShrink: 0 }} />
+                  <h4 style={{ color: "var(--text-primary)", fontSize: "1.25rem", fontWeight: 700, fontFamily: "var(--font-inter), sans-serif", margin: 0 }}>100% Antecipado</h4>
                 </div>
-                <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "1rem", lineHeight: 1.6, fontFamily: "var(--font-inter), sans-serif", fontWeight: 400, margin: 0 }}>
+                <p style={{ color: "var(--text-primary)", opacity: 0.5, fontSize: "1rem", lineHeight: 1.6, fontFamily: "var(--font-inter), sans-serif", fontWeight: 400, margin: 0 }}>
                   Pagamento via contrato fechado no ato. Toda cronologia e segurança de entrega são protegidas juridicamente em contrato formal.
                 </p>
               </div>
@@ -812,15 +850,15 @@ export function Pricing() {
                 gap: "1.2rem", 
                 marginTop: "1rem"
               }}>
-                <h4 style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.85rem", textTransform: "uppercase", letterSpacing: "0.15em", fontFamily: "var(--font-inter), sans-serif", margin: 0, fontWeight: 700 }}>Pagamentos via</h4>
+                <h4 style={{ color: "var(--text-primary)", opacity: 0.4, fontSize: "0.85rem", textTransform: "uppercase", letterSpacing: "0.15em", fontFamily: "var(--font-inter), sans-serif", margin: 0, fontWeight: 700 }}>Pagamentos via</h4>
                 
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "12px" }}>
                   <div style={{ 
                     padding: "0.6rem 1.5rem", 
-                    background: "rgba(255,255,255,0.05)", 
+                    background: "var(--bg-secondary)", 
                     borderRadius: "100px", 
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    color: "#ffffff",
+                    border: "1px solid var(--border-color)",
+                    color: "var(--text-primary)",
                     fontFamily: "var(--font-inter), sans-serif",
                     fontWeight: 600,
                     fontSize: "0.95rem"
@@ -829,10 +867,10 @@ export function Pricing() {
                   </div>
                   <div style={{ 
                     padding: "0.6rem 1.5rem", 
-                    background: "rgba(255,255,255,0.05)", 
+                    background: "var(--bg-secondary)", 
                     borderRadius: "100px", 
-                    border: "1px solid rgba(255,255,255,0.1)",
-                    color: "#ffffff",
+                    border: "1px solid var(--border-color)",
+                    color: "var(--text-primary)",
                     fontFamily: "var(--font-inter), sans-serif",
                     fontWeight: 600,
                     fontSize: "0.95rem"
