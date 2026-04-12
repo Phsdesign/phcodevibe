@@ -1668,32 +1668,6 @@ section {
    ========================================== */
 
 /* ── NAVBAR ── */
-@keyframes navbar-pill-entrance {
-  from { 
-    opacity: 0; 
-    transform: translate3d(0, -30px, 0); 
-  }
-  to { 
-    opacity: 1; 
-    transform: translate3d(0, 0, 0); 
-  }
-}
-
-.navbar-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 9999;
-  padding: 1.5rem 0;
-  pointer-events: none;
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  display: flex;
-  justify-content: center;
-}
-
 .navbar-nav {
   display: flex;
   align-items: center;
@@ -1708,7 +1682,6 @@ section {
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
   pointer-events: auto;
-  animation: navbar-pill-entrance 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   will-change: transform, opacity;
 }
 
