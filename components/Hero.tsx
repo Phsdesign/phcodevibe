@@ -159,9 +159,9 @@ export function Hero() {
             <p ref={projectsCounter.elementRef} className="hero-stat-number" style={{ color: "var(--text-primary)" }}>{projectsCounter.count}+</p>
             <p className="hero-stat-label" style={{ color: "var(--text-primary)", opacity: 0.6 }}>Projetos Lançados</p>
           </div>
-          <div className="neu-card hero-reveal hero-stat-dark" style={{ minHeight: "160px", flex: "1 1 200px", maxWidth: "280px", animationDelay: "600ms", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", background: "var(--text-primary)", color: "var(--bg)", borderColor: "var(--border-color)" }}>
-            <p ref={satisfactionCounter.elementRef} className="hero-stat-number" style={{ color: "var(--bg)" }}>{satisfactionCounter.count}%</p>
-            <p className="hero-stat-label" style={{ color: "var(--bg)", opacity: 0.6 }}>Satisfação</p>
+          <div className="neu-card hero-reveal hero-stat-dark" style={{ minHeight: "160px", flex: "1 1 200px", maxWidth: "280px", animationDelay: "600ms", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", background: "var(--bg-card)", borderColor: "var(--border-color)" }}>
+            <p ref={satisfactionCounter.elementRef} className="hero-stat-number" style={{ color: "var(--text-primary)" }}>{satisfactionCounter.count}%</p>
+            <p className="hero-stat-label" style={{ color: "var(--text-primary)", opacity: 0.6 }}>Satisfação</p>
           </div>
           <div className="neu-card hero-reveal hero-stat-light" style={{ minHeight: "160px", flex: "1 1 200px", maxWidth: "280px", animationDelay: "700ms", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", background: "var(--bg-card)", borderColor: "var(--border-color)" }}>
             <p ref={autoralCounter.elementRef} className="hero-stat-number" style={{ color: "var(--text-primary)" }}>{autoralCounter.count}%</p>
