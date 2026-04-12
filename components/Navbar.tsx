@@ -25,7 +25,6 @@ export function Navbar() {
       const scrollY = window.scrollY;
       setScrolled(scrollY > 40);
       
-      // Esconde a navbar no desktop (lg: 1024px) após 800px de scroll
       if (window.innerWidth >= 1024) {
         setHidden(scrollY > 800);
       } else {
@@ -38,14 +37,13 @@ export function Navbar() {
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll); // Atualiza ao redimensionar
+    window.addEventListener("resize", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleScroll);
     };
   }, [handleScroll]);
 
-  // Lock body scroll when drawer is open
   useEffect(() => {
     if (drawerOpen) {
       document.body.style.overflow = "hidden";
@@ -59,19 +57,16 @@ export function Navbar() {
 
   return (
     <>
-      <header 
-        role="banner" 
-        className={`navbar-header ${scrolled ? "navbar-scrolled" : ""} ${hidden ? "navbar-hidden-desktop" : ""}`}
-      >
-        <nav className="container navbar-nav">
+      <header className={`navbar-header ${hidden ? "navbar-hidden-desktop" : ""}`}>
+        <nav className="navbar-nav">
           {/* Logo */}
-          <Link href="/" className="navbar-logo-link" aria-label="Ir para a página inicial">
-            <Image src="/logoicon.svg" alt="PH Code Vibe Logo" width={28} height={28} style={{ objectFit: "contain" }} priority />
+          <Link href="/" className="navbar-logo-link" style={{ display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none" }}>
+            <Image src="/logoicon.svg" alt="Logo" width={22} height={22} style={{ filter: "brightness(0) invert(1)" }} />
             <span className="navbar-brand">PH CODE VIBE</span>
           </Link>
 
-          {/* Nav Links (Desktop) */}
-          <div className="hidden lg:flex items-center gap-8">
+          {/* Desktop Nav */}
+          <div className="hidden lg:flex items-center gap-6">
             {links.map((l) => (
               <Link key={l.href} href={l.href} className="navbar-link">
                 {l.label}
@@ -79,83 +74,55 @@ export function Navbar() {
             ))}
           </div>
 
-          {/* CTA + Hamburger */}
+          {/* Right Area */}
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
             <div className="hidden md:flex navbar-status-pill">
-              <span className="navbar-status-dot" />
+              <span className="navbar-status-dot animate-ping" />
               <span className="navbar-status-text">Disponível</span>
             </div>
 
-            <Link href="#contato" className="navbar-cta" aria-label="Iniciar novo projeto">
+            <Link href="#contato" className="navbar-cta">
               Começar Projeto
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                 <path d="M7 17L17 7M17 7H7M17 7V17"/>
               </svg>
             </Link>
 
-            {/* Hamburger Button — Only visible on mobile via CSS */}
+            {/* Mobile Toggle */}
             <button
-              className={`mobile-hamburger ${drawerOpen ? "open" : ""}`}
+              className="md:hidden"
               onClick={() => setDrawerOpen(!drawerOpen)}
-              aria-label="Abrir menu de navegação"
-              style={{ display: "none" }}  /* Hidden by default; CSS shows it on mobile */
+              style={{ background: "transparent", border: "none", color: "#fff", padding: "0.5rem", display: "flex", alignItems: "center" }}
             >
-              <span />
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d={drawerOpen ? "M18 6L6 18M6 6l12 12" : "M3 12h18M3 6h18M3 18h18"} />
+              </svg>
             </button>
           </div>
         </nav>
       </header>
 
-      {/* Mobile Drawer Overlay */}
+      {/* Mobile Menu */}
       <div
         className={`mobile-drawer-overlay ${drawerOpen ? "open" : ""}`}
         onClick={closeDrawer}
-        style={{ display: "none" }}
-        aria-hidden={!drawerOpen}
       />
 
-      {/* Mobile Drawer */}
-      <nav
-        className={`mobile-drawer ${drawerOpen ? "open" : ""}`}
-        style={{ display: "none" }}
-        role="navigation"
-        aria-label="Menu principal mobile"
-      >
-        {/* Close button */}
-        <button
-          className="mobile-drawer-close"
-          onClick={closeDrawer}
-          aria-label="Fechar menu"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <nav className={`mobile-drawer ${drawerOpen ? "open" : ""}`}>
+        <button className="mobile-drawer-close" onClick={closeDrawer}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
             <path d="M18 6L6 18M6 6l12 12"/>
           </svg>
         </button>
 
-        {/* Links */}
         {links.map((l) => (
-          <Link
-            key={l.href}
-            href={l.href}
-            className="mobile-drawer-link"
-            onClick={closeDrawer}
-          >
+          <Link key={l.href} href={l.href} className="mobile-drawer-link" onClick={closeDrawer}>
             {l.label}
           </Link>
         ))}
 
-        {/* CTA */}
-        <a
-          href="https://wa.me/5549991031743"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mobile-drawer-cta"
-          onClick={closeDrawer}
-        >
+        <a href="https://wa.me/5549991031743" target="_blank" className="mobile-drawer-cta" onClick={closeDrawer}>
           Começar Projeto
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M7 17L17 7M17 7H7M17 7V17"/>
-          </svg>
         </a>
       </nav>
     </>
