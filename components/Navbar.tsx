@@ -13,7 +13,6 @@ const links = [
 ];
 
 export function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const ticking = useRef(false);
@@ -23,7 +22,6 @@ export function Navbar() {
     ticking.current = true;
     requestAnimationFrame(() => {
       const scrollY = window.scrollY;
-      setScrolled(scrollY > 40);
       
       if (window.innerWidth >= 1024) {
         setHidden(scrollY > 800);
@@ -60,8 +58,15 @@ export function Navbar() {
       <header className={`navbar-header ${hidden ? "navbar-hidden-desktop" : ""}`}>
         <nav className="navbar-nav">
           {/* Logo */}
-          <Link href="/" className="navbar-logo-link" style={{ display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none" }}>
-            <Image src="/logoicon.svg" alt="Logo" width={22} height={22} style={{ filter: "brightness(0) invert(1)" }} />
+          <Link href="/" className="navbar-logo-link">
+            <Image 
+              src="/logoicon.svg" 
+              alt="Logo" 
+              width={24} 
+              height={24} 
+              priority
+              style={{ objectFit: "contain" }}
+            />
             <span className="navbar-brand">PH CODE VIBE</span>
           </Link>
 
