@@ -14,11 +14,15 @@ import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { motion } from "framer-motion";
 
+import { SplashLoader } from "@/components/SplashLoader";
+
 export default function Home() {
   useScrollObserver();
 
   return (
-    <main style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", background: "var(--bg)" }}>
+    <>
+      <SplashLoader />
+      <main style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", background: "var(--bg)" }}>
       <Navbar />
       <Hero />
       <FeaturesAI />
@@ -66,5 +70,6 @@ export default function Home() {
       <Contact />
       <Footer />
     </main>
+    </>
   );
 }

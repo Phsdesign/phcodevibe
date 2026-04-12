@@ -552,11 +552,36 @@ section {
 }
 
 /* Navbar: Disable heavy effects during the critical initial scroll (first 100px) */
+/* Unificação Final Navbar: Apenas pílula centralizada */
+.navbar-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  padding: 1.5rem 0;
+  pointer-events: none;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  display: flex;
+  justify-content: center;
+}
+
 .navbar-nav {
-  /* ... existing styles ... */
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* Only transform */
-  backdrop-filter: none !important; /* Remove blur during initial scroll tests */
-  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1.5rem;
+  width: 92vw;
+  max-width: 1200px;
+  background: #111111 !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  pointer-events: auto;
 }
 
 /* ---- Status Ping Dot ---- */
