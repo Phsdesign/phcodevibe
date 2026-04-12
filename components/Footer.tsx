@@ -82,17 +82,21 @@ export function Footer() {
                   rel="noopener noreferrer"
                   className="btn-shine-mini"
                   style={{
-                    padding: "1rem 2.2rem",
+                    padding: "clamp(0.7rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2.2rem)",
                     borderRadius: "100px",
                     fontWeight: 800,
-                    fontSize: "0.9rem",
+                    fontSize: "clamp(0.75rem, 2vw, 0.9rem)",
                     background: "#fff",
                     color: "#000",
                     textDecoration: "none",
                     textTransform: "uppercase",
                     letterSpacing: "0.05em",
                     boxShadow: "0 10px 20px rgba(255,255,255,0.1)",
-                    transition: "all 0.3s ease"
+                    transition: "all 0.3s ease",
+                    whiteSpace: "nowrap",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center"
                   }}
                 >
                   Começar Projeto

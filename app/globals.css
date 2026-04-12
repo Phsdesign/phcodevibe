@@ -1926,6 +1926,8 @@ section {
   word-break: break-word;
 }
 .hero-rotating-word {
+  font-family: var(--font-body) !important;
+  font-weight: 900;
   color: #000;
   background-image: linear-gradient(90deg, #000, #555, #000, #555, #000);
   -webkit-background-clip: text;
