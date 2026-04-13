@@ -17,6 +17,16 @@
     -webkit-text-size-adjust: 100%;
   }
 
+  /* Esconder linha vertical do scrollbar no mobile */
+  ::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+  }
+  * {
+    scrollbar-width: none !important; /* Firefox */
+    -ms-overflow-style: none !important; /* IE/Edge */
+  }
+
   body {
     overflow: visible !important; /* Libera o scroll para o html */
     position: relative !important;

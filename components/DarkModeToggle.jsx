@@ -39,8 +39,12 @@ export default function DarkModeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="flex items-center justify-center w-[50px] h-[50px] rounded-full bg-white dark:bg-[#1a1a1a] text-black dark:text-white border border-gray-200 dark:border-neutral-800 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-      style={{ boxShadow: "0 4px 16px rgba(0,0,0,0.1)" }}
+      className="flex items-center justify-center w-[50px] h-[50px] bg-white dark:bg-[#1a1a1a] text-black dark:text-white border border-gray-200 dark:border-neutral-800 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+      style={{ 
+        boxShadow: "0 4px 16px rgba(0,0,0,0.1)",
+        borderRadius: "50%",
+        overflow: "hidden"
+      }}
       aria-label="Alternar tema"
     >
       {isDarkMode ? (

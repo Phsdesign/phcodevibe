@@ -2,6 +2,42 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+
+const entranceVariants = {
+  hidden: { opacity: 0, y: 30, filter: "blur(10px)" },
+  visible: (custom: number) => ({
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: {
+      delay: custom,
+      duration: 1.2,
+      ease: [0.16, 1, 0.3, 1]
+    }
+  })
+};
+
+const cardHoverVariants = {
+  initial: { 
+    backgroundColor: "rgba(0, 0, 0, 0.05)", 
+    color: "var(--text-primary)"
+  },
+  hover: { 
+    backgroundColor: "var(--text-primary)", 
+    color: "var(--bg)",
+    scale: 1.02,
+    transition: {
+      duration: 0.4,
+      ease: [0.16, 1, 0.3, 1]
+    }
+  }
+};
+
+const textHoverVariants = {
+  initial: { color: "var(--text-primary)" },
+  hover: { color: "var(--bg)" }
+};
 
 function useCounter(target: number, duration: number = 2000) {
   const [count, setCount] = useState(0);
@@ -75,73 +111,105 @@ export function Hero() {
   }, [ROTATING_WORDS.length]);
 
   return (
-    <section id="hero" className="hero-section" style={{ position: "relative", overflow: isMobile ? "visible" : "hidden", minHeight: "100vh", width: "100%", display: "flex", alignItems: "center", background: "var(--bg)" }}>
-      {/* Background Video Implementation - Only on Desktop */}
-      {isDesktop && (
-        <>
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              zIndex: -1,
-              willChange: "transform",
-              transform: "translate3d(0,0,0)",
-              filter: "var(--hero-video-filter)", // Dinâmico via CSS vars
-            }}
-          >
-            <source src="/bg-hero-v2.mp4" type="video/mp4" />
-            Seu navegador não suporta vídeos HTML5.
-          </video>
-          {/* Overlay Branco para clarear ainda mais */}
-          <div style={{
-            position: "absolute",
-            inset: 0,
-            background: "var(--glass)",
-            zIndex: 0,
-            pointerEvents: "none",
-            opacity: 0.5
-          }} />
-        </>
-      )}
+    <section id="hero" className="hero-section" style={{ position: "relative", overflow: "visible", minHeight: "100vh", width: "100%", display: "flex", alignItems: "center", background: "var(--bg)", transition: "background 0.5s ease" }}>
+      {/* Background Video Implementation - LOCAL HIGH-FIDELITY SOURCE (186MB Crystal Clear) */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        key="hero-video-v6-local-hiqh"
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          zIndex: 0,
+          filter: "invert(var(--invert-value)) contrast(1.1) brightness(1.05) saturate(0.2)", // Sophisticated B&W+
+          transition: "filter 0.5s ease"
+        }}
+      >
+        <source src="/hero-concept-optimized.mp4" type="video/mp4" />
+      </video>
+      
+      {/* FILM GRAIN OVERLAY (VFX Design to hide pixels and add texture) */}
+      <div style={{
+        position: "absolute",
+        inset: 0,
+        zIndex: 1,
+        pointerEvents: "none",
+        opacity: 0.05,
+        background: "url('https://res.cloudinary.com/did7m7xtb/image/upload/v1672674485/noise_t6o8y7.png')",
+        backgroundRepeat: "repeat",
+        mixBlendMode: "overlay"
+      }} />
+
+      {/* Overlay - Radial Depth */}
+      <div style={{
+        position: "absolute",
+        inset: 0,
+        background: "radial-gradient(circle at center, transparent 0%, var(--bg) 95%)",
+        opacity: 1,
+        zIndex: 2,
+        pointerEvents: "none",
+        transition: "all 0.5s ease"
+      }} />
 
       {/* Content */}
       <div className="container hero-reveal-container" style={{ textAlign: "center", position: "relative", zIndex: 1 }}>
         {/* STATUS BADGE */}
-        <div className="hero-reveal orbai-badge hidden md:inline-flex" style={{ marginBottom: "2rem", background: "var(--bg-secondary)", color: "var(--text-primary)", borderColor: "var(--border-color)" }}>
+        <motion.div 
+          custom={3.6}
+          initial="hidden"
+          animate="visible"
+          variants={entranceVariants}
+          className="orbai-badge hidden md:inline-flex" 
+          style={{ marginBottom: "2rem", background: "var(--bg-secondary)", color: "var(--text-primary)", borderColor: "var(--border-color)" }}
+        >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ color: "var(--text-primary)" }}>
             <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z"/>
           </svg>
           <span style={{ color: "var(--text-primary)", fontWeight: 700 }}>Design & Experiências High-End</span>
-        </div>
+        </motion.div>
 
         {/* HERO TITLE */}
         <h1 className="hero-title" style={{ color: "var(--text-primary)" }}>
-          <span className="block hero-reveal" style={{ color: "var(--text-primary)" }}>Design de Elite.</span>
-          <span className="block hero-reveal" style={{ animationDelay: "100ms", color: "var(--text-primary)" }}>
+          <motion.span 
+            custom={3.8} initial="hidden" animate="visible" variants={entranceVariants}
+            className="block" style={{ color: "var(--text-primary)" }}
+          >
+            Design de Elite.
+          </motion.span>
+          <motion.span 
+            custom={3.9} initial="hidden" animate="visible" variants={entranceVariants}
+            className="block" style={{ color: "var(--text-primary)" }}
+          >
             Marcas
-          </span>
-          <span className="block hero-reveal" style={{ animationDelay: "200ms", color: "var(--text-primary)" }}>
+          </motion.span>
+          <motion.span 
+            custom={4.0} initial="hidden" animate="visible" variants={entranceVariants}
+            className="block" style={{ color: "var(--text-primary)" }}
+          >
             <span key={wordIndex} className="inline-block animate-word-rotate hero-rotating-word" style={{ color: "var(--text-primary)" }}>
               {ROTATING_WORDS[wordIndex]}
             </span>
-          </span>
+          </motion.span>
         </h1>
 
-        <p className="hero-reveal hero-subtitle" style={{ animationDelay: "200ms", color: "var(--text-primary)", opacity: 0.7 }}>
+        <motion.p 
+          custom={4.2} initial="hidden" animate="visible" variants={entranceVariants}
+          className="hero-subtitle" style={{ color: "var(--text-primary)", opacity: 0.7 }}
+        >
           Criamos identidades digitais de alto luxo e tecnologia para marcas que buscam o topo do mercado.
-        </p>
+        </motion.p>
 
         {/* CTAs */}
-        <div className="hero-reveal hero-ctas" style={{ animationDelay: "400ms" }}>
+        <motion.div 
+          custom={4.4} initial="hidden" animate="visible" variants={entranceVariants}
+          className="hero-ctas"
+        >
           <Link href="#portfolio" className="hero-cta-primary" aria-label="Ver portfólio de projetos" style={{ background: "var(--text-primary)", color: "var(--bg)" }}>
             Ver Projetos
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -151,27 +219,111 @@ export function Hero() {
           <a href="https://wa.me/5549991031743" target="_blank" rel="noopener noreferrer" className="hero-cta-secondary" aria-label="Falar conosco no WhatsApp" style={{ color: "var(--text-primary)", borderColor: "var(--border-color)" }}>
             Ver Serviços
           </a>
-        </div>
+        </motion.div>
 
         {/* Bento preview stats */}
         <div className="hero-stats-grid" style={{ marginBottom: "2rem", display: "flex", justifyContent: "center", gap: "1rem", flexWrap: "wrap" }}>
-          <div className="neu-card hero-reveal hero-stat-tall" style={{ minHeight: "160px", flex: "1 1 200px", maxWidth: "280px", animationDelay: "500ms", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", background: "var(--bg-card)", borderColor: "var(--border-color)" }}>
-            <p ref={projectsCounter.elementRef} className="hero-stat-number" style={{ color: "var(--text-primary)" }}>{projectsCounter.count}+</p>
-            <p className="hero-stat-label" style={{ color: "var(--text-primary)", opacity: 0.6 }}>Projetos Lançados</p>
-          </div>
-          <div className="neu-card hero-reveal hero-stat-dark" style={{ minHeight: "160px", flex: "1 1 200px", maxWidth: "280px", animationDelay: "600ms", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", background: "var(--bg-card)", borderColor: "var(--border-color)" }}>
-            <p ref={satisfactionCounter.elementRef} className="hero-stat-number" style={{ color: "var(--text-primary)" }}>{satisfactionCounter.count}%</p>
-            <p className="hero-stat-label" style={{ color: "var(--text-primary)", opacity: 0.6 }}>Satisfação</p>
-          </div>
-          <div className="neu-card hero-reveal hero-stat-light" style={{ minHeight: "160px", flex: "1 1 200px", maxWidth: "280px", animationDelay: "700ms", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", background: "var(--bg-card)", borderColor: "var(--border-color)" }}>
-            <p ref={autoralCounter.elementRef} className="hero-stat-number" style={{ color: "var(--text-primary)" }}>{autoralCounter.count}%</p>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.375rem" }}>
-              <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "var(--text-primary)", display: "inline-block" }} />
-              <p className="hero-stat-label" style={{ color: "var(--text-primary)", opacity: 0.6 }}>Design Autoral</p>
-            </div>
-          </div>
+          <motion.div 
+            custom={4.6} initial="hidden" animate="visible" whileHover="hover"
+            variants={entranceVariants}
+          >
+            <motion.div
+              variants={cardHoverVariants}
+              initial="initial"
+              className="neu-card hero-stat-tall" 
+              style={{ minHeight: "160px", flex: "1 1 200px", maxWidth: "280px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", border: "1px solid var(--border-color)", cursor: "pointer" }}
+            >
+              <p ref={projectsCounter.elementRef} className="hero-stat-number" style={{ color: "inherit" }}>{projectsCounter.count}+</p>
+              <p className="hero-stat-label" style={{ color: "inherit", opacity: 0.6 }}>Projetos Lançados</p>
+            </motion.div>
+          </motion.div>
+
+          <motion.div 
+            custom={4.7} initial="hidden" animate="visible" whileHover="hover"
+            variants={entranceVariants}
+          >
+            <motion.div
+              variants={cardHoverVariants}
+              initial="initial"
+              className="neu-card hero-stat-dark" 
+              style={{ minHeight: "160px", flex: "1 1 200px", maxWidth: "280px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", border: "1px solid var(--border-color)", cursor: "pointer" }}
+            >
+              <p ref={satisfactionCounter.elementRef} className="hero-stat-number" style={{ color: "inherit" }}>{satisfactionCounter.count}%</p>
+              <p className="hero-stat-label" style={{ color: "inherit", opacity: 0.6 }}>Satisfação</p>
+            </motion.div>
+          </motion.div>
+
+          <motion.div 
+            custom={4.8} initial="hidden" animate="visible" whileHover="hover"
+            variants={entranceVariants}
+          >
+            <motion.div
+              variants={cardHoverVariants}
+              initial="initial"
+              className="neu-card hero-stat-light" 
+              style={{ minHeight: "160px", flex: "1 1 200px", maxWidth: "280px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", border: "1px solid var(--border-color)", cursor: "pointer" }}
+            >
+              <p ref={autoralCounter.elementRef} className="hero-stat-number" style={{ color: "inherit" }}>{autoralCounter.count}%</p>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.375rem" }}>
+                <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "currentColor", display: "inline-block" }} />
+                <p className="hero-stat-label" style={{ color: "inherit", opacity: 0.6 }}>Design Autoral</p>
+              </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
+
+      {/* SECTION CONNECTOR - Mouse Scroll Indicator */}
+      <div style={{
+        position: "absolute",
+        bottom: "-30px",
+        left: "50%",
+        transform: "translateX(-50%)",
+        zIndex: 110,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        pointerEvents: "none"
+      }}>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 5 }}
+          style={{
+            width: "28px",
+            height: "46px",
+            borderRadius: "16px",
+            border: "2px solid var(--text-primary)",
+            position: "relative",
+            display: "flex",
+            justifyContent: "center",
+            background: "rgba(255,255,255,0.05)",
+            backdropFilter: "blur(10px)",
+            boxShadow: "0 10px 40px rgba(0,0,0,0.5), 0 0 20px rgba(255,255,255,0.1)"
+          }}
+        >
+          {/* Moving Wheel */}
+          <motion.div
+            animate={{ 
+              y: [6, 20, 6],
+              opacity: [1, 0.2, 1],
+              height: [8, 12, 8]
+            }}
+            transition={{ 
+              duration: 2, 
+              repeat: Infinity, 
+              ease: "easeInOut" 
+            }}
+            style={{
+              width: "4px",
+              background: "var(--text-primary)",
+              borderRadius: "2px",
+              marginTop: "6px"
+            }}
+          />
+        </motion.div>
+      </div>
+
     </section>
   );
 }

@@ -15,6 +15,7 @@ import { Footer } from "@/components/Footer";
 import { motion } from "framer-motion";
 
 import { SplashLoader } from "@/components/SplashLoader";
+import { CinematicPortal } from "@/components/CinematicPortal";
 
 export default function Home() {
   useScrollObserver();
@@ -25,6 +26,10 @@ export default function Home() {
       <main style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center", background: "var(--bg)" }}>
       <Navbar />
       <Hero />
+      {/* Cinematic Portal: Localizado na raiz para flutuar por cima de todas as dobras */}
+      <div style={{ position: "relative", width: "100%", height: 0, zIndex: 1000, pointerEvents: "none" }}>
+        <CinematicPortal />
+      </div>
       <FeaturesAI />
       <Marquee />
       <Services />

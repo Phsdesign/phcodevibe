@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { FloatingButtons } from "@/components/FloatingButtons";
 import { ScrollEffects } from "@/components/ScrollEffects";
+import { CustomCursor } from "@/components/CustomCursor";
 import "./globals.css";
 import "./mobile-fix.css";
 
@@ -54,6 +55,7 @@ export default function RootLayout({
         <ScrollEffects />
         <FloatingButtons />
         {children}
+        <CustomCursor />
       </body>
     </html>
   );

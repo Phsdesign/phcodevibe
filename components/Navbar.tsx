@@ -64,7 +64,7 @@ export function Navbar() {
           transition={{ 
             duration: 1.2, 
             ease: [0.16, 1, 0.3, 1],
-            delay: 0.2
+            delay: 3.4 // Sincronizado com o fim do Splash (3.2s + 0.2s)
           }}
         >
           {/* Logo */}

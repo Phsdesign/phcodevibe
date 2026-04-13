@@ -73,29 +73,61 @@ function BenefitTag({ text, delay }: { text: string; delay: number }) {
 
 export function Marquee() {
   return (
-    <section id="marquee" className="marquee-section" style={{ padding: "120px 0", background: "var(--bg)" }}>
+    <section id="marquee" className="marquee-section" style={{ position: "relative", padding: "120px 0", background: "var(--bg)", overflow: "hidden" }}>
+      {/* Background Video — Optimized for Web (H.264, 1080p) */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        style={{
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          zIndex: 0,
+          opacity: 0.12, // Suavidade extrema para design de elite
+          filter: "grayscale(1) contrast(1.1)",
+          transform: "scaleY(-1)", // Espelhamento vertical (para cima)
+          pointerEvents: "none"
+        }}
+      >
+        <source src="/BG10-optimized.mp4" type="video/mp4" />
+      </video>
+
+      {/* Overlay for Depth & Legibility */}
+      <div style={{
+        position: "absolute",
+        inset: 0,
+        background: "radial-gradient(circle at center, transparent 20%, var(--bg) 100%)",
+        zIndex: 1,
+        pointerEvents: "none"
+      }} />
+
       <motion.div 
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
         className="container" 
-        style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 20px" }}
+        style={{ position: "relative", zIndex: 2, maxWidth: "1200px", margin: "0 auto", padding: "0 20px" }}
       >
         {/* Section Header */}
         <div style={{ textAlign: "center", marginBottom: "5rem" }}>
-          <div style={{
+            <div style={{
             display: "inline-block",
             fontSize: "10px",
             fontWeight: 800,
             textTransform: "uppercase",
             letterSpacing: "0.4em",
             color: "var(--text-primary)",
-            opacity: 0.3,
+            background: "var(--bg-secondary)",
             border: "1px solid var(--border-color)",
             padding: "8px 24px",
             borderRadius: "100px",
-            marginBottom: "1.5rem"
+            marginBottom: "1.5rem",
+            boxShadow: "var(--shadow-sm)"
           }}>
             Nossas Conexões &amp; Parcerias
           </div>
@@ -129,9 +161,9 @@ export function Marquee() {
                 alignItems: "center",
                 justifyContent: "center",
                 padding: "1.5rem",
-                background: "var(--text-primary)",
+                background: "var(--bg-secondary)",
                 borderRadius: "32px",
-                border: "1px solid var(--glass-border)",
+                border: "1px solid var(--border-color)",
                 overflow: "hidden",
               } as React.CSSProperties}
             >
@@ -145,7 +177,7 @@ export function Marquee() {
                   objectFit: "contain",
                   width: "100%",
                   height: "100%",
-                  filter: "brightness(0) invert(var(--invert-value, 1))",
+                  filter: "brightness(0) invert(var(--invert-value))", // Força PRETO no Light (0) e BRANCO no Dark (1)
                   // Aplicar o tamanho calibrado individualmente
                   ...logo.imgStyle,
                 }}
