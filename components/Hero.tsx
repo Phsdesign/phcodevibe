@@ -125,41 +125,44 @@ export function Hero() {
         key="hero-video-v6-local-hiqh"
         style={{
           position: "absolute",
-          top: 0,
-          left: 0,
+          inset: 0,
           width: "100%",
           height: "100%",
           objectFit: "cover",
           zIndex: 0,
-          filter: "invert(var(--invert-value)) contrast(1.1) brightness(1.05) saturate(0.2)", // Sophisticated B&W+
+          filter: isMobile 
+            ? "invert(var(--invert-value)) contrast(1.2) brightness(1) saturate(0.1)" // Sharper & Less fog on mobile
+            : "invert(var(--invert-value)) contrast(1.1) brightness(1.05) saturate(0.2)", // Sophisticated B&W+
           transition: "filter 0.5s ease"
         }}
       >
         <source src="/hero-concept-optimized.mp4" type="video/mp4" />
       </video>
       
-      {/* FILM GRAIN OVERLAY (VFX Design to hide pixels and add texture) */}
+      {/* FILM GRAIN OVERLAY (Subtler on mobile to avoid 'noise fog') */}
       <div style={{
         position: "absolute",
         inset: 0,
         zIndex: 1,
         pointerEvents: "none",
-        opacity: 0.05,
+        opacity: isMobile ? 0.02 : 0.05,
         background: "url('https://res.cloudinary.com/did7m7xtb/image/upload/v1672674485/noise_t6o8y7.png')",
         backgroundRepeat: "repeat",
         mixBlendMode: "overlay"
       }} />
 
-      {/* Overlay - Radial Depth */}
-      <div style={{
-        position: "absolute",
-        inset: 0,
-        background: "radial-gradient(circle at center, transparent 0%, var(--bg) 95%)",
-        opacity: 1,
-        zIndex: 2,
-        pointerEvents: "none",
-        transition: "all 0.5s ease"
-      }} />
+      {/* Overlay - Radial Depth (Disabled on Mobile to remove 'fog' effect) */}
+      {!isMobile && (
+        <div style={{
+          position: "absolute",
+          inset: 0,
+          background: "radial-gradient(circle at center, transparent 0%, var(--bg) 95%)",
+          opacity: 1,
+          zIndex: 2,
+          pointerEvents: "none",
+          transition: "all 0.5s ease"
+        }} />
+      )}
 
       {/* Content */}
       <div className="container hero-reveal-container" style={{ textAlign: "center", position: "relative", zIndex: 1 }}>
