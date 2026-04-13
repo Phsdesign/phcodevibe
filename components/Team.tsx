@@ -89,7 +89,7 @@ export function Team() {
               </p>
             </motion.div>
             <motion.div initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }} viewport={viewportConfig} transition={isMobile ? { duration: 0 } : { duration: 1, delay: 0.5 }} style={{ display: "flex", gap: "2rem", alignItems: "center", flexWrap: "wrap" }}>
-              <a href="https://instagram.com/phcodevibe" target="_blank" className="premium-link">Instagram</a>
+              <a href="https://www.instagram.com/henriqueprofx/" target="_blank" className="premium-link">Instagram</a>
               <span style={{ opacity: 0.1, color: "var(--text-primary)" }}>/</span>
               <a href="https://behance.net/phcodevibe" target="_blank" className="premium-link">Behance</a>
               <span style={{ opacity: 0.1, color: "var(--text-primary)" }}>/</span>
