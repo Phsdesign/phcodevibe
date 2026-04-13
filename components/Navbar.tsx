@@ -103,16 +103,6 @@ export function Navbar() {
               </svg>
             </Link>
 
-            {/* Mobile Toggle */}
-            <button
-              className="md:hidden"
-              onClick={() => setDrawerOpen(!drawerOpen)}
-              style={{ background: "transparent", border: "none", color: "#fff", padding: "0.5rem", display: "flex", alignItems: "center" }}
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d={drawerOpen ? "M18 6L6 18M6 6l12 12" : "M3 12h18M3 6h18M3 18h18"} />
-              </svg>
-            </button>
           </div>
         </motion.nav>
       </header>
