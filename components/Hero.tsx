@@ -5,14 +5,18 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 const entranceVariants = {
-  hidden: { opacity: 0, y: 30, filter: "blur(10px)" },
-  visible: (custom: number) => ({
+  hidden: (isMobile?: boolean) => ({ 
+    opacity: 0, 
+    y: isMobile ? 10 : 30, 
+    filter: isMobile ? "none" : "blur(10px)" 
+  }),
+  visible: ({ custom, isMobile }: { custom: number; isMobile?: boolean }) => ({
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
+    filter: "none",
     transition: {
-      delay: custom,
-      duration: 1.2,
+      delay: isMobile ? custom * 0.5 : custom,
+      duration: isMobile ? 0.6 : 1.2,
       ease: [0.16, 1, 0.3, 1] as const
     }
   })
@@ -161,7 +165,7 @@ export function Hero() {
       <div className="container hero-reveal-container" style={{ textAlign: "center", position: "relative", zIndex: 1 }}>
         {/* STATUS BADGE */}
         <motion.div 
-          custom={3.6}
+          custom={{ custom: 3.6, isMobile }}
           initial="hidden"
           animate="visible"
           variants={entranceVariants}
@@ -177,19 +181,19 @@ export function Hero() {
         {/* HERO TITLE */}
         <h1 className="hero-title" style={{ color: "var(--text-primary)" }}>
           <motion.span 
-            custom={3.8} initial="hidden" animate="visible" variants={entranceVariants}
+            custom={{ custom: 3.8, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
             className="block" style={{ color: "var(--text-primary)" }}
           >
             Design de Elite.
           </motion.span>
           <motion.span 
-            custom={3.9} initial="hidden" animate="visible" variants={entranceVariants}
+            custom={{ custom: 3.9, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
             className="block" style={{ color: "var(--text-primary)" }}
           >
             Marcas
           </motion.span>
           <motion.span 
-            custom={4.0} initial="hidden" animate="visible" variants={entranceVariants}
+            custom={{ custom: 4.0, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
             className="block" style={{ color: "var(--text-primary)" }}
           >
             <span key={wordIndex} className="inline-block animate-word-rotate hero-rotating-word" style={{ color: "var(--text-primary)" }}>
@@ -199,7 +203,7 @@ export function Hero() {
         </h1>
 
         <motion.p 
-          custom={4.2} initial="hidden" animate="visible" variants={entranceVariants}
+          custom={{ custom: 4.2, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
           className="hero-subtitle" style={{ color: "var(--text-primary)", opacity: 0.7 }}
         >
           Criamos identidades digitais de alto luxo e tecnologia para marcas que buscam o topo do mercado.
@@ -207,7 +211,7 @@ export function Hero() {
 
         {/* CTAs */}
         <motion.div 
-          custom={4.4} initial="hidden" animate="visible" variants={entranceVariants}
+          custom={{ custom: 4.4, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
           className="hero-ctas"
         >
           <Link href="#portfolio" className="hero-cta-primary" aria-label="Ver portfólio de projetos" style={{ background: "var(--text-primary)", color: "var(--bg)" }}>
@@ -224,7 +228,7 @@ export function Hero() {
         {/* Bento preview stats */}
         <div className="hero-stats-grid" style={{ marginBottom: "2rem", display: "flex", justifyContent: "center", gap: "1rem", flexWrap: "wrap" }}>
           <motion.div 
-            custom={4.6} initial="hidden" animate="visible" whileHover="hover"
+            custom={{ custom: 4.6, isMobile }} initial="hidden" animate="visible" whileHover="hover"
             variants={entranceVariants}
           >
             <motion.div
@@ -239,7 +243,7 @@ export function Hero() {
           </motion.div>
 
           <motion.div 
-            custom={4.7} initial="hidden" animate="visible" whileHover="hover"
+            custom={{ custom: 4.7, isMobile }} initial="hidden" animate="visible" whileHover="hover"
             variants={entranceVariants}
           >
             <motion.div
@@ -254,7 +258,7 @@ export function Hero() {
           </motion.div>
 
           <motion.div 
-            custom={4.8} initial="hidden" animate="visible" whileHover="hover"
+            custom={{ custom: 4.8, isMobile }} initial="hidden" animate="visible" whileHover="hover"
             variants={entranceVariants}
           >
             <motion.div
