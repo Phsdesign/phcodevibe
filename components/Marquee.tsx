@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 /**
@@ -72,44 +73,57 @@ function BenefitTag({ text, delay }: { text: string; delay: number }) {
 }
 
 export function Marquee() {
-  return (
-    <section id="marquee" className="marquee-section" style={{ position: "relative", padding: "120px 0", background: "var(--bg)", overflow: "hidden" }}>
-      {/* Background Video — Optimized for Web (H.264, 1080p) */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        style={{
-          position: "absolute",
-          inset: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          zIndex: 0,
-          opacity: 0.12, // Suavidade extrema para design de elite
-          filter: "grayscale(1) contrast(1.1)",
-          transform: "scaleY(-1)", // Espelhamento vertical (para cima)
-          pointerEvents: "none"
-        }}
-      >
-        <source src="/BG10-optimized.mp4" type="video/mp4" />
-      </video>
+  const [isMobile, setIsMobile] = useState(false);
 
-      {/* Overlay for Depth & Legibility */}
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  return (
+    <section id="marquee" className="marquee-section" style={{ position: "relative", padding: isMobile ? "60px 0" : "120px 0", background: "var(--bg)", overflow: "hidden" }}>
+      {/* Background Video — Disabled on Mobile for Maximum Performance & Zero Stutter */}
+      {!isMobile && (
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            zIndex: 0,
+            opacity: 0.12,
+            filter: "grayscale(1) contrast(1.1)",
+            transform: "scaleY(-1)",
+            pointerEvents: "none"
+          }}
+        >
+          <source src="/BG10-optimized.mp4" type="video/mp4" />
+        </video>
+      )}
+
+      {/* Overlay for Depth — Simplified on Mobile */}
       <div style={{
         position: "absolute",
         inset: 0,
-        background: "radial-gradient(circle at center, transparent 20%, var(--bg) 100%)",
+        background: isMobile 
+          ? "none" 
+          : "radial-gradient(circle at center, transparent 20%, var(--bg) 100%)",
         zIndex: 1,
         pointerEvents: "none"
       }} />
 
       <motion.div 
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as const }}
+        initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+        whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: isMobile ? 0.4 : 1, ease: [0.16, 1, 0.3, 1] as const }}
         className="container" 
         style={{ position: "relative", zIndex: 2, maxWidth: "1200px", margin: "0 auto", padding: "0 20px" }}
       >
