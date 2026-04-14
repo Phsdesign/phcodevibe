@@ -161,7 +161,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div style={{ borderTop: "1px solid rgba(255,255,255,0.1)", marginTop: "clamp(4rem, 8vw, 6rem)", paddingTop: "2.5rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1.5rem", position: "relative", zIndex: 1 }}>
           <p style={{ fontSize: "0.8rem", color: "#fff", opacity: 0.4, fontWeight: 500, letterSpacing: "0.02em" }}>
-            © 2025 PH CODE VIBE. MADE BY <span style={{ fontWeight: 700 }}>PEDRO HENRIQUE</span>.
+            © 2026 PH CODE VIBE. MADE BY <span style={{ fontWeight: 700 }}>PEDRO HENRIQUE</span>.
           </p>
           <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
             <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#4ade80" }} />
