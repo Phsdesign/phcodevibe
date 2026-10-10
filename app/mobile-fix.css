@@ -196,8 +196,32 @@
      ════════════════════════════════════════════ */
   .hero-section {
     padding-top: 6rem !important;
-    padding-bottom: 3rem !important;
+    padding-bottom: clamp(7.5rem, 16vh, 9rem) !important;
     min-height: auto !important;
+  }
+
+  /* Botão Explorar centralizado e perfeitamente posicionado abaixo do painel, sem sobreposição */
+  .hero-scroll-cue {
+    bottom: clamp(1.25rem, 3vh, 2rem) !important;
+    z-index: 50 !important;
+    transform: translateX(-50%) !important;
+    gap: 0.5rem !important;
+  }
+
+  .hero-scroll-cue > span:first-child {
+    width: 52px !important;
+    height: 52px !important;
+  }
+
+  .hero-scroll-cue svg {
+    width: 12px !important;
+    height: 7px !important;
+  }
+
+  .hero-scroll-cue span:last-child {
+    font-size: 0.55rem !important;
+    letter-spacing: 0.28em !important;
+    margin-top: -1px !important;
   }
 
   /* Mostrar o badge no mobile (override do hidden md:inline-flex) */
@@ -236,7 +260,7 @@
   }
 
   .hz-panel-wrap {
-    margin: 2.5rem auto 1.5rem !important;
+    margin: 2.5rem auto 2.5rem !important;
     padding: 0 !important;
   }
 

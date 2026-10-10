@@ -432,8 +432,13 @@ export function Hero() {
         </motion.div>
       </div>
 
-      <motion.div
-        aria-hidden="true"
+      <motion.a
+        href="#features"
+        onClick={(e) => {
+          e.preventDefault();
+          document.getElementById("features")?.scrollIntoView({ behavior: "smooth" });
+        }}
+        aria-label="Explorar o site"
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, delay: isMobile ? 3 : 2, ease: [0.16, 1, 0.3, 1] }}
@@ -449,7 +454,9 @@ export function Hero() {
           alignItems: "center",
           gap: "0.75rem",
           color: "rgba(255,255,255,0.9)",
-          pointerEvents: "none",
+          textDecoration: "none",
+          pointerEvents: "auto",
+          cursor: "pointer",
           userSelect: "none",
         }}
       >
@@ -529,7 +536,7 @@ export function Hero() {
         >
           Explorar
         </span>
-      </motion.div>
+      </motion.a>
 
     </section>
   );
