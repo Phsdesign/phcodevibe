@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ThemeToggle } from "./ThemeToggle";
 
 const links = [
   { href: "#servicos", label: "Serviços" },
@@ -145,7 +144,7 @@ export function Navbar() {
           <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
             <MotionLink
               href="/quiz"
-              className="navbar-link"
+              className="navbar-link hidden sm:inline-flex"
               custom={base + step * 2 + links.length * step}
               initial="hidden"
               animate="visible"
@@ -169,20 +168,10 @@ export function Navbar() {
               <span className="navbar-status-text">Disponível</span>
             </motion.div>
 
-            {/* Alternador White / Dark (Uiverse) */}
-            <motion.div
-              custom={base + step * 3 + links.length * step}
-              initial="hidden"
-              animate="visible"
-              variants={itemVariants}
-            >
-              <ThemeToggle id="navbar-theme-toggle" />
-            </motion.div>
-
             <MotionLink
               href="#contato"
-              className="navbar-cta"
-              custom={base + step * 4 + links.length * step}
+              className="navbar-cta hidden sm:inline-flex"
+              custom={base + step * 3 + links.length * step}
               initial="hidden"
               animate="visible"
               variants={itemVariants}
@@ -193,51 +182,133 @@ export function Navbar() {
               </svg>
             </MotionLink>
 
+            {/* Mobile Hamburger Button */}
+            <motion.button
+              type="button"
+              className="navbar-hamburger lg:hidden"
+              onClick={() => setDrawerOpen(true)}
+              aria-label="Abrir menu de navegação"
+              custom={base + step * 3 + links.length * step}
+              initial="hidden"
+              animate="visible"
+              variants={itemVariants}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+                <line x1="4" y1="7" x2="20" y2="7" />
+                <line x1="4" y1="17" x2="20" y2="17" />
+              </svg>
+            </motion.button>
           </div>
         </motion.nav>
       </header>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Drawer */}
       <AnimatePresence>
         {drawerOpen && (
-          <>
+          <div className="mobile-drawer-portal">
             <motion.div
-              className="mobile-drawer-overlay open"
+              className="mobile-drawer-overlay"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
               onClick={closeDrawer}
             />
 
             <motion.nav 
-              className="mobile-drawer open"
+              className="mobile-drawer"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              transition={{ type: "spring", damping: 30, stiffness: 300 }}
+              aria-label="Menu principal mobile"
             >
-              <button className="mobile-drawer-close" onClick={closeDrawer}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                  <path d="M18 6L6 18M6 6l12 12"/>
-                </svg>
-              </button>
-
-              {links.map((l) => (
-                <Link key={l.href} href={l.href} className="mobile-drawer-link" onClick={closeDrawer}>
-                  {l.label}
+              <div className="mobile-drawer-header">
+                <Link href="/" className="navbar-logo-link" onClick={closeDrawer}>
+                  <Image 
+                    src="/logoicon.svg" 
+                    alt="Logo" 
+                    width={22} 
+                    height={22} 
+                    style={{ objectFit: "contain" }}
+                  />
+                  <span className="navbar-brand text-sm">PH CODE LABS</span>
                 </Link>
-              ))}
 
-              <div style={{ padding: "1rem 0", display: "flex", alignItems: "center", justifyContent: "space-between", borderTop: "1px solid var(--border-color)", borderBottom: "1px solid var(--border-color)", margin: "0.5rem 0 1rem" }}>
-                <span style={{ fontSize: "0.9rem", color: "var(--text-primary)", fontWeight: 600 }}>Versão White / Black</span>
-                <ThemeToggle id="drawer-theme-toggle" />
+                <button 
+                  type="button"
+                  className="mobile-drawer-close" 
+                  onClick={closeDrawer}
+                  aria-label="Fechar menu"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
               </div>
 
-              <a href="https://wa.me/5549991031743" target="_blank" className="mobile-drawer-cta" onClick={closeDrawer}>
-                Começar Projeto
-              </a>
+              <div className="mobile-drawer-status">
+                <span className="navbar-status-dot-wrapper">
+                  <span className="navbar-status-dot-ping" />
+                  <span className="navbar-status-dot" />
+                </span>
+                <span className="navbar-status-text">Disponível para novos projetos</span>
+              </div>
+
+              <div className="mobile-drawer-links">
+                {links.map((l) => (
+                  <Link 
+                    key={l.href} 
+                    href={l.href} 
+                    className="mobile-drawer-link" 
+                    onClick={closeDrawer}
+                  >
+                    <span>{l.label}</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                  </Link>
+                ))}
+
+                <Link 
+                  href="/quiz" 
+                  className="mobile-drawer-link mobile-drawer-quiz" 
+                  onClick={closeDrawer}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                    <span>Quiz Interativo</span>
+                    <span className="mobile-quiz-badge">Novo</span>
+                  </div>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M9 18l6-6-6-6"/>
+                  </svg>
+                </Link>
+              </div>
+
+              <div className="mobile-drawer-footer">
+                <a 
+                  href="#contato" 
+                  className="mobile-drawer-cta primary" 
+                  onClick={closeDrawer}
+                >
+                  Começar Projeto
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                    <path d="M7 17L17 7M17 7H7M17 7V17"/>
+                  </svg>
+                </a>
+                <a 
+                  href="https://wa.me/5549991031743" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="mobile-drawer-cta secondary" 
+                  onClick={closeDrawer}
+                >
+                  Falar no WhatsApp
+                </a>
+              </div>
             </motion.nav>
-          </>
+          </div>
         )}
       </AnimatePresence>
     </>

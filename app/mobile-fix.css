@@ -852,13 +852,13 @@
     opacity: 1 !important;
   }
 
-  /* Valor: branco, negrito, sem quebrar linha */
+  /* Valor: branco, negrito, com quebra segura para qualquer tela */
   #contato a p:last-child {
     color: #ffffff !important;
-    font-size: 0.9rem !important;
+    font-size: clamp(0.72rem, 3.4vw, 0.9rem) !important;
     font-weight: 700 !important;
     opacity: 1 !important;
-    white-space: nowrap !important;
+    word-break: break-all !important;
   }
 
   /* Garantir que o link ocupe a largura necessária */
@@ -1019,4 +1019,241 @@
     min-height: auto;
     min-width: auto;
   }
+
+  /* ════════════════════════════════════════════
+     16. NAVBAR & BRANDING ON MOBILE
+     ════════════════════════════════════════════ */
+  .navbar-header {
+    padding: 0.85rem 0 !important;
+  }
+
+  .navbar-nav {
+    width: 94vw !important;
+    max-width: 440px !important;
+    padding: 0.45rem 0.85rem !important;
+    min-width: auto !important;
+  }
+
+  .navbar-brand {
+    font-size: clamp(0.78rem, 3.4vw, 0.95rem) !important;
+    letter-spacing: 0.01em !important;
+  }
+
+  /* Ocultar CTA no header compacto mobile para layout perfeito (disponível no menu drawer) */
+  .navbar-cta {
+    display: none !important;
+  }
+
+  /* Esconder tiles extras de estrelas para poupar GPU/bateria no mobile */
+  .stars-tile-1,
+  .stars-tile-2,
+  .stars-tile-3 {
+    display: none !important;
+  }
+}
+
+/* ============================================================
+   MOBILE DRAWER & HAMBURGER NAVIGATION
+   ============================================================ */
+.navbar-hamburger {
+  display: none !important;
+}
+
+@media (max-width: 1023px) {
+  .navbar-hamburger {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    flex-shrink: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .navbar-hamburger:hover,
+  .navbar-hamburger:active {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+  }
+}
+
+.mobile-drawer-portal {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  pointer-events: auto;
+}
+
+.mobile-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 100001;
+}
+
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(88vw, 360px);
+  height: 100%;
+  height: 100dvh;
+  background: rgba(9, 11, 18, 0.96);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: -15px 0 50px rgba(0, 0, 0, 0.8);
+  z-index: 100002;
+  display: flex;
+  flex-direction: column;
+  padding: calc(env(safe-area-inset-top, 1rem) + 1.25rem) 1.5rem calc(env(safe-area-inset-bottom, 1rem) + 1.25rem);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 1rem;
+}
+
+.mobile-drawer-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-drawer-close:hover,
+.mobile-drawer-close:active {
+  background: rgba(255, 255, 255, 0.18);
+  transform: rotate(90deg);
+}
+
+.mobile-drawer-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 9999px;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  margin-bottom: 1.25rem;
+  width: fit-content;
+}
+
+.mobile-drawer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+}
+
+.mobile-drawer-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1rem;
+  border-radius: 14px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  background: transparent;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-drawer-link svg {
+  color: rgba(255, 255, 255, 0.35);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.mobile-drawer-link:hover,
+.mobile-drawer-link:active {
+  background: rgba(255, 255, 255, 0.07);
+  color: #ffffff;
+}
+
+.mobile-drawer-link:hover svg,
+.mobile-drawer-link:active svg {
+  color: #38bdf8;
+  transform: translateX(4px);
+}
+
+.mobile-quiz-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #0ea5e9, #6366f1);
+  color: #ffffff;
+}
+
+.mobile-drawer-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 1rem;
+}
+
+.mobile-drawer-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  border-radius: 14px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-drawer-cta.primary {
+  background: linear-gradient(135deg, #0284c7, #2563eb);
+  color: #ffffff;
+  box-shadow: 0 4px 18px rgba(37, 99, 235, 0.35);
+}
+
+.mobile-drawer-cta.primary:active {
+  transform: scale(0.98);
+}
+
+.mobile-drawer-cta.secondary {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.mobile-drawer-cta.secondary:active {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(0.98);
 }

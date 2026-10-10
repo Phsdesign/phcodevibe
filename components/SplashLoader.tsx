@@ -70,27 +70,7 @@ export function SplashLoader() {
             overflow: "hidden"
           }}
         >
-          {/* Background Video (Minimalist Vertical Glowing Lines) - Apenas renderiza no mobile */}
-          {(!mounted || isMobile) && (
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              style={{
-                position: "absolute",
-                inset: 0,
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                zIndex: 0,
-                opacity: 0.4,
-                filter: "brightness(0.5) contrast(1.2) grayscale(1)"
-              }}
-            >
-              <source src="/splash-bg.mp4" type="video/mp4" />
-            </video>
-          )}
+
 
           {/* Overlay gradiente para profundidade intensa */}
           <div style={{

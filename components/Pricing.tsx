@@ -122,6 +122,7 @@ function OfferCodeRide() {
         for (let i = from + 1; i <= to; i++) {
           const a = pts[(head - beamN + i - 1 + N) % N];
           const b = pts[(head - beamN + i + N) % N];
+          if (!a || !b) continue;
           if (Math.hypot(b.x - a.x, b.y - a.y) > 20) continue;
           ctx.moveTo(a.x, a.y);
           ctx.lineTo(b.x, b.y);
@@ -130,19 +131,21 @@ function OfferCodeRide() {
       }
       ctx.restore();
 
-      const p = pts[head];
-      for (let k = 0; k < 2; k++) {
-        if (sparks.length > 40) break;
-        const speed = 0.4 + Math.random() * 0.8;
-        const tangent = (Math.random() - 0.5) * 0.4;
-        sparks.push({
-          x: p.x,
-          y: p.y,
-          vx: -p.nx * speed - p.ny * tangent,
-          vy: -p.ny * speed + p.nx * tangent,
-          life: 1,
-          glyph: OFFER_GLYPHS[Math.floor(Math.random() * OFFER_GLYPHS.length)],
-        });
+      const p = pts[head % N];
+      if (p) {
+        for (let k = 0; k < 2; k++) {
+          if (sparks.length > 40) break;
+          const speed = 0.4 + Math.random() * 0.8;
+          const tangent = (Math.random() - 0.5) * 0.4;
+          sparks.push({
+            x: p.x,
+            y: p.y,
+            vx: -p.nx * speed - p.ny * tangent,
+            vy: -p.ny * speed + p.nx * tangent,
+            life: 1,
+            glyph: OFFER_GLYPHS[Math.floor(Math.random() * OFFER_GLYPHS.length)],
+          });
+        }
       }
 
       ctx.font = "11px monospace";

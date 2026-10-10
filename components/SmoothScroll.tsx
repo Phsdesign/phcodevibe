@@ -8,6 +8,10 @@ export function SmoothScroll() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) return;
 
+    // Em dispositivos móveis e touch, utilizar o scroll nativo de 120Hz do navegador
+    const isTouchOrMobile = window.innerWidth < 768 || window.matchMedia("(pointer: coarse)").matches;
+    if (isTouchOrMobile) return;
+
     const lenis = new Lenis({
       duration: 0.9,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
