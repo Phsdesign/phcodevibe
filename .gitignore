@@ -44,18 +44,10 @@ next-env.d.ts
 .agent/
 .agents/
 
-# High-fidelity source videos (Blocked to prevent Git/Vercel errors)
-public/*.mov
-/public/BG10.mov
-/public/bg11.mov
-/public/BG12.mov
-/public/bg15.mov
-/public/bg2.mov
-/public/hero-4.mp4
-/public/abstract-white-tone-technology-style-with-mirror-r-2026-01-28-03-36-58-utc.mp4
+# Videos (not used)
+*.mp4
+*.mov
 
-# Track web-optimized assets
-!public/*-optimized.mp4
 
 # Test and debugging artifacts in root
 /*.png
