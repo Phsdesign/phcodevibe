@@ -5,6 +5,7 @@ import { ScrollEffects } from "@/components/ScrollEffects";
 import { CustomCursor } from "@/components/CustomCursor";
 import { StarsBackground } from "@/components/StarsBackground";
 import { SmoothScroll } from "@/components/SmoothScroll";
+import { WebVitals } from "@/components/WebVitals";
 import "./globals.css";
 import "./mobile-fix.css";
 import "./theme-glass.css";
@@ -27,6 +28,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "https://phcodevibe.pages.dev"
+  ),
   title: "PH Code Labs | Studio de Design e Experiências Web",
   description:
     "Combinamos design impecável, motion cinematográfico e performance para marcas que buscam o extraordinário no ambiente digital.",
@@ -38,7 +42,29 @@ export const metadata: Metadata = {
     apple: "/apple-icon.png",
   },
   openGraph: {
-    images: [{ url: "/opengraph-image.png" }],
+    title: "PH Code Labs | Studio de Design e Experiências Web",
+    description:
+      "Combinamos design impecável, motion cinematográfico e performance para marcas que buscam o extraordinário no ambiente digital.",
+    url: "https://phcodevibe.pages.dev",
+    siteName: "PH Code Labs",
+    locale: "pt_BR",
+    type: "website",
+    images: [
+      {
+        url: "/icon.png",
+        width: 512,
+        height: 512,
+        alt: "PH Code Labs Logo",
+        type: "image/png",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: "PH Code Labs | Studio de Design e Experiências Web",
+    description:
+      "Combinamos design impecável, motion cinematográfico e performance para marcas que buscam o extraordinário no ambiente digital.",
+    images: ["/icon.png"],
   },
 };
 
@@ -66,12 +92,34 @@ export default function RootLayout({
             `,
           }}
         />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <link rel="preload" href="/Fonts/Vamu.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
         <link rel="preload" href="https://fonts.gstatic.com/s/plusjakartasans/v12/LDIbaomQNQcsA88c7O9yZ4KMCoOg4IA6-91aHEjcWuA_Tkn9TR_V.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="image_src" href="https://phcodevibe.pages.dev/icon.png" />
+        <script
+          type="speculationrules"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              prerender: [
+                {
+                  where: {
+                    and: [
+                      { href_matches: "/*" },
+                      { not: { href_matches: "/api/*" } },
+                    ],
+                  },
+                  eagerness: "moderate",
+                },
+              ],
+            }),
+          }}
+        />
       </head>
       <body
         className={`${inter.variable} antialiased selection:bg-cyan-400/40 selection:text-white transition-colors duration-300`}
       >
+        <WebVitals />
         <SmoothScroll />
         <StarsBackground />
         <ScrollEffects />

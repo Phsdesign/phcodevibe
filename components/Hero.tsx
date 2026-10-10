@@ -432,57 +432,104 @@ export function Hero() {
         </motion.div>
       </div>
 
-      {/* SECTION CONNECTOR - Mouse Scroll Indicator */}
-      <div style={{
-        position: "absolute",
-        bottom: "-30px",
-        left: "50%",
-        transform: "translateX(-50%)",
-        zIndex: 110,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        pointerEvents: "none"
-      }}>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: isMobile ? 3 : 2 }}
+      <motion.div
+        aria-hidden="true"
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9, delay: isMobile ? 3 : 2, ease: [0.16, 1, 0.3, 1] }}
+        className="hero-scroll-cue"
+        style={{
+          position: "absolute",
+          bottom: "clamp(1rem, 3.5vh, 2.25rem)",
+          left: "50%",
+          transform: "translateX(-50%)",
+          zIndex: 110,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "0.75rem",
+          color: "rgba(255,255,255,0.9)",
+          pointerEvents: "none",
+          userSelect: "none",
+        }}
+      >
+        <span
           style={{
-            width: "28px",
-            height: "46px",
-            borderRadius: "16px",
-            border: "2px solid rgba(255,255,255,0.45)",
             position: "relative",
-            display: "flex",
-            justifyContent: "center",
-            background: "rgba(255,255,255,0.06)",
-            backdropFilter: "blur(10px)",
-            boxShadow: "0 10px 40px rgba(0,0,0,0.5), 0 0 20px rgba(0,229,255,0.15)"
+            width: "64px",
+            height: "64px",
+            borderRadius: "50%",
+            background: "conic-gradient(from 0deg, rgba(0,229,255,0) 0deg, rgba(0,229,255,0.9) 120deg, rgba(129,140,248,0.9) 240deg, rgba(0,229,255,0) 360deg)",
+            padding: "1px",
+            boxShadow: "0 0 24px rgba(0,229,255,0.25)",
           }}
         >
-          {/* Moving Wheel */}
-          <motion.div
-            animate={{ 
-              y: [6, 20, 6],
-              opacity: [1, 0.4, 1],
-              height: [8, 12, 8]
-            }}
-            transition={{ 
-              duration: 2, 
-              repeat: Infinity, 
-              ease: "easeInOut" 
-            }}
-            style={{
-              width: "4px",
-              background: "#00E5FF",
-              borderRadius: "2px",
-              marginTop: "6px",
-              boxShadow: "0 0 8px #00E5FF"
-            }}
+          <motion.span
+            animate={{ rotate: 360 }}
+            transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+            style={{ position: "absolute", inset: 0, borderRadius: "50%", background: "inherit", pointerEvents: "none" }}
           />
-        </motion.div>
-      </div>
+          <span
+            style={{
+              position: "absolute",
+              inset: "1px",
+              borderRadius: "50%",
+              background: "linear-gradient(160deg, rgba(20,28,44,0.85), rgba(6,10,18,0.92))",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "1px",
+            }}
+          >
+            {[0, 1, 2].map((i) => (
+              <motion.svg
+                key={i}
+                width="14"
+                height="8"
+                viewBox="0 0 14 8"
+                fill="none"
+                stroke="#67e8f9"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                animate={{ opacity: [0.15, 1, 0.15] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.2 }}
+              >
+                <path d="M1 1.5L7 6.5L13 1.5" />
+              </motion.svg>
+            ))}
+          </span>
+          {[0, 1].map((i) => (
+            <motion.span
+              key={i}
+              aria-hidden="true"
+              animate={{ scale: [1, 2.4], opacity: [0.5, 0] }}
+              transition={{ duration: 2.4, repeat: Infinity, ease: "easeOut", delay: i * 1.2 }}
+              style={{
+                position: "absolute",
+                inset: 0,
+                borderRadius: "50%",
+                border: "1px solid rgba(0,229,255,0.6)",
+                pointerEvents: "none",
+              }}
+            />
+          ))}
+        </span>
+        <span
+          style={{
+            fontSize: "0.6rem",
+            fontWeight: 700,
+            letterSpacing: "0.34em",
+            textTransform: "uppercase",
+            textShadow: "0 1px 8px rgba(0,0,0,0.6)",
+          }}
+        >
+          Explorar
+        </span>
+      </motion.div>
 
     </section>
   );

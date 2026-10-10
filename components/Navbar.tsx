@@ -176,10 +176,13 @@ export function Navbar() {
               animate="visible"
               variants={itemVariants}
             >
-              Começar Projeto
+              <span className="navbar-cta-label">Começar Projeto</span>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                 <path d="M7 17L17 7M17 7H7M17 7V17"/>
               </svg>
+              <span className="navbar-cta-particles" aria-hidden="true">
+                <i /><i /><i /><i /><i /><i />
+              </span>
             </MotionLink>
 
             {/* Mobile Hamburger Button */}

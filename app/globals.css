@@ -1943,6 +1943,93 @@ section {
   box-shadow: 0 4px 16px rgba(0,0,0,0.2);
 }
 
+/* ── Navbar CTA: glitch + partículas ── */
+.navbar-cta {
+  position: relative;
+  isolation: isolate;
+}
+.navbar-cta-label {
+  position: relative;
+  z-index: 1;
+}
+.navbar-cta::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(from var(--cta-angle, 0deg), transparent 0deg, #00e5ff 60deg, #818cf8 120deg, transparent 180deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+  animation: navbar-cta-orbit 3s linear infinite;
+  pointer-events: none;
+}
+.navbar-cta::after {
+  content: "Começar Projeto";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #00e5ff;
+  opacity: 0;
+  clip-path: inset(0 0 100% 0);
+  pointer-events: none;
+  z-index: 2;
+  animation: navbar-cta-glitch 3.5s steps(1) infinite;
+}
+.navbar-cta-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+.navbar-cta-particles i {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #67e8f9;
+  box-shadow: 0 0 6px #00e5ff;
+  opacity: 0;
+  animation: navbar-cta-particle 2.4s ease-out infinite;
+}
+.navbar-cta-particles i:nth-child(1) { --dx: -34px; --dy: -14px; animation-delay: 0s; }
+.navbar-cta-particles i:nth-child(2) { --dx: 30px; --dy: -18px; animation-delay: 0.4s; }
+.navbar-cta-particles i:nth-child(3) { --dx: -18px; --dy: 16px; animation-delay: 0.8s; }
+.navbar-cta-particles i:nth-child(4) { --dx: 38px; --dy: 10px; animation-delay: 1.2s; }
+.navbar-cta-particles i:nth-child(5) { --dx: 4px; --dy: -26px; animation-delay: 1.6s; }
+.navbar-cta-particles i:nth-child(6) { --dx: -6px; --dy: 24px; animation-delay: 2s; }
+@property --cta-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+@keyframes navbar-cta-orbit {
+  to { --cta-angle: 360deg; }
+}
+@keyframes navbar-cta-glitch {
+  0%, 86%, 100% { opacity: 0; clip-path: inset(0 0 100% 0); transform: translateX(0); }
+  87% { opacity: 1; clip-path: inset(10% 0 60% 0); transform: translateX(-3px); }
+  89% { opacity: 1; clip-path: inset(55% 0 20% 0); transform: translateX(3px); }
+  91% { opacity: 1; clip-path: inset(30% 0 45% 0); transform: translateX(-2px); }
+  93% { opacity: 0; }
+}
+@keyframes navbar-cta-particle {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.4); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .navbar-cta::before,
+  .navbar-cta::after,
+  .navbar-cta-particles i { animation: none; }
+}
+
 /* ── HERO ── */
 
 /* ==========================================

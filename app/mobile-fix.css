@@ -36,11 +36,33 @@
      0. BASE GLOBAL — DEFINITIVE ONE-SWIPE FIX
      ════════════════════════════════════════════ */
   html {
-    overflow-x: clip !important;
+    overflow-x: hidden !important;
     overflow-y: auto !important; /* Único container de scroll */
     height: auto !important;
     scroll-behavior: auto !important;
     -webkit-text-size-adjust: 100%;
+    max-width: 100vw !important;
+    overscroll-behavior-x: none !important;
+    touch-action: pan-y !important; /* Impede arrastar a página para os lados */
+  }
+
+  body {
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    overscroll-behavior-x: none !important;
+    touch-action: pan-y !important;
+  }
+
+  main,
+  main > section,
+  main > div {
+    max-width: 100vw !important;
+    overflow-x: clip !important;
+  }
+
+  .navbar-header {
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
   }
 
   /* Esconder linha vertical do scrollbar no mobile */
@@ -211,10 +233,6 @@
     line-height: 1.15 !important;
     padding-bottom: 0.08em !important;
     white-space: normal !important;
-  }
-
-  .hero-section div[style*="bottom: -30px"] {
-    display: none !important;
   }
 
   .hz-panel-wrap {
