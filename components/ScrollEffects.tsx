@@ -9,6 +9,12 @@ export function ScrollEffects() {
     // Skip entirely on mobile — zero scroll overhead
     if (window.innerWidth < 768) return;
 
+    let scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const measure = () => {
+      scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    };
+    window.addEventListener("resize", measure, { passive: true });
+
     const handleScroll = () => {
       if (window.scrollY < 100) {
         ticking.current = false;
@@ -17,7 +23,6 @@ export function ScrollEffects() {
 
       if (!ticking.current) {
         window.requestAnimationFrame(() => {
-          const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
           const progress = Math.min(Math.max(window.scrollY / scrollHeight, 0), 1);
 
           const root = document.documentElement;
@@ -53,7 +58,10 @@ export function ScrollEffects() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", measure);
+    };
   }, []);
 
   return null;

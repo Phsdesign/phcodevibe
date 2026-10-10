@@ -1,4 +1,4 @@
-# PH Code Vibe — Guia Completo do Projeto
+# PH Code Labs — Guia Completo do Projeto
 
 > **Para Claude:** Este arquivo contém TODO o contexto necessário do projeto. Leia-o uma única vez e trabalhe com as informações aqui. Não leia `node_modules`, `.next`, `package-lock.json` ou arquivos de build.
 
@@ -116,7 +116,7 @@ c:\WEBSITE PH CODE\
 ## 🎨 DESIGN SYSTEM
 
 ### Identidade Visual
-- **Marca:** PH Code Vibe — Studio de Design e Experiências Web
+- **Marca:** PH Code Labs — Studio de Design e Experiências Web
 - **Tagline:** "Design impecável, motion cinematográfico e performance para marcas extraordinárias"
 - **Estilo:** Premium, minimalista, moderno, com motion cinematográfico
 
@@ -175,7 +175,7 @@ O Claude Code tem acesso a ferramentas especializadas em `.claude/skills/`. Use-
 
 ## 🎨 DIRETRIZES DE DESIGN AVANÇADAS (Anti-"AI Slop")
 
-Para manter o nível PH Code Vibe, siga estas regras de estética:
+Para manter o nível PH Code Labs, siga estas regras de estética:
 
 1. **Tipografia Distintiva:** Evite fontes genéricas (Arial, Inter). Use as fontes customizadas em `public/Fonts/` ou fontes Google com forte personalidade (ex: Plus Jakarta Sans, Syne, Space Grotesk).
 2. **Motion Cinematográfico:** Use `framer-motion` para stagger reveals, scroll-triggered animations e hover states surpreendentes.
@@ -230,7 +230,7 @@ claud              # Inicia o Claude Code com API Original
 
 ## 📁 CONTEXTO DE NEGÓCIO
 
-- **Empresa:** PH Code Vibe (ou "PH Design" / "PHs Design")
+- **Empresa:** PH Code Labs (ou "PH Design" / "PHs Design")
 - **Fundador:** Pedro Henrique
 - **Serviços:** Web design, UI/UX, Motion design, IA, sistemas web
 - **Mercado-alvo:** Marcas premium que buscam experiências digitais extraordinárias

@@ -8,7 +8,7 @@ export default function UiUx() {
   useScrollObserver();
 
   return (
-    <main style={{ width: "100%", minHeight: "100vh", display: "flex", flexDirection: "column", background: "#fafafa" }}>
+    <main style={{ width: "100%", minHeight: "100vh", display: "flex", flexDirection: "column", background: "var(--glass-bg)" }}>
       <Navbar />
 
       <section
@@ -27,7 +27,7 @@ export default function UiUx() {
             left: "-5%", 
             width: "50%", 
             height: "70%", 
-            background: "radial-gradient(circle, rgba(0,0,0,0.01) 0%, transparent 70%)", 
+            background: "radial-gradient(circle, rgb(var(--ink) / 0.01) 0%, transparent 70%)", 
             pointerEvents: "none" 
           }} 
         />
@@ -42,7 +42,7 @@ export default function UiUx() {
                   aspectRatio: "1.2", 
                   background: "var(--bg)", 
                   borderRadius: "40px", 
-                  border: "1px solid rgba(0,0,0,0.04)", 
+                  border: "1px solid rgb(var(--ink) / 0.04)", 
                   boxShadow: "0 40px 100px -20px rgba(0,0,0,0.06)",
                   display: "flex",
                   alignItems: "center",
@@ -54,14 +54,14 @@ export default function UiUx() {
                 <div style={{ transform: "rotate(-10deg) scale(1.2)", opacity: 0.02, position: "absolute", fontWeight: 900, fontSize: "12rem", pointerEvents: "none" }}>UX</div>
                 
                 {/* Visual Representation of Grid/Layout */}
-                <div className="animate-float-delayed" style={{ width: "240px", height: "320px", background: "#fafafa", borderRadius: "20px", border: "1px solid rgba(0,0,0,0.05)", padding: "1.5rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
-                  <div style={{ width: "40%", height: "8px", background: "#000", opacity: 0.1, borderRadius: "4px" }} />
-                  <div style={{ width: "100%", height: "30%", background: "#000", opacity: 0.03, borderRadius: "12px" }} />
+                <div className="animate-float-delayed" style={{ width: "240px", height: "320px", background: "var(--glass-bg)", borderRadius: "20px", border: "1px solid rgb(var(--ink) / 0.05)", padding: "1.5rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
+                  <div style={{ width: "40%", height: "8px", background: "var(--grad-brand)", opacity: 0.1, borderRadius: "4px" }} />
+                  <div style={{ width: "100%", height: "30%", background: "var(--grad-brand)", opacity: 0.03, borderRadius: "12px" }} />
                   <div className="grid grid-cols-2 gap-2" style={{ height: "40%" }}>
-                    <div style={{ background: "#000", opacity: 0.05, borderRadius: "8px" }} />
-                    <div style={{ background: "#000", opacity: 0.05, borderRadius: "8px" }} />
+                    <div style={{ background: "var(--grad-brand)", opacity: 0.05, borderRadius: "8px" }} />
+                    <div style={{ background: "var(--grad-brand)", opacity: 0.05, borderRadius: "8px" }} />
                   </div>
-                  <div style={{ width: "80%", height: "40px", background: "#000", borderRadius: "10px", marginTop: "auto" }} />
+                  <div style={{ width: "80%", height: "40px", background: "var(--grad-brand)", borderRadius: "10px", marginTop: "auto" }} />
                 </div>
               </div>
             </div>
@@ -69,7 +69,7 @@ export default function UiUx() {
             {/* Content (Right) */}
             <div className="lg:col-span-7 order-1 lg:order-2">
               <div className="animate-fade-slide" style={{ display: "flex", marginBottom: "2.5rem" }}>
-                <div className="orbai-badge" style={{ background: "#000", color: "#fff", borderColor: "#000" }}>
+                <div className="orbai-badge" style={{ background: "var(--grad-brand)", color: "#fff", borderColor: "#000" }}>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
                     <path d="M9 3v18M3 9h18"/>
@@ -90,14 +90,14 @@ export default function UiUx() {
                 }}
               >
                 Design que <br />
-                <span style={{ color: "rgba(0,0,0,0.15)" }}>exala autoridade.</span>
+                <span style={{ color: "rgb(var(--ink) / 0.15)" }}>exala autoridade.</span>
               </h1>
 
               <p 
                 className="animate-fade-slide-2" 
                 style={{ 
                   fontSize: "clamp(1rem, 2vw, 1.25rem)", 
-                  color: "rgba(0,0,0,0.5)", 
+                  color: "rgb(var(--ink) / 0.5)", 
                   lineHeight: 1.6, 
                   marginBottom: "3.5rem", 
                   maxWidth: "540px" 

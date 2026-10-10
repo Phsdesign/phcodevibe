@@ -27,7 +27,7 @@ export default function WebDev() {
         <div className="container" style={{ maxWidth: "800px", textAlign: "center", position: "relative", zIndex: 1 }}>
           <div className="animate-fade-slide" style={{ display: "flex", justifyContent: "center", marginBottom: "1.5rem" }}>
             <div className="orbai-badge">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2">
                 <polyline points="16 18 22 12 16 6"/>
                 <polyline points="8 6 2 12 8 18"/>
               </svg>
@@ -37,7 +37,7 @@ export default function WebDev() {
           <h1 className="animate-fade-slide-1" style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.1, color: "var(--text-primary)", marginBottom: "2rem" }}>
             Desenvolvimento Web
           </h1>
-          <p className="animate-fade-slide-2" style={{ fontSize: "1.1rem", color: "rgba(0,0,0,0.5)", lineHeight: 1.8, marginBottom: "3rem" }}>
+          <p className="animate-fade-slide-2" style={{ fontSize: "1.1rem", color: "rgb(var(--ink) / 0.5)", lineHeight: 1.8, marginBottom: "3rem" }}>
             Performance no estado da arte. Desenvolvemos com as tecnologias mais modernas (Next.js, React, Tailwind) garantindo que a sua aplicação carregue em milissegundos, ranqueie no topo do Google e proporcione uma experiência sem fricções.
           </p>
 

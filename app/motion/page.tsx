@@ -27,7 +27,7 @@ export default function Motion() {
         <div className="container" style={{ maxWidth: "800px", textAlign: "center", position: "relative", zIndex: 1 }}>
           <div className="animate-fade-slide" style={{ display: "flex", justifyContent: "center", marginBottom: "1.5rem" }}>
             <div className="orbai-badge">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2">
                 <polygon points="5 3 19 12 5 21 5 3"/>
               </svg>
               <span>Serviços</span>
@@ -36,7 +36,7 @@ export default function Motion() {
           <h1 className="animate-fade-slide-1" style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.1, color: "var(--text-primary)", marginBottom: "2rem" }}>
             Motion Design
           </h1>
-          <p className="animate-fade-slide-2" style={{ fontSize: "1.1rem", color: "rgba(0,0,0,0.5)", lineHeight: 1.8, marginBottom: "3rem" }}>
+          <p className="animate-fade-slide-2" style={{ fontSize: "1.1rem", color: "rgb(var(--ink) / 0.5)", lineHeight: 1.8, marginBottom: "3rem" }}>
             Movimento gera emoção, e emoção gera conversão. Trazemos o seu site à vida com animações fluidas (60fps), micro-interações refinadas e transições imersivas. Deixe as páginas estáticas para os seus concorrentes.
           </p>
 

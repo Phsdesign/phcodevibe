@@ -15,7 +15,7 @@ export const portfolioData: Project[] = [
     title: "Casa Solar",
     category: "Rebranding & Design",
     challenge: "Reposicionar a Casa Solar como líder em energia sustentável com uma identidade visual moderna e confiável.",
-    solution: "Desenvolvemos um Rebranding completo focado em minimalismo e eficiência energética, utilizando o selo Vibe Code para otimizar a presença digital.",
+    solution: "Desenvolvemos um Rebranding completo focado em minimalismo e eficiência energética, utilizando o selo PH Code Labs para otimizar a presença digital.",
     logo: "/portfolio/casa-solar/logo_principal.webp",
     mockups: [
       "/portfolio/casa-solar/mockup (1).webp",
@@ -71,7 +71,7 @@ export const portfolioData: Project[] = [
       "/portfolio/popeloni-hub/mockup (9).webp",
       "/portfolio/popeloni-hub/mockup (10).webp"
     ],
-    color: "#ec4899"
+    color: "#0a8cff"
   },
   {
     slug: "elleganza",

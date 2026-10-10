@@ -1,11 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Enabled native Image Optimization on Vercel
-  // output: 'export',
-  // images: {
-  //   unoptimized: true,
-  // },
+  output: 'export',
+  images: {
+    unoptimized: true,
+  },
   async headers() {
     // Evita que o CSP bloqueie o Turbopack HMR em modo de desenvolvimento
     if (process.env.NODE_ENV === "development") return [];

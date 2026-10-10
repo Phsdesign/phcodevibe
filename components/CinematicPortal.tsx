@@ -44,11 +44,27 @@ export function CinematicPortal() {
       lastScrollY.current = currentScrollY;
     };
 
+    let visible = true;
+    const io = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+    });
+    io.observe(canvas);
+
+    let themeColor = "#ffffff";
+    let colorReadAt = -1000;
+
     const draw = (time: number) => {
+      if (!visible) {
+        animationFrameId = requestAnimationFrame(draw);
+        return;
+      }
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      const themeColor = getComputedStyle(document.documentElement)
-        .getPropertyValue("--text-primary").trim() || "#ffffff";
+
+      if (time - colorReadAt > 250) {
+        colorReadAt = time;
+        themeColor = getComputedStyle(document.documentElement)
+          .getPropertyValue("--text-primary").trim() || "#ffffff";
+      }
       
       scrollVelocity.current *= 0.96; 
 
@@ -111,6 +127,7 @@ export function CinematicPortal() {
     return () => {
       window.removeEventListener("resize", resize);
       window.removeEventListener("scroll", handleScroll);
+      io.disconnect();
       cancelAnimationFrame(animationFrameId);
     };
   }, []);

@@ -73,7 +73,7 @@ export function FounderNote() {
           <div className="fn-author-avatar">
             <Image
               src="/logo1.png"
-              alt="PH Code Vibe"
+              alt="PH Code Labs"
               width={36}
               height={36}
               style={{ objectFit: "cover" }}
@@ -81,7 +81,7 @@ export function FounderNote() {
             />
           </div>
           <div style={{ textAlign: "left" }}>
-            <p className="fn-author-name">PH CODE VIBE</p>
+            <p className="fn-author-name">PH CODE LABS</p>
             <p className="fn-author-role">The Future of Digital Esthetics</p>
           </div>
         </div>

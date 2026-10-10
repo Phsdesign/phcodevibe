@@ -3,8 +3,12 @@ import { Inter } from "next/font/google";
 import { FloatingButtons } from "@/components/FloatingButtons";
 import { ScrollEffects } from "@/components/ScrollEffects";
 import { CustomCursor } from "@/components/CustomCursor";
+import { StarsBackground } from "@/components/StarsBackground";
+import { SmoothScroll } from "@/components/SmoothScroll";
 import "./globals.css";
 import "./mobile-fix.css";
+import "./theme-glass.css";
+import "./stars.css";
 
 import Script from "next/script";
 
@@ -19,11 +23,11 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: "#ffffff",
+  themeColor: "#0A1128",
 };
 
 export const metadata: Metadata = {
-  title: "PH Code Vibe | Studio de Design e Experiências Web",
+  title: "PH Code Labs | Studio de Design e Experiências Web",
   description:
     "Combinamos design impecável, motion cinematográfico e performance para marcas que buscam o extraordinário no ambiente digital.",
   icons: {
@@ -44,14 +48,32 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" suppressHydrationWarning>
+    <html lang="pt-BR" className="dark" suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var saved = localStorage.getItem('theme');
+                  if (saved === 'light') {
+                    document.documentElement.classList.remove('dark');
+                  } else {
+                    document.documentElement.classList.add('dark');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
         <link rel="preload" href="/Fonts/Vamu.ttf" as="font" type="font/ttf" crossOrigin="anonymous" />
         <link rel="preload" href="https://fonts.gstatic.com/s/plusjakartasans/v12/LDIbaomQNQcsA88c7O9yZ4KMCoOg4IA6-91aHEjcWuA_Tkn9TR_V.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
       </head>
       <body
-        className={`${inter.variable} antialiased selection:bg-blue-500 selection:text-white transition-colors duration-300`}
+        className={`${inter.variable} antialiased selection:bg-cyan-400/40 selection:text-white transition-colors duration-300`}
       >
+        <SmoothScroll />
+        <StarsBackground />
         <ScrollEffects />
         <FloatingButtons />
         {children}

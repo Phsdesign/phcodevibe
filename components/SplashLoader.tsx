@@ -5,27 +5,52 @@ import { useEffect, useState } from "react";
 
 export function SplashLoader() {
   const [loading, setLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Bloqueia o scroll ao iniciar o loading
+    setMounted(true);
+    const mobile = window.innerWidth <= 768;
+    setIsMobile(mobile);
+
+    // Se for parte web / desktop, desativa imediatamente e libera o scroll
+    if (!mobile) {
+      setLoading(false);
+      document.body.style.overflow = "auto";
+      return;
+    }
+
+    // Apenas no mobile: bloqueia o scroll ao iniciar o loading
     document.body.style.overflow = "hidden";
-    
+    document.documentElement.classList.add("splash-active");
+    document.body.classList.add("splash-active");
+
     const timer = setTimeout(() => {
       setLoading(false);
       // Restaura o scroll após o tempo do splash
       document.body.style.overflow = "auto";
+      document.documentElement.classList.remove("splash-active");
+      document.body.classList.remove("splash-active");
     }, 3200);
 
     return () => {
       clearTimeout(timer);
       document.body.style.overflow = "auto";
+      document.documentElement.classList.remove("splash-active");
+      document.body.classList.remove("splash-active");
     };
   }, []);
+
+  // Se já montou no cliente e confirmou que é desktop/web, não renderiza nada
+  if (mounted && !isMobile) {
+    return null;
+  }
 
   return (
     <AnimatePresence>
       {loading && (
         <motion.div
+          className="splash-loader-mobile"
           initial={{ opacity: 1 }}
           exit={{ 
             y: "-100%",
@@ -39,32 +64,33 @@ export function SplashLoader() {
             height: "100vh",
             zIndex: 99999,
             background: "#000",
-            display: "flex",
             alignItems: "center",
             justifyContent: "center",
             flexDirection: "column",
             overflow: "hidden"
           }}
         >
-          {/* Background Video (Minimalist Vertical Glowing Lines) */}
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            style={{
-              position: "absolute",
-              inset: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              zIndex: 0,
-              opacity: 0.4,
-              filter: "brightness(0.5) contrast(1.2) grayscale(1)"
-            }}
-          >
-            <source src="/splash-bg.mp4" type="video/mp4" />
-          </video>
+          {/* Background Video (Minimalist Vertical Glowing Lines) - Apenas renderiza no mobile */}
+          {(!mounted || isMobile) && (
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              style={{
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                zIndex: 0,
+                opacity: 0.4,
+                filter: "brightness(0.5) contrast(1.2) grayscale(1)"
+              }}
+            >
+              <source src="/splash-bg.mp4" type="video/mp4" />
+            </video>
+          )}
 
           {/* Overlay gradiente para profundidade intensa */}
           <div style={{
@@ -155,7 +181,7 @@ export function SplashLoader() {
             {/* Impactful Rhythmic Name Display */}
             <div style={{ marginTop: "3rem", display: "flex", flexDirection: "column", alignItems: "center" }}>
               <div style={{ display: "flex", overflow: "hidden" }}>
-                {"PH CODE VIBE".split("").map((char, index) => (
+                {"PH CODE LABS".split("").map((char, index) => (
                   <motion.span
                     key={index}
                     initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}

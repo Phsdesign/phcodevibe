@@ -3,6 +3,7 @@
 import { useScrollObserver } from "@/hooks/useScrollObserver";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
+import { ScrollLogo } from "@/components/ScrollLogo";
 import { Marquee } from "@/components/Marquee";
 import { FeaturesAI } from "@/components/FeaturesAI";
 import { Services } from "@/components/Services";
@@ -31,6 +32,7 @@ export default function Home() {
         <CinematicPortal />
       </div>
       <FeaturesAI />
+      <ScrollLogo />
       <Marquee />
       <Services />
       <Metrics />
@@ -51,16 +53,18 @@ export default function Home() {
             alignItems: "center",
             gap: "12px",
             padding: "1.2rem 3rem",
-            background: "var(--bg)",
-            border: "1px solid rgba(0,0,0,0.1)",
+            background: "rgba(255, 255, 255, 0.12)",
+            border: "1px solid rgba(255, 255, 255, 0.25)",
+            backdropFilter: "blur(14px)",
+            WebkitBackdropFilter: "blur(14px)",
             borderRadius: "100px",
-            color: "var(--text-primary)",
+            color: "#ffffff",
             fontSize: "0.85rem",
             fontWeight: 900,
             letterSpacing: "0.2em",
             textTransform: "uppercase",
             textDecoration: "none",
-            boxShadow: "0 10px 30px rgba(0,0,0,0.05)",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
             transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)"
           }}
         >
@@ -72,6 +76,11 @@ export default function Home() {
       </div>
 
       <Team />
+
+      <div aria-hidden="true" style={{ position: "relative", maxWidth: "1200px", margin: "0 auto", padding: "0 1.25rem", height: "1px" }}>
+        <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, rgba(10, 140, 255, 0.6), #00E5FF, rgba(10, 140, 255, 0.6), transparent)" }} />
+      </div>
+
       <Contact />
       <Footer />
     </main>

@@ -100,7 +100,7 @@ function GalleryImage({
             style={{ objectFit: "cover" }}
           />
         </div>
-        <div className="proj-image-number" style={{ background: "#000", color: "#fff", border: "1px solid rgba(255,255,255,0.1)" }}>
+        <div className="proj-image-number" style={{ background: "var(--grad-brand)", color: "#fff", border: "1px solid rgba(255,255,255,0.1)" }}>
           {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
         </div>
         <div className="proj-image-gradient" />
@@ -119,7 +119,7 @@ function ProjectNav({ currentSlug }: { currentSlug: string }) {
     <div ref={revealRef} className="proj-gallery-item proj-nav-section">
       <div className="proj-nav-grid">
         {prev ? (
-          <Link href={`/portfolio/${prev.slug}`} className="proj-nav-card" style={{ background: "#000", borderColor: "rgba(255,255,255,0.1)" }} scroll={true}>
+          <Link href={`/portfolio/${prev.slug}`} className="proj-nav-card" style={{ background: "var(--grad-brand)", borderColor: "rgba(255,255,255,0.1)" }} scroll={true}>
             <span className="proj-nav-label" style={{ color: "#fff", opacity: 0.4 }}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M19 12H5m0 0l7 7m-7-7l7-7"/>
@@ -131,7 +131,7 @@ function ProjectNav({ currentSlug }: { currentSlug: string }) {
           </Link>
         ) : <div />}
         {next ? (
-          <Link href={`/portfolio/${next.slug}`} className="proj-nav-card proj-nav-card-right" style={{ background: "#000", borderColor: "rgba(255,255,255,0.1)" }} scroll={true}>
+          <Link href={`/portfolio/${next.slug}`} className="proj-nav-card proj-nav-card-right" style={{ background: "var(--grad-brand)", borderColor: "rgba(255,255,255,0.1)" }} scroll={true}>
             <span className="proj-nav-label" style={{ color: "#fff", opacity: 0.4 }}>
               Próximo Projeto
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -157,9 +157,14 @@ export default function ProjectPage({ slug: propSlug }: { slug?: string }) {
 
   const [scrollProgress, setScrollProgress] = useState(0);
   useEffect(() => {
+    let frame = 0;
     const handler = () => {
-      const total = document.documentElement.scrollHeight - window.innerHeight;
-      setScrollProgress(total > 0 ? window.scrollY / total : 0);
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const total = document.documentElement.scrollHeight - window.innerHeight;
+        setScrollProgress(total > 0 ? window.scrollY / total : 0);
+      });
     };
     window.addEventListener("scroll", handler, { passive: true });
     return () => window.removeEventListener("scroll", handler);
@@ -277,7 +282,7 @@ export default function ProjectPage({ slug: propSlug }: { slug?: string }) {
             </div>
             <p className="proj-solution-text" style={{ color: "var(--text-primary)", opacity: 0.7 }}>{project.solution}</p>
             <div style={{ marginTop: "3rem", display: "flex", flexWrap: "wrap", gap: "1rem" }}>
-              <Link href="/#contato" className="proj-cta-primary" style={{ background: "#000", color: "#fff", padding: "1rem 2rem", borderRadius: "100px", fontWeight: 700 }}>
+              <Link href="/#contato" className="proj-cta-primary" style={{ background: "var(--grad-brand)", color: "#fff", padding: "1rem 2rem", borderRadius: "100px", fontWeight: 700 }}>
                 <span>Iniciar Projeto Semelhante</span>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M7 17L17 7M17 7H7M17 7V17"/>

@@ -1,0 +1,418 @@
+/* =========================================================
+   PH CODE LABS — GLASS 2026 (Dark Mode Only)
+   Camada visual carregada para o modo escuro (.dark).
+   Paleta: Midnight #0A1128 · Deep Blue #0F2147 · Quantum Cyan #00E5FF
+           Royal Blue #0A4DBF · Electric Blue #0A8CFF · White #FFF
+   ========================================================= */
+
+html,
+html.dark {
+  background-color: #090a0f !important;
+  color: var(--text-primary);
+}
+
+html.dark body {
+  background-color: transparent !important;
+  background: transparent !important;
+  color: var(--text-primary);
+}
+
+/* Fundo da Hero (dobra 1) com o tom de azul idêntico à dobra 2 */
+.hero-section,
+.dark .hero-section {
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%) !important;
+}
+
+/* Seções a partir da dobra 2 transparentes para deixar o fundo cósmico aparecer */
+.dark main,
+.dark main > section:not(.hero-section),
+.dark section:not(.hero-section),
+.dark .marquee-section,
+.dark .features-section,
+.dark .team-section-neural,
+.dark .portfolio-immersive-section {
+  background-color: transparent !important;
+}
+.dark .marquee-section {
+  border-color: var(--glass-border) !important;
+}
+
+/* ---- Tipografia no Modo Escuro (Sem textos apagados) ---- */
+.dark h1,
+.dark h2,
+.dark h3,
+.dark .hero-title,
+.dark .portfolio-main-title,
+.dark .neural-title,
+.dark .proj-title {
+  color: #fff;
+  letter-spacing: -0.03em;
+}
+.dark .portfolio-main-title {
+  background: var(--grad-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero-rotating-word,
+.dark .hero-rotating-word {
+  color: #ffffff !important;
+  background: none !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+}
+.hero-subtitle,
+.dark .hero-subtitle {
+  color: rgba(255, 255, 255, 0.94) !important;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.5);
+}
+.dark .hero-stat-label {
+  color: rgba(255, 255, 255, 0.90) !important;
+  opacity: 1 !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+}
+.dark .hero-stat-number {
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.5);
+}
+.dark .features-card-desc,
+.dark .portfolio-subtitle,
+.dark .marquee-label {
+  color: rgba(255, 255, 255, 0.86) !important;
+  opacity: 1 !important;
+}
+.dark .features-card-title { color: #fff !important; }
+.dark .text-stroke { -webkit-text-stroke-color: rgba(255,255,255,0.5); }
+
+/* ---- Títulos e textos sobre o fundo cósmico (sempre brancos e nítidos) ---- */
+#hero h1,
+#hero .hero-title,
+#features h2,
+#marquee h2,
+#metricas h2,
+.portfolio-main-title,
+#sobre h2,
+#contato h2 {
+  color: #ffffff !important;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.portfolio-subtitle {
+  color: rgba(255, 255, 255, 0.85) !important;
+  opacity: 1 !important;
+}
+
+#sobre p {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+#sobre li,
+#sobre .premium-link {
+  color: #ffffff !important;
+}
+
+/* ---- Superfície Glass reutilizável ---- */
+.dark .glass,
+.dark .neu-card,
+.dark .neu-card-flat,
+.dark .glass-logo-card,
+.dark .orbai-badge,
+.dark .features-card,
+.dark .hero-stat-tall,
+.dark .hero-stat-light,
+.dark .hero-stat-dark,
+.dark .marquee-logo-card,
+.dark .marquee-tag,
+.dark .faq-item,
+.dark .neural-card,
+.dark .portfolio-card-large,
+.dark .portfolio-info-bar,
+.dark .proj-nav-card,
+.dark .proj-meta-item,
+.dark .features-dropdown,
+.dark .features-chat-input,
+.dark .features-input-bar,
+.dark .premium-card-glass,
+.dark .glass-fab {
+  background: linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03)) !important;
+  border: 1px solid var(--glass-border) !important;
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow-md) !important;
+  color: var(--text-primary);
+}
+.dark .neu-card:hover,
+.dark .features-card:hover,
+.dark .neural-card:hover,
+.dark .glass-logo-card:hover,
+.dark .portfolio-card-large:hover,
+.dark .marquee-logo-card:hover,
+.dark .marquee-tag:hover {
+  border-color: rgba(0, 229, 255, 0.45) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+.dark .hero-stat-dark {
+  background: linear-gradient(145deg, rgba(77,0,255,0.50), rgba(0,229,255,0.20)) !important;
+  border-color: rgba(0, 229, 255, 0.35) !important;
+}
+.dark .orbai-badge {
+  border-radius: 999px;
+}
+.dark .marquee-tag { color: var(--text-secondary) !important; }
+.dark .marquee-logo-inner { filter: brightness(0) invert(1) !important; opacity: 0.8 !important; }
+
+/* ---- Hero: CTAs & Cards (White & Dark Modes) ---- */
+.hero-cta-primary {
+  background: #ffffff !important;
+  color: #080d1a !important;
+  font-weight: 700 !important;
+  border: 1px solid rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.hero-cta-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.4) !important;
+}
+.dark .hero-cta-primary {
+  background: linear-gradient(135deg, #0A4DBF 0%, #0A8CFF 55%, #00E5FF 100%) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  box-shadow: 0 8px 30px rgba(0, 150, 255, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.45) !important;
+}
+.dark .hero-cta-primary:hover {
+  box-shadow: 0 12px 40px rgba(0, 229, 255, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+  transform: translateY(-2px) scale(1.02);
+  filter: brightness(1.1);
+}
+
+.hero-cta-secondary {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.hero-cta-secondary:hover {
+  background: rgba(255, 255, 255, 0.22) !important;
+  border-color: rgba(255, 255, 255, 0.65) !important;
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35) !important;
+}
+.dark .hero-cta-secondary {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  box-shadow: 0 6px 24px rgba(2, 6, 23, 0.4) !important;
+}
+.dark .hero-cta-secondary:hover {
+  background: rgba(255, 255, 255, 0.16) !important;
+  border-color: rgba(0, 229, 255, 0.55) !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 25px rgba(0, 229, 255, 0.35) !important;
+  transform: translateY(-2px);
+}
+
+/* Cards na versão white */
+html:not(.dark) .hero-stat-card {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+  backdrop-filter: blur(20px) !important;
+}
+html:not(.dark) .hero-stat-card .hero-stat-number {
+  color: #0a0a0a !important;
+  font-weight: 800 !important;
+}
+html:not(.dark) .hero-stat-card .hero-stat-label {
+  color: rgba(10, 10, 10, 0.75) !important;
+  font-weight: 700 !important;
+  opacity: 1 !important;
+  letter-spacing: 0.08em !important;
+}
+html:not(.dark) .hero-stat-card .hero-stat-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #0284c7;
+  display: inline-block;
+  box-shadow: 0 0 8px rgba(2, 132, 199, 0.5);
+}
+
+/* Cards na versão black */
+.dark .hero-stat-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(20px) !important;
+}
+.dark .hero-stat-dark {
+  background: linear-gradient(145deg, rgba(77, 0, 255, 0.5), rgba(0, 229, 255, 0.2)) !important;
+  border: 1px solid rgba(0, 229, 255, 0.35) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 229, 255, 0.15) !important;
+}
+.dark .hero-stat-card .hero-stat-number {
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.5) !important;
+}
+.dark .hero-stat-card .hero-stat-label {
+  color: rgba(255, 255, 255, 0.90) !important;
+  font-weight: 700 !important;
+  opacity: 1 !important;
+  letter-spacing: 0.08em !important;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5) !important;
+}
+.dark .hero-stat-card .hero-stat-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #00E5FF;
+  display: inline-block;
+  box-shadow: 0 0 10px #00E5FF;
+}
+
+/* Badge do Hero em ambas as versões */
+html:not(.dark) .orbai-badge {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid rgba(255, 255, 255, 0.9) !important;
+  color: #0a0a0a !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
+}
+html:not(.dark) .orbai-badge svg {
+  color: #0284c7 !important;
+}
+html:not(.dark) .orbai-badge span {
+  color: #0a0a0a !important;
+  font-weight: 700 !important;
+}
+
+.dark .orbai-badge {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+}
+.dark .orbai-badge svg {
+  color: #00E5FF !important;
+  filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.6));
+}
+.dark .orbai-badge span {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+/* ---- Botões Gerais ---- */
+.dark .btn-primary,
+.dark .navbar-cta,
+.dark .portfolio-cta-btn,
+.dark .proj-cta-primary {
+  background: var(--grad-brand) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255,255,255,0.28) !important;
+  box-shadow: 0 8px 30px rgba(0, 150, 255, 0.35), inset 0 1px 0 rgba(255,255,255,0.35) !important;
+}
+.dark .btn-primary:hover,
+.dark .navbar-cta:hover,
+.dark .portfolio-cta-btn:hover,
+.dark .proj-cta-primary:hover {
+  box-shadow: 0 10px 40px rgba(0, 229, 255, 0.55), inset 0 1px 0 rgba(255,255,255,0.45) !important;
+  filter: brightness(1.08);
+}
+.dark .btn-secondary,
+.dark .proj-cta-secondary {
+  background: var(--glass-bg) !important;
+  color: #fff !important;
+  border: 1px solid var(--glass-border) !important;
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+.dark .btn-secondary:hover,
+.dark .proj-cta-secondary:hover {
+  color: #fff !important;
+  border-color: rgba(0, 229, 255, 0.5) !important;
+  background: var(--glass-bg-strong) !important;
+}
+
+/* ---- Navbar (pílula de vidro) ---- */
+.dark .navbar-nav {
+  background: rgba(15, 33, 71, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  box-shadow: 0 16px 45px rgba(2, 6, 23, 0.55), inset 0 1px 0 rgba(255,255,255,0.18) !important;
+}
+.dark .navbar-link { color: rgba(255, 255, 255, 0.88) !important; font-weight: 500; }
+.dark .navbar-link:hover { color: #00E5FF !important; }
+.dark .navbar-brand { color: #ffffff !important; font-weight: 900; }
+.dark .navbar-status-pill { background: rgba(0, 229, 255, 0.12) !important; border: 1px solid rgba(0, 229, 255, 0.3) !important; }
+.dark .navbar-status-text { color: #00E5FF !important; font-weight: 700 !important; }
+.dark .navbar-status-dot { background: #00E5FF !important; box-shadow: 0 0 8px #00E5FF !important; }
+
+/* ---- Botões flutuantes ---- */
+.dark .glass-fab { border-radius: 50%; }
+.dark .glass-fab:hover { border-color: rgba(0,229,255,0.5) !important; }
+
+/* ---- Inputs de formulário ---- */
+.dark input,
+.dark textarea,
+.dark select {
+  background: rgba(255,255,255,0.06) !important;
+  border: 1px solid var(--glass-border) !important;
+  color: #fff !important;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+.dark input::placeholder,
+.dark textarea::placeholder { color: rgba(255,255,255,0.4) !important; }
+.dark input:focus,
+.dark textarea:focus,
+.dark select:focus {
+  outline: none !important;
+  border-color: var(--c-cyan) !important;
+  box-shadow: 0 0 0 3px rgba(0,229,255,0.18) !important;
+}
+
+/* ---- Seleção, foco, links ---- */
+.dark ::selection { background: rgba(0, 229, 255, 0.35); color: #fff; }
+.dark a:focus-visible,
+.dark button:focus-visible { outline: 2px solid var(--c-cyan); outline-offset: 3px; }
+
+/* ---- Brilho especular ao passar o mouse (liquid glass) ---- */
+.dark .neu-card::after,
+.dark .features-card::after,
+.dark .neural-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(420px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0,229,255,0.12), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.dark .neu-card:hover::after,
+.dark .features-card:hover::after,
+.dark .neural-card:hover::after { opacity: 1; }
+
+/* Mobile: backdrop-filter pesado reduzido para manter performance */
+@media (max-width: 768px) {
+  .dark { --glass-blur: blur(14px) saturate(140%); }
+  html.dark body::before { opacity: 0.1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dark .neu-card::after,
+.dark .features-card::after,
+.dark .neural-card::after { transition: none; }
+}

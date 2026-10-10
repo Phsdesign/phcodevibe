@@ -8,7 +8,7 @@ export default function AIAutomation() {
   useScrollObserver();
 
   return (
-    <main style={{ width: "100%", minHeight: "100vh", display: "flex", flexDirection: "column", background: "#fafafa" }}>
+    <main style={{ width: "100%", minHeight: "100vh", display: "flex", flexDirection: "column", background: "var(--glass-bg)" }}>
       <Navbar />
 
       <section
@@ -27,7 +27,7 @@ export default function AIAutomation() {
             right: "-10%", 
             width: "60%", 
             height: "80%", 
-            background: "radial-gradient(circle, rgba(0,0,0,0.015) 0%, transparent 70%)", 
+            background: "radial-gradient(circle, rgb(var(--ink) / 0.015) 0%, transparent 70%)", 
             pointerEvents: "none" 
           }} 
         />
@@ -37,7 +37,7 @@ export default function AIAutomation() {
             {/* Left: Content */}
             <div className="lg:col-span-7">
               <div className="animate-fade-slide" style={{ display: "flex", marginBottom: "2.5rem" }}>
-                <div className="orbai-badge" style={{ background: "#000", color: "#fff", borderColor: "#000" }}>
+                <div className="orbai-badge" style={{ background: "var(--grad-brand)", color: "#fff", borderColor: "#000" }}>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                     <path d="M12 2v8l6-4-6-4zM12 14v8l-6-4 6-4z"/>
                   </svg>
@@ -57,14 +57,14 @@ export default function AIAutomation() {
                 }}
               >
                 O futuro já <br />
-                <span style={{ color: "rgba(0,0,0,0.15)" }}>não dorme.</span>
+                <span style={{ color: "rgb(var(--ink) / 0.15)" }}>não dorme.</span>
               </h1>
 
               <p 
                 className="animate-fade-slide-2" 
                 style={{ 
                   fontSize: "clamp(1rem, 2vw, 1.25rem)", 
-                  color: "rgba(0,0,0,0.5)", 
+                  color: "rgb(var(--ink) / 0.5)", 
                   lineHeight: 1.6, 
                   marginBottom: "3.5rem", 
                   maxWidth: "540px" 
@@ -108,7 +108,7 @@ export default function AIAutomation() {
                   aspectRatio: "1", 
                   background: "var(--bg)", 
                   borderRadius: "40px", 
-                  border: "1px solid rgba(0,0,0,0.04)", 
+                  border: "1px solid rgb(var(--ink) / 0.04)", 
                   boxShadow: "0 40px 100px -20px rgba(0,0,0,0.06)",
                   display: "flex",
                   alignItems: "center",
@@ -123,8 +123,8 @@ export default function AIAutomation() {
                   style={{ 
                     padding: "2rem", 
                     borderRadius: "24px", 
-                    background: "#fafafa", 
-                    border: "1px solid rgba(0,0,0,0.05)",
+                    background: "var(--glass-bg)", 
+                    border: "1px solid rgb(var(--ink) / 0.05)",
                     zIndex: 1
                   }}
                 >

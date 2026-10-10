@@ -27,7 +27,7 @@ export default function Sobre() {
         <div className="container" style={{ maxWidth: "800px", textAlign: "center", position: "relative", zIndex: 1 }}>
           <div className="animate-fade-slide" style={{ display: "flex", justifyContent: "center", marginBottom: "1.5rem" }}>
             <div className="orbai-badge">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2">
                 <circle cx="12" cy="12" r="10"/>
                 <path d="M12 16v-4M12 8h.01"/>
               </svg>
@@ -37,20 +37,20 @@ export default function Sobre() {
           <h1 className="animate-fade-slide-1" style={{ fontSize: "clamp(3rem, 6vw, 5rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.1, color: "var(--text-primary)", marginBottom: "2rem" }}>
             A Nova Era do Design Digital
           </h1>
-          <p className="animate-fade-slide-2" style={{ fontSize: "1.1rem", color: "rgba(0,0,0,0.5)", lineHeight: 1.8, marginBottom: "3rem" }}>
-            Não somos apenas uma agência. Na PH Code Vibe, operamos como um estúdio de inovação de alto padrão. Nosso manifesto é simples: forjar experiências imersivas que desafiam o status quo e transformam marcas comuns em autoridades indiscutíveis no mercado digital.
+          <p className="animate-fade-slide-2" style={{ fontSize: "1.1rem", color: "rgb(var(--ink) / 0.5)", lineHeight: 1.8, marginBottom: "3rem" }}>
+            Não somos apenas uma agência. Na PH Code Labs, operamos como um estúdio de inovação de alto padrão. Nosso manifesto é simples: forjar experiências imersivas que desafiam o status quo e transformam marcas comuns em autoridades indiscutíveis no mercado digital.
           </p>
 
           <div className="animate-fade-slide-3 grid grid-cols-1 md:grid-cols-2 gap-6 text-left" style={{ marginTop: "4rem" }}>
-            <div style={{ padding: "2rem", borderRadius: "20px", background: "var(--bg-secondary)", border: "1px solid rgba(0,0,0,0.06)" }}>
+            <div style={{ padding: "2rem", borderRadius: "20px", background: "var(--bg-secondary)", border: "1px solid rgb(var(--ink) / 0.06)" }}>
               <h3 style={{ color: "var(--text-primary)", fontSize: "1.2rem", fontWeight: 700, marginBottom: "1rem" }}>A Visão</h3>
-              <p style={{ color: "rgba(0,0,0,0.5)", fontSize: "0.95rem", lineHeight: 1.6 }}>
+              <p style={{ color: "rgb(var(--ink) / 0.5)", fontSize: "0.95rem", lineHeight: 1.6 }}>
                 Acreditamos que a estética premium e a inteligência artificial não são o futuro, mas a linguagem obrigatória do presente. Cada pixel é desenhado com intenção. Cada linha de código é otimizada para o máximo desempenho (Core Web Vitals) e conversão.
               </p>
             </div>
-            <div style={{ padding: "2rem", borderRadius: "20px", background: "var(--bg-secondary)", border: "1px solid rgba(0,0,0,0.06)" }}>
+            <div style={{ padding: "2rem", borderRadius: "20px", background: "var(--bg-secondary)", border: "1px solid rgb(var(--ink) / 0.06)" }}>
               <h3 style={{ color: "var(--text-primary)", fontSize: "1.2rem", fontWeight: 700, marginBottom: "1rem" }}>O Diferencial</h3>
-              <p style={{ color: "rgba(0,0,0,0.5)", fontSize: "0.95rem", lineHeight: 1.6 }}>
+              <p style={{ color: "rgb(var(--ink) / 0.5)", fontSize: "0.95rem", lineHeight: 1.6 }}>
                 Enquanto o mercado entrega templates invisíveis, nós integramos Motion Design avançado, arquitetura serverless e copywriting obsessivo por resultados. Criamos o seu &quot;Oceano Azul&quot;.
               </p>
             </div>

@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import DarkModeToggle from "./DarkModeToggle";
 
 export function FloatingButtons() {
   const scrollToTop = () => {
@@ -12,11 +11,10 @@ export function FloatingButtons() {
 
   return (
     <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-50">
-      <DarkModeToggle />
       {/* Scroll to Top Button */}
       <button
         onClick={scrollToTop}
-        className="w-[50px] h-[50px] rounded-full bg-white text-black border border-gray-200 flex items-center justify-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg opacity-100 translate-y-0"
+        className="w-[50px] h-[50px] rounded-full glass-fab text-white flex items-center justify-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg opacity-100 translate-y-0"
         style={{ boxShadow: "0 4px 16px rgba(0,0,0,0.1)" }}
         aria-label="Voltar ao Início"
       >
@@ -30,7 +28,7 @@ export function FloatingButtons() {
         href="https://wa.me/5549991031743"
         target="_blank"
         rel="noopener noreferrer"
-        className="w-[50px] h-[50px] rounded-full bg-white text-black border border-gray-200 flex items-center justify-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+        className="w-[50px] h-[50px] rounded-full glass-fab text-white flex items-center justify-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
         style={{ boxShadow: "0 4px 16px rgba(0,0,0,0.1)" }}
         aria-label="Fale Conosco no WhatsApp"
       >

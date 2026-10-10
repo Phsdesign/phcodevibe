@@ -1,5 +1,5 @@
 /* ============================================================
-   PH CODE VIBE — MOBILE ELITE OPTIMIZATION
+   PH CODE LABS — MOBILE ELITE OPTIMIZATION
    Aplica-se EXCLUSIVAMENTE a telas ≤ 768px.
    REGRA DE OURO: Desktop = INTOCÁVEL.
    ============================================================ */
@@ -10,7 +10,7 @@
      0. BASE GLOBAL — DEFINITIVE ONE-SWIPE FIX
      ════════════════════════════════════════════ */
   html {
-    overflow-x: hidden !important;
+    overflow-x: clip !important;
     overflow-y: auto !important; /* Único container de scroll */
     height: auto !important;
     scroll-behavior: auto !important;
@@ -344,7 +344,7 @@
   }
 
   /* ── Processo Absolute (bloco preto) ── */
-  /* Target: motion.div com background: #000 e padding: 80px 60px */
+  /* Target: motion.div com background: var(--grad-brand) e padding: 80px 60px */
   .features-v3 .container > div[style*="background"][style*="rgb(0, 0, 0)"],
   .features-v3 .container > div[style*="background: rgb(0, 0, 0)"],
   .features-v3 .container > div[style*="#000"] {
@@ -444,7 +444,7 @@
     margin-bottom: 3rem !important;
   }
 
-  /* Logo cards (motion.div) — 2 per row using background: #000 as target */
+  /* Logo cards (motion.div) — 2 per row using background: var(--grad-brand) as target */
   #marquee .container > div[style*="flex"] > div {
     width: calc(50% - 0.5rem) !important;
     height: 100px !important;

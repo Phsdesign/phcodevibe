@@ -56,3 +56,8 @@ public/*.mov
 
 # Track web-optimized assets
 !public/*-optimized.mp4
+
+# Test and debugging artifacts in root
+/*.png
+hero_elements.json
+inspect_result.json

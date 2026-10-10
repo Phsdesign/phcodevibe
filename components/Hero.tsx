@@ -1,96 +1,33 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState, type CSSProperties, type MouseEvent } from "react";
 import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
+
+const AntigravityBackground = dynamic(
+  () => import("@/components/AntigravityBackground").then((m) => m.AntigravityBackground),
+  { ssr: false }
+);
 
 const entranceVariants = {
-  hidden: (isMobile?: boolean) => ({ 
+  hidden: ({ isMobile }: { isMobile?: boolean } = {}) => ({ 
     opacity: 0, 
-    y: isMobile ? 10 : 30, 
-    filter: isMobile ? "none" : "blur(10px)" 
+    y: isMobile ? 10 : 24, 
   }),
   visible: ({ custom, isMobile }: { custom: number; isMobile?: boolean }) => ({
     opacity: 1,
     y: 0,
-    filter: "none",
     transition: {
-      delay: isMobile ? custom * 0.5 : custom,
-      duration: isMobile ? 0.6 : 1.2,
+      delay: isMobile ? 3.3 + custom * 0.4 : custom,
+      duration: isMobile ? 0.6 : 0.9,
       ease: [0.16, 1, 0.3, 1] as const
     }
   })
 };
 
-const cardHoverVariants = {
-  initial: { 
-    backgroundColor: "rgba(0, 0, 0, 0.05)", 
-    color: "var(--text-primary)"
-  },
-  hover: { 
-    backgroundColor: "var(--text-primary)", 
-    color: "var(--bg)",
-    scale: 1.02,
-    transition: {
-      duration: 0.4,
-      ease: [0.16, 1, 0.3, 1] as const
-    }
-  }
-};
-
-const textHoverVariants = {
-  initial: { color: "var(--text-primary)" },
-  hover: { color: "var(--bg)" }
-};
-
-function useCounter(target: number, duration: number = 2000) {
-  const [count, setCount] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-  const elementRef = useRef<HTMLParagraphElement>(null);
-
-  useEffect(() => {
-    // If mobile, set count to target immediately and skip animation
-    if (typeof window !== "undefined" && window.innerWidth < 768) {
-      setCount(target);
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    if (elementRef.current) observer.observe(elementRef.current);
-    return () => observer.disconnect();
-  }, [target]);
-
-  useEffect(() => {
-    if (!isVisible) return;
-    // Animation skip double-check for resize
-    if (window.innerWidth < 768) return;
-
-    let startTimestamp: number | null = null;
-    const step = (timestamp: number) => {
-      if (!startTimestamp) startTimestamp = timestamp;
-      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-      const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-      setCount(Math.floor(easeProgress * target));
-      if (progress < 1) window.requestAnimationFrame(step);
-    };
-    window.requestAnimationFrame(step);
-  }, [isVisible, target, duration]);
-
-  return { count, elementRef };
-}
-
 export function Hero() {
-  const projectsCounter = useCounter(120, 2500);
-  const satisfactionCounter = useCounter(99, 2500);
-  const autoralCounter = useCounter(100, 2500);
+
 
   const ROTATING_WORDS = ["Imbatíveis.", "Lendárias.", "Absolutas.", "Únicas."];
   const [wordIndex, setWordIndex] = useState(0);
@@ -114,170 +51,385 @@ export function Hero() {
     return () => clearInterval(interval);
   }, [ROTATING_WORDS.length]);
 
-  return (
-    <section id="hero" className="hero-section" style={{ position: "relative", overflow: "visible", minHeight: "100vh", width: "100%", display: "flex", alignItems: "center", background: "var(--bg)", transition: "background 0.5s ease" }}>
-      {/* Background Video Implementation - LOCAL HIGH-FIDELITY SOURCE (186MB Crystal Clear) */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        key="hero-video-v6-local-hiqh"
-        style={{
-          position: "absolute",
-          inset: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          zIndex: 0,
-          filter: isMobile 
-            ? "invert(var(--invert-value)) contrast(1.2) brightness(1) saturate(0.1)" // Sharper & Less fog on mobile
-            : "invert(var(--invert-value)) contrast(1.1) brightness(1.05) saturate(0.2)", // Sophisticated B&W+
-          transition: "filter 0.5s ease"
-        }}
-      >
-        <source src="/hero-concept-optimized.mp4" type="video/mp4" />
-      </video>
-      
-      {/* FILM GRAIN OVERLAY (Subtler on mobile to avoid 'noise fog') */}
-      <div style={{
-        position: "absolute",
-        inset: 0,
-        zIndex: 1,
-        pointerEvents: "none",
-        opacity: isMobile ? 0.02 : 0.05,
-        background: "url('https://res.cloudinary.com/did7m7xtb/image/upload/v1672674485/noise_t6o8y7.png')",
-        backgroundRepeat: "repeat",
-        mixBlendMode: "overlay"
-      }} />
+  const handleCellMove = (e: MouseEvent<HTMLDivElement>) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
+    e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
+    e.currentTarget.style.setProperty("--tx", `${((e.clientX - r.left) / r.width) * 2 - 1}`);
+    e.currentTarget.style.setProperty("--ty", `${((e.clientY - r.top) / r.height) * 2 - 1}`);
+  };
 
-      {/* Overlay - Radial Depth (Disabled on Mobile to remove 'fog' effect) */}
-      {!isMobile && (
-        <div style={{
-          position: "absolute",
-          inset: 0,
-          background: "radial-gradient(circle at center, transparent 0%, var(--bg) 95%)",
-          opacity: 1,
-          zIndex: 2,
-          pointerEvents: "none",
-          transition: "all 0.5s ease"
-        }} />
-      )}
+  const stack = [
+    { name: "Next.js", label: "Site rápido que aparece bem no Google", fx: "hz-fx-sweep" },
+    { name: "TypeScript", label: "Menos erros e mais segurança no produto", fx: "hz-fx-orbit" },
+    { name: "Three.js", label: "Efeitos 3D que dão vida ao site", fx: "hz-fx-tilt" },
+  ];
+
+  return (
+    <section id="hero" className="hero-section" style={{ position: "relative", overflow: "hidden", minHeight: "100vh", width: "100%", display: "flex", alignItems: "center", background: "radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%)", transition: "background 0.5s ease" }}>
+      {/* Google Antigravity Style Interactive Background (Apenas na versão black) */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.2, ease: "easeOut", delay: isMobile ? 4.6 : 2.9 }}
+        style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
+      >
+        <AntigravityBackground />
+      </motion.div>
 
       {/* Content */}
-      <div className="container hero-reveal-container" style={{ textAlign: "center", position: "relative", zIndex: 1 }}>
+      <div className="container hero-reveal-container" style={{ textAlign: "center", position: "relative", zIndex: 3 }}>
         {/* STATUS BADGE */}
         <motion.div 
-          custom={{ custom: 3.6, isMobile }}
+          custom={{ custom: 1.0, isMobile }}
           initial="hidden"
           animate="visible"
           variants={entranceVariants}
-          className="orbai-badge hidden md:inline-flex" 
-          style={{ marginBottom: "2rem", background: "var(--bg-secondary)", color: "var(--text-primary)", borderColor: "var(--border-color)" }}
+          className="orbai-badge hero-enter hidden md:inline-flex" 
+          style={{ marginBottom: "2rem" }}
         >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ color: "var(--text-primary)" }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
             <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z"/>
           </svg>
-          <span style={{ color: "var(--text-primary)", fontWeight: 700 }}>Design & Experiências High-End</span>
+          <span style={{ fontWeight: 700 }}>Design &amp; Experiências High-End</span>
         </motion.div>
 
         {/* HERO TITLE */}
-        <h1 className="hero-title" style={{ color: "var(--text-primary)" }}>
+        <h1 className="hero-title" style={{ color: "#ffffff" }}>
           <motion.span 
-            custom={{ custom: 3.8, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
-            className="block" style={{ color: "var(--text-primary)" }}
+            custom={{ custom: 1.12, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
+            className="block hero-enter" style={{ color: "#ffffff" }}
           >
             Design de Elite.
           </motion.span>
           <motion.span 
-            custom={{ custom: 3.9, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
-            className="block" style={{ color: "var(--text-primary)" }}
+            custom={{ custom: 1.24, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
+            className="block hero-enter" style={{ color: "#ffffff" }}
           >
             Marcas
           </motion.span>
           <motion.span 
-            custom={{ custom: 4.0, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
-            className="block" style={{ color: "var(--text-primary)" }}
+            custom={{ custom: 1.36, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
+            className="block hero-enter" style={{ color: "#ffffff" }}
           >
-            <span key={wordIndex} className="inline-block animate-word-rotate hero-rotating-word" style={{ color: "var(--text-primary)" }}>
+            <span 
+              key={wordIndex} 
+              className="inline-block animate-word-rotate hero-rotating-word"
+              style={{ color: "#ffffff", WebkitTextFillColor: "#ffffff" }}
+            >
               {ROTATING_WORDS[wordIndex]}
             </span>
           </motion.span>
         </h1>
 
         <motion.p 
-          custom={{ custom: 4.2, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
-          className="hero-subtitle" style={{ color: "var(--text-primary)", opacity: 0.7 }}
+          custom={{ custom: 1.5, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
+          className="hero-subtitle hero-enter"
+          style={{ color: "#ffffff" }}
         >
           Criamos identidades digitais de alto luxo e tecnologia para marcas que buscam o topo do mercado.
         </motion.p>
 
         {/* CTAs */}
         <motion.div 
-          custom={{ custom: 4.4, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
-          className="hero-ctas"
+          custom={{ custom: 1.64, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
+          className="hero-ctas hero-enter"
         >
-          <Link href="#portfolio" className="hero-cta-primary" aria-label="Ver portfólio de projetos" style={{ background: "var(--text-primary)", color: "var(--bg)" }}>
+          <Link href="#portfolio" className="hero-cta-primary" aria-label="Ver portfólio de projetos">
             Ver Projetos
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M7 17L17 7M17 7H7M17 7V17"/>
             </svg>
           </Link>
-          <a href="https://wa.me/5549991031743" target="_blank" rel="noopener noreferrer" className="hero-cta-secondary" aria-label="Falar conosco no WhatsApp" style={{ color: "var(--text-primary)", borderColor: "var(--border-color)" }}>
+          <a href="https://wa.me/5549991031743" target="_blank" rel="noopener noreferrer" className="hero-cta-secondary" aria-label="Falar conosco no WhatsApp">
             Ver Serviços
           </a>
         </motion.div>
 
-        {/* Bento preview stats */}
-        <div className="hero-stats-grid" style={{ marginBottom: "2rem", display: "flex", justifyContent: "center", gap: "1rem", flexWrap: "wrap" }}>
-          <motion.div 
-            custom={{ custom: 4.6, isMobile }} initial="hidden" animate="visible" whileHover="hover"
-            variants={entranceVariants}
-          >
-            <motion.div
-              variants={cardHoverVariants}
-              initial="initial"
-              className="neu-card hero-stat-tall" 
-              style={{ minHeight: "160px", flex: "1 1 200px", maxWidth: "280px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", border: "1px solid var(--border-color)", cursor: "pointer" }}
-            >
-              <p ref={projectsCounter.elementRef} className="hero-stat-number" style={{ color: "inherit" }}>{projectsCounter.count}+</p>
-              <p className="hero-stat-label" style={{ color: "inherit", opacity: 0.6 }}>Projetos Lançados</p>
-            </motion.div>
-          </motion.div>
+        {/* Painel de métricas */}
+        <motion.div
+          custom={{ custom: 1.8, isMobile }} initial="hidden" animate="visible"
+          variants={entranceVariants} className="hero-enter hz-panel-wrap"
+        >
+          <style>{`
+            .hz-panel-wrap {
+              width: 100%;
+              max-width: 960px;
+              margin: clamp(3rem, 7vh, 4.5rem) auto 2.5rem;
+            }
+            .hz-panel {
+              position: relative;
+              isolation: isolate;
+              overflow: hidden;
+              display: grid;
+              grid-template-columns: repeat(3, minmax(0, 1fr));
+              border-radius: 28px;
+              background: linear-gradient(170deg, rgba(255,255,255,0.075), rgba(255,255,255,0.015));
+              border: 1px solid rgba(255,255,255,0.1);
+              backdrop-filter: blur(18px);
+              -webkit-backdrop-filter: blur(18px);
+              box-shadow: 0 40px 90px -40px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.07);
+            }
+            .hz-panel::before {
+              content: "";
+              position: absolute;
+              top: -1px;
+              left: 0;
+              right: 0;
+              height: 1px;
+              z-index: 2;
+              background: linear-gradient(90deg, transparent, #22d3ee 50%, transparent);
+              background-size: 200% 100%;
+              animation: hzEdge 4s linear infinite;
+            }
+            .hz-panel::after {
+              content: "";
+              position: absolute;
+              top: 0;
+              left: -40%;
+              width: 30%;
+              height: 100%;
+              z-index: 0;
+              pointer-events: none;
+              background: linear-gradient(90deg, transparent, rgba(34,211,238,0.08), transparent);
+              transform: skewX(-18deg);
+              animation: hzSweep 8s ease-in-out infinite;
+            }
+            .hz-cell {
+              position: relative;
+              z-index: 1;
+              padding: 34px 26px 30px;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              gap: 14px;
+              transition: background 0.5s ease;
+            }
+            .hz-cell + .hz-cell { border-left: 1px solid rgba(255,255,255,0.08); }
+            .hz-cell::before {
+              content: "";
+              position: absolute;
+              inset: 0;
+              z-index: -1;
+              opacity: 0;
+              background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), rgba(34,211,238,0.14), transparent 70%);
+              transition: opacity 0.4s ease;
+            }
+            .hz-cell:hover::before { opacity: 1; }
+            .hz-cell.is-hl {
+              background: linear-gradient(180deg, rgba(34,211,238,0.1), rgba(99,102,241,0.08));
+            }
+            .hz-cell { overflow: hidden; }
+            .hz-cell > .hz-num, .hz-cell > .hz-label { position: relative; z-index: 1; }
+            .hz-num {
+              font-family: var(--font-display);
+              font-size: clamp(1.9rem, 3.6vw, 2.8rem);
+              font-weight: 800;
+              letter-spacing: -0.03em;
+              line-height: 0.95;
+              color: #ffffff;
+              margin: 0;
+              font-variant-numeric: tabular-nums;
+              transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), text-shadow 0.5s ease;
+            }
+            .hz-cell.is-hl .hz-num {
+              background: linear-gradient(120deg, #ffffff 0%, #67e8f9 60%, #818cf8 100%);
+              -webkit-background-clip: text;
+              background-clip: text;
+              color: transparent;
+            }
+            .hz-cell:hover .hz-num { transform: translateY(-3px); text-shadow: 0 0 28px rgba(34,211,238,0.35); }
+            .hz-label {
+              font-size: 11px;
+              font-weight: 800;
+              letter-spacing: 0.2em;
+              text-transform: uppercase;
+              color: rgba(255,255,255,0.78);
+              margin: 0;
+            }
+            .hz-fx-sweep::after {
+              content: "";
+              position: absolute;
+              top: 0;
+              bottom: 0;
+              left: -60%;
+              width: 45%;
+              z-index: 0;
+              pointer-events: none;
+              background: linear-gradient(100deg, transparent, rgba(255,255,255,0.22), transparent);
+              transform: skewX(-20deg);
+            }
+            .hz-fx-sweep:hover::after { left: 130%; transition: left 1s cubic-bezier(0.16,1,0.3,1); }
+            .hz-fx-sweep:hover .hz-num { letter-spacing: 0.04em; animation: hzGlitch 0.7s steps(4) 1; }
+            .hz-fx-sweep:hover .hz-label { color: #ffffff; letter-spacing: 0.26em; transition: letter-spacing 0.6s ease, color 0.4s ease; }
+            .hz-fx-orbit::after {
+              content: "";
+              position: absolute;
+              inset: -50%;
+              z-index: 0;
+              pointer-events: none;
+              border-radius: 50%;
+              background: conic-gradient(from 0deg, transparent 0deg, transparent 300deg, rgba(103,232,249,0.35) 340deg, rgba(129,140,248,0.6) 360deg);
+              opacity: 0;
+              transition: opacity 0.6s ease;
+            }
+            .hz-fx-orbit:hover::after { opacity: 0.55; animation: hzBeam 3s linear infinite; }
+            .hz-rings {
+              position: absolute;
+              inset: 0;
+              z-index: 0;
+              pointer-events: none;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+            .hz-rings i {
+              position: absolute;
+              width: 120px;
+              height: 120px;
+              border-radius: 50%;
+              border: 1px solid rgba(103,232,249,0.7);
+              box-shadow: 0 0 18px rgba(103,232,249,0.35);
+              opacity: 0;
+            }
+            .hz-fx-orbit:hover .hz-rings i { animation: hzRing 2.4s cubic-bezier(0.16,1,0.3,1) infinite; }
+            .hz-fx-orbit:hover .hz-rings i:nth-child(2) { animation-delay: 0.8s; }
+            .hz-fx-orbit:hover .hz-rings i:nth-child(3) { animation-delay: 1.6s; }
+            .hz-cell.hz-fx-orbit.is-hl .hz-num { background: none; -webkit-background-clip: border-box; background-clip: border-box; color: #ffffff; }
+            .hz-num { white-space: nowrap; }
+            .hz-ltr { display: inline-block; }
+            .hz-fx-orbit:hover .hz-ltr { animation: hzWave 1.8s ease-in-out infinite; animation-delay: calc(var(--i) * 0.08s); }
+            .hz-fx-orbit:hover .hz-label { color: #67e8f9; letter-spacing: 0.26em; transition: letter-spacing 0.6s ease, color 0.4s ease; }
+            .hz-fx-tilt {
+              transition: transform 0.45s cubic-bezier(0.16,1,0.3,1), background 0.5s ease;
+              transform-style: preserve-3d;
+            }
+            .hz-fx-tilt::after {
+              content: "";
+              position: absolute;
+              inset: 0;
+              z-index: 0;
+              pointer-events: none;
+              opacity: 0;
+              background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.16) 50%, transparent 70%);
+              transform: translateX(calc(var(--tx, 0) * 40px));
+              transition: opacity 0.4s ease;
+            }
+            .hz-fx-tilt:hover::after { opacity: 1; }
+            .hz-fx-tilt:hover .hz-num {
+              transform: translateZ(40px);
+              text-shadow: 0 22px 30px rgba(0,0,0,0.55), 0 0 26px rgba(34,211,238,0.45);
+              transition: transform 0.45s cubic-bezier(0.16,1,0.3,1), text-shadow 0.45s ease;
+            }
+            .hz-fx-tilt:hover .hz-label { transform: translateZ(24px); transition: transform 0.45s cubic-bezier(0.16,1,0.3,1); }
+            .hz-cube-stage {
+              position: absolute;
+              inset: 0;
+              z-index: 0;
+              pointer-events: none;
+              perspective: 420px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+            .hz-cube {
+              position: relative;
+              width: 110px;
+              height: 110px;
+              transform-style: preserve-3d;
+              opacity: 0;
+              transition: opacity 0.6s ease;
+            }
+            .hz-cube i {
+              position: absolute;
+              inset: 0;
+              border: 1px solid rgba(103,232,249,0.6);
+              border-radius: 50%;
+              box-shadow: 0 0 14px rgba(103,232,249,0.35), inset 0 0 12px rgba(129,140,248,0.25);
+            }
+            .hz-cube i:nth-child(1) { transform: rotateX(90deg); }
+            .hz-cube i:nth-child(2) { transform: rotateY(90deg); border-color: rgba(129,140,248,0.7); }
+            .hz-cube i:nth-child(3) { transform: rotateX(45deg) rotateY(45deg); border-style: dashed; }
+            .hz-fx-tilt:hover .hz-cube { opacity: 1; animation: hzCubeSpin 5s linear infinite; }
+            @keyframes hzCubeSpin {
+              from { transform: rotateX(0deg) rotateY(0deg); }
+              to { transform: rotateX(360deg) rotateY(360deg); }
+            }
+            .hz-fx-tilt:hover {
+              transform: perspective(700px) rotateX(calc(var(--ty, 0) * -12deg)) rotateY(calc(var(--tx, 0) * 12deg)) scale(1.02);
+            }
+            @keyframes hzBeam { to { transform: rotate(360deg); } }
+            @keyframes hzRing {
+              0% { transform: scale(0.4); opacity: 0; }
+              15% { opacity: 1; }
+              100% { transform: scale(3.4); opacity: 0; }
+            }
+            @keyframes hzWave {
+              0%, 100% { transform: translateY(0); color: #ffffff; text-shadow: none; }
+              30% { transform: translateY(-9px); color: #67e8f9; text-shadow: 0 0 20px rgba(103,232,249,0.9); }
+              60% { transform: translateY(0); color: #c4b5fd; }
+            }
+            @keyframes hzGlitch {
+              0% { transform: translate(0); text-shadow: none; }
+              20% { transform: translate(-3px, 1px); text-shadow: 3px 0 #22d3ee, -3px 0 #f472b6; }
+              40% { transform: translate(2px, -1px); text-shadow: -2px 0 #22d3ee, 2px 0 #f472b6; }
+              60% { transform: translate(-1px, 0); text-shadow: 1px 0 #22d3ee, -1px 0 #f472b6; }
+              100% { transform: translate(0); text-shadow: none; }
+            }
+            @keyframes hzEdge { to { background-position: -200% 0; } }
+            @keyframes hzSweep {
+              0%, 55% { left: -40%; }
+              100% { left: 120%; }
+            }
+            @media (max-width: 720px) {
+              .hz-panel { grid-template-columns: 1fr; }
+              .hz-cell { padding: 26px 22px; }
+              .hz-cell + .hz-cell { border-left: none; border-top: 1px solid rgba(255,255,255,0.08); }
+              .hz-num { font-size: clamp(2.6rem, 12vw, 3.2rem); }
+            }
+            @media (prefers-reduced-motion: reduce) {
+              .hz-panel::before, .hz-panel::after { animation: none; }
+            }
+          `}</style>
 
-          <motion.div 
-            custom={{ custom: 4.7, isMobile }} initial="hidden" animate="visible" whileHover="hover"
-            variants={entranceVariants}
-          >
-            <motion.div
-              variants={cardHoverVariants}
-              initial="initial"
-              className="neu-card hero-stat-dark" 
-              style={{ minHeight: "160px", flex: "1 1 200px", maxWidth: "280px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", border: "1px solid var(--border-color)", cursor: "pointer" }}
-            >
-              <p ref={satisfactionCounter.elementRef} className="hero-stat-number" style={{ color: "inherit" }}>{satisfactionCounter.count}%</p>
-              <p className="hero-stat-label" style={{ color: "inherit", opacity: 0.6 }}>Satisfação</p>
-            </motion.div>
-          </motion.div>
-
-          <motion.div 
-            custom={{ custom: 4.8, isMobile }} initial="hidden" animate="visible" whileHover="hover"
-            variants={entranceVariants}
-          >
-            <motion.div
-              variants={cardHoverVariants}
-              initial="initial"
-              className="neu-card hero-stat-light" 
-              style={{ minHeight: "160px", flex: "1 1 200px", maxWidth: "280px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", border: "1px solid var(--border-color)", cursor: "pointer" }}
-            >
-              <p ref={autoralCounter.elementRef} className="hero-stat-number" style={{ color: "inherit" }}>{autoralCounter.count}%</p>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.375rem" }}>
-                <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "currentColor", display: "inline-block" }} />
-                <p className="hero-stat-label" style={{ color: "inherit", opacity: 0.6 }}>Design Autoral</p>
+          <div className="hz-panel">
+            {stack.map((s, i) => (
+              <div
+                key={s.name}
+                className={`hz-cell ${s.fx} ${i === 1 ? "is-hl" : ""}`}
+                onMouseMove={handleCellMove}
+              >
+                {s.fx === "hz-fx-orbit" && (
+                  <div className="hz-rings" aria-hidden="true">
+                    <i />
+                    <i />
+                    <i />
+                  </div>
+                )}
+                {s.fx === "hz-fx-tilt" && (
+                  <div className="hz-cube-stage" aria-hidden="true">
+                    <div className="hz-cube">
+                      <i />
+                      <i />
+                      <i />
+                    </div>
+                  </div>
+                )}
+                <p className="hz-num">
+                  {s.fx === "hz-fx-orbit"
+                    ? s.name.split("").map((ch, k) => (
+                        <span key={k} className="hz-ltr" style={{ "--i": k } as CSSProperties}>
+                          {ch}
+                        </span>
+                      ))
+                    : s.name}
+                </p>
+                <p className="hz-label">{s.label}</p>
               </div>
-            </motion.div>
-          </motion.div>
-        </div>
+            ))}
+          </div>
+        </motion.div>
       </div>
 
       {/* SECTION CONNECTOR - Mouse Scroll Indicator */}
@@ -295,25 +447,25 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 5 }}
+          transition={{ duration: 0.6, delay: isMobile ? 3 : 2 }}
           style={{
             width: "28px",
             height: "46px",
             borderRadius: "16px",
-            border: "2px solid var(--text-primary)",
+            border: "2px solid rgba(255,255,255,0.45)",
             position: "relative",
             display: "flex",
             justifyContent: "center",
-            background: "rgba(255,255,255,0.05)",
+            background: "rgba(255,255,255,0.06)",
             backdropFilter: "blur(10px)",
-            boxShadow: "0 10px 40px rgba(0,0,0,0.5), 0 0 20px rgba(255,255,255,0.1)"
+            boxShadow: "0 10px 40px rgba(0,0,0,0.5), 0 0 20px rgba(0,229,255,0.15)"
           }}
         >
           {/* Moving Wheel */}
           <motion.div
             animate={{ 
               y: [6, 20, 6],
-              opacity: [1, 0.2, 1],
+              opacity: [1, 0.4, 1],
               height: [8, 12, 8]
             }}
             transition={{ 
@@ -323,9 +475,10 @@ export function Hero() {
             }}
             style={{
               width: "4px",
-              background: "var(--text-primary)",
+              background: "#00E5FF",
               borderRadius: "2px",
-              marginTop: "6px"
+              marginTop: "6px",
+              boxShadow: "0 0 8px #00E5FF"
             }}
           />
         </motion.div>
