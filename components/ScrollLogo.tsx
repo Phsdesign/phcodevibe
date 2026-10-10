@@ -162,11 +162,21 @@ export function ScrollLogo() {
     window.addEventListener("mousemove", handleMouse, { passive: true });
     document.addEventListener("mouseleave", handleLeave);
 
+    let p = 0;
+    const updateScrollProgress = () => {
+      const rect = section.getBoundingClientRect();
+      const range = Math.max(1, section.offsetHeight - vh);
+      p = Math.min(1, Math.max(0, -rect.top / range));
+    };
+    window.addEventListener("scroll", updateScrollProgress, { passive: true });
+    updateScrollProgress();
+
     const t0 = performance.now();
     let raf = 0;
     let inView = true;
     const io = new IntersectionObserver(([entry]) => {
       inView = entry.isIntersecting;
+      if (inView) updateScrollProgress();
     });
     io.observe(section);
 
@@ -174,10 +184,6 @@ export function ScrollLogo() {
       raf = requestAnimationFrame(frame);
       if (!inView) return;
       const t = (now - t0) / 1000;
-
-      const rect = section.getBoundingClientRect();
-      const range = Math.max(1, section.offsetHeight - vh);
-      const p = Math.min(1, Math.max(0, -rect.top / range));
 
       const gather = smoothstep(0.0, 0.2, p);
       const split = smoothstep(0.2, 0.45, p);
@@ -280,6 +286,7 @@ export function ScrollLogo() {
       cancelAnimationFrame(raf);
       io.disconnect();
       window.removeEventListener("resize", resize);
+      window.removeEventListener("scroll", updateScrollProgress);
       window.removeEventListener("mousemove", handleMouse);
       document.removeEventListener("mouseleave", handleLeave);
     };

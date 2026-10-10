@@ -132,17 +132,22 @@ html.dark body {
 .dark .portfolio-info-bar,
 .dark .proj-nav-card,
 .dark .proj-meta-item,
+.dark .neural-card,
+.dark .portfolio-card-large,
+.dark .portfolio-info-bar,
+.dark .proj-nav-card,
+.dark .proj-meta-item,
 .dark .features-dropdown,
 .dark .features-chat-input,
 .dark .features-input-bar,
 .dark .premium-card-glass,
 .dark .glass-fab {
-  background: linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03)) !important;
+  background: rgba(14, 22, 38, 0.94) !important;
   border: 1px solid var(--glass-border) !important;
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
   box-shadow: var(--shadow-md) !important;
   color: var(--text-primary);
+  will-change: transform;
+  transform: translateZ(0);
 }
 .dark .neu-card:hover,
 .dark .features-card:hover,
@@ -195,8 +200,6 @@ html.dark body {
   color: #ffffff !important;
   font-weight: 600 !important;
   border: 1px solid rgba(255, 255, 255, 0.35) !important;
-  backdrop-filter: blur(14px) !important;
-  -webkit-backdrop-filter: blur(14px) !important;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25) !important;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
@@ -208,16 +211,14 @@ html.dark body {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35) !important;
 }
 .dark .hero-cta-secondary {
-  background: rgba(255, 255, 255, 0.08) !important;
+  background: rgba(14, 22, 38, 0.9) !important;
   color: #ffffff !important;
   font-weight: 600 !important;
   border: 1px solid rgba(255, 255, 255, 0.25) !important;
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
   box-shadow: 0 6px 24px rgba(2, 6, 23, 0.4) !important;
 }
 .dark .hero-cta-secondary:hover {
-  background: rgba(255, 255, 255, 0.16) !important;
+  background: rgba(20, 32, 54, 0.95) !important;
   border-color: rgba(0, 229, 255, 0.55) !important;
   color: #ffffff !important;
   box-shadow: 0 0 25px rgba(0, 229, 255, 0.35) !important;
@@ -229,7 +230,6 @@ html:not(.dark) .hero-stat-card {
   background: rgba(255, 255, 255, 0.95) !important;
   border: 1px solid rgba(255, 255, 255, 0.9) !important;
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
-  backdrop-filter: blur(20px) !important;
 }
 html:not(.dark) .hero-stat-card .hero-stat-number {
   color: #0a0a0a !important;
@@ -252,10 +252,9 @@ html:not(.dark) .hero-stat-card .hero-stat-dot {
 
 /* Cards na versão black */
 .dark .hero-stat-card {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03)) !important;
+  background: rgba(14, 22, 38, 0.94) !important;
   border: 1px solid rgba(255, 255, 255, 0.18) !important;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
-  backdrop-filter: blur(20px) !important;
 }
 .dark .hero-stat-dark {
   background: linear-gradient(145deg, rgba(77, 0, 255, 0.5), rgba(0, 229, 255, 0.2)) !important;

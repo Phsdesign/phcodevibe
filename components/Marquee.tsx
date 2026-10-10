@@ -121,10 +121,10 @@ function PartnerCell({
   return (
     <motion.div
       style={{ ...(desktop ? cellPlacement[index] : {}), perspective: 1000 }}
-      initial={{ opacity: 0, y: 90, rotateX: 40, scale: 0.85, filter: "blur(10px)" }}
-      whileInView={{ opacity: 1, y: 0, rotateX: 0, scale: 1, filter: "blur(0px)" }}
+      initial={{ opacity: 0, y: 50, rotateX: 20, scale: 0.92 }}
+      whileInView={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 1.2, delay: index * 0.09, ease: EASE }}
+      transition={{ duration: 0.9, delay: index * 0.07, ease: EASE }}
     >
       <motion.div style={{ y: desktop ? y : 0, height: desktop ? "100%" : 120 }}>
         <motion.div
@@ -137,6 +137,7 @@ function PartnerCell({
             rotateX: interactive ? rotateX : 0,
             rotateY: interactive ? rotateY : 0,
             transformPerspective: 900,
+            willChange: "transform",
             height: "100%",
             position: "relative",
             overflow: "hidden",
@@ -145,11 +146,9 @@ function PartnerCell({
             justifyContent: "center",
             padding: featured ? "2.5rem" : "1.5rem",
             borderRadius: featured ? 36 : 26,
-            background: `linear-gradient(160deg, ${accent}2e, rgba(255,255,255,0.02) 70%)`,
-            border: "none",
-            backdropFilter: "blur(14px)",
-            WebkitBackdropFilter: "blur(14px)",
-            boxShadow: "0 30px 60px -30px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.08)",
+            background: "rgba(14, 22, 38, 0.92)",
+            border: "1px solid rgba(255, 255, 255, 0.08)",
+            boxShadow: "0 20px 40px -20px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.08)",
           }}
         >
           <div className="mq-spot" style={{ background: `radial-gradient(340px circle at var(--mx, 50%) var(--my, 50%), ${accent}66, transparent 65%)` }} />
@@ -315,18 +314,7 @@ export function Marquee() {
           .mq-group { gap: 10px; padding-right: 10px; }
         }
         .mq-aura {
-          position: absolute;
-          border-radius: 50%;
-          opacity: 0.32;
-          pointer-events: none;
-          will-change: transform;
-          animation: mqAura 16s ease-in-out infinite;
-        }
-        .mq-aura.a { width: 520px; height: 520px; top: -140px; left: -140px; background: radial-gradient(circle, #2f6fd6 0%, rgba(47,111,214,0) 70%); }
-        .mq-aura.b { width: 480px; height: 480px; bottom: -180px; right: -120px; background: radial-gradient(circle, #1e5fb0 0%, rgba(30,95,176,0) 70%); animation-delay: -8s; }
-        @keyframes mqAura {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          50% { transform: translate(70px, 40px) scale(1.15); }
+          display: none !important;
         }
         .mq-spot {
           position: absolute;

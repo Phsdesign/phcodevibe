@@ -106,25 +106,26 @@ function PillarScene({
           show: {
             y: 0,
             scale: 1,
-            backgroundColor: "rgba(20, 26, 38, 0.85)",
+            backgroundColor: "rgba(20, 26, 38, 0.95)",
             borderColor: "rgba(255, 255, 255, 0.12)",
-            boxShadow: "0 40px 90px -40px rgba(0, 0, 0, 0.75)",
+            boxShadow: "0 20px 40px -15px rgba(0, 0, 0, 0.7)",
           },
           hover: {
-            y: -8,
+            y: -6,
             scale: 1.01,
             backgroundColor: "#ffffff",
             borderColor: "#ffffff",
-            boxShadow: "0 50px 100px -30px rgba(255, 255, 255, 0.25)",
+            boxShadow: "0 25px 50px -15px rgba(255, 255, 255, 0.25)",
           },
         }}
-        transition={{ duration: 0.5, ease: EASE }}
+        transition={{ duration: 0.4, ease: EASE }}
         style={{
           position: "relative",
           overflow: "hidden",
           rotateX: interactive ? rotateX : 0,
           rotateY: interactive ? rotateY : 0,
           transformPerspective: 1100,
+          willChange: "transform",
           display: "grid",
           gridTemplateColumns: desktop ? "minmax(120px, 0.7fr) 2fr 1fr" : "1fr",
           gap: desktop ? 48 : 20,
@@ -132,8 +133,8 @@ function PillarScene({
           padding: desktop ? "56px 48px" : "28px 22px",
           borderRadius: desktop ? 40 : 26,
           border: "1px solid rgba(255, 255, 255, 0.12)",
-          backgroundColor: "rgba(20, 26, 38, 0.85)",
-          boxShadow: "0 40px 90px -40px rgba(0, 0, 0, 0.75)",
+          backgroundColor: "rgba(20, 26, 38, 0.95)",
+          boxShadow: "0 20px 40px -15px rgba(0, 0, 0, 0.7)",
         }}
       >
         <motion.span
@@ -309,34 +310,6 @@ export function Metrics() {
         background: "var(--bg)",
       }}
     >
-      <style>{`
-        .mt-blob-inner {
-          width: 100%;
-          height: 100%;
-          border-radius: 50%;
-          background: radial-gradient(circle, rgba(120,160,255,0.16) 0%, rgba(120,160,255,0) 65%);
-        }
-      `}</style>
-
-      {parallax && (
-        <motion.div
-          aria-hidden
-          style={{
-            position: "absolute",
-            top: "30%",
-            left: "50%",
-            width: 1000,
-            height: 1000,
-            marginLeft: -500,
-            marginTop: -500,
-            pointerEvents: "none",
-            y: blobY,
-          }}
-        >
-          <div className="mt-blob-inner" />
-        </motion.div>
-      )}
-
       <div style={{ position: "relative", zIndex: 2, maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
         <div style={{ maxWidth: 820, marginBottom: desktop ? 110 : 60 }}>
           <motion.div

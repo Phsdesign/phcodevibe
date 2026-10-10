@@ -112,8 +112,6 @@ function OfferCodeRide() {
 
       ctx.save();
       ctx.lineCap = "round";
-      ctx.shadowColor = "rgba(255,255,255,0.9)";
-      ctx.shadowBlur = 18;
       for (let k = 0; k < BEAM_BUCKETS; k++) {
         const from = Math.floor((k * beamN) / BEAM_BUCKETS);
         const to = Math.floor(((k + 1) * beamN) / BEAM_BUCKETS);
@@ -133,8 +131,8 @@ function OfferCodeRide() {
       ctx.restore();
 
       const p = pts[head];
-      for (let k = 0; k < 3; k++) {
-        if (sparks.length > 160) break;
+      for (let k = 0; k < 2; k++) {
+        if (sparks.length > 40) break;
         const speed = 0.4 + Math.random() * 0.8;
         const tangent = (Math.random() - 0.5) * 0.4;
         sparks.push({
@@ -1376,14 +1374,14 @@ export function Pricing() {
         }
         
         .premium-card-glass {
-          background: var(--bg-card);
-          backdrop-filter: blur(24px);
-          -webkit-backdrop-filter: blur(24px);
+          background: rgba(14, 22, 38, 0.94);
           border: 1px solid var(--border-color);
           border-radius: 40px;
           position: relative;
           z-index: 2;
-          transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+          will-change: transform;
+          transform: translateZ(0);
+          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.4s ease;
           box-shadow: var(--shadow-lg);
         }
 
@@ -1791,21 +1789,6 @@ export function Pricing() {
         
         {/* Main Offer Section */}
         <div style={{ position: "relative", marginBottom: "10rem" }}>
-          
-          <div style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "90%",
-            height: "90%",
-            background: "radial-gradient(circle, rgba(255, 255, 255, 0.06) 0%, transparent 70%)",
-            willChange: "transform, opacity",
-            animation: "premium-glow 8s infinite ease-in-out",
-            pointerEvents: "none",
-            zIndex: 1
-          }} />
-
           <div className="offer-card">
             <OfferCodeRide />
             <div className="offer-grid" aria-hidden="true" />
