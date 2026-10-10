@@ -13,14 +13,14 @@ const AntigravityBackground = dynamic(
 const entranceVariants = {
   hidden: ({ isMobile }: { isMobile?: boolean } = {}) => ({ 
     opacity: 0, 
-    y: isMobile ? 10 : 24, 
+    y: isMobile ? 14 : 22, 
   }),
-  visible: ({ custom, isMobile }: { custom: number; isMobile?: boolean }) => ({
+  visible: ({ delay, isMobile }: { delay: number; isMobile?: boolean }) => ({
     opacity: 1,
     y: 0,
     transition: {
-      delay: isMobile ? 3.3 + custom * 0.4 : custom,
-      duration: isMobile ? 0.6 : 0.9,
+      delay,
+      duration: isMobile ? 0.65 : 0.85,
       ease: [0.16, 1, 0.3, 1] as const
     }
   })
@@ -33,6 +33,7 @@ export function Hero() {
   const [wordIndex, setWordIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
+  const base = isMobile ? 3.25 : 0.08;
 
   useEffect(() => {
     const handleResize = () => {
@@ -71,7 +72,7 @@ export function Hero() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1.2, ease: "easeOut", delay: isMobile ? 4.6 : 2.9 }}
+        transition={{ duration: 1.2, ease: "easeOut", delay: base + 0.15 }}
         style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
       >
         <AntigravityBackground />
@@ -81,7 +82,7 @@ export function Hero() {
       <div className="container hero-reveal-container" style={{ textAlign: "center", position: "relative", zIndex: 3 }}>
         {/* STATUS BADGE */}
         <motion.div 
-          custom={{ custom: 1.0, isMobile }}
+          custom={{ delay: base + 0.48, isMobile }}
           initial="hidden"
           animate="visible"
           variants={entranceVariants}
@@ -97,19 +98,19 @@ export function Hero() {
         {/* HERO TITLE */}
         <h1 className="hero-title" style={{ color: "#ffffff" }}>
           <motion.span 
-            custom={{ custom: 1.12, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
+            custom={{ delay: base + 0.62, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
             className="block hero-enter" style={{ color: "#ffffff" }}
           >
             Design de Elite.
           </motion.span>
           <motion.span 
-            custom={{ custom: 1.24, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
+            custom={{ delay: base + 0.74, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
             className="block hero-enter" style={{ color: "#ffffff" }}
           >
             Marcas
           </motion.span>
           <motion.span 
-            custom={{ custom: 1.36, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
+            custom={{ delay: base + 0.86, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
             className="block hero-enter" style={{ color: "#ffffff" }}
           >
             <span 
@@ -123,7 +124,7 @@ export function Hero() {
         </h1>
 
         <motion.p 
-          custom={{ custom: 1.5, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
+          custom={{ delay: base + 1.02, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
           className="hero-subtitle hero-enter"
           style={{ color: "#ffffff" }}
         >
@@ -132,7 +133,7 @@ export function Hero() {
 
         {/* CTAs */}
         <motion.div 
-          custom={{ custom: 1.64, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
+          custom={{ delay: base + 1.18, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
           className="hero-ctas hero-enter"
         >
           <Link href="#portfolio" className="hero-cta-primary" aria-label="Ver portfólio de projetos">
@@ -148,7 +149,7 @@ export function Hero() {
 
         {/* Painel de métricas */}
         <motion.div
-          custom={{ custom: 1.8, isMobile }} initial="hidden" animate="visible"
+          custom={{ delay: base + 1.34, isMobile }} initial="hidden" animate="visible"
           variants={entranceVariants} className="hero-enter hz-panel-wrap"
         >
           <style>{`
@@ -441,7 +442,7 @@ export function Hero() {
         aria-label="Explorar o site"
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.9, delay: isMobile ? 3 : 2, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.85, delay: base + 1.55, ease: [0.16, 1, 0.3, 1] }}
         className="hero-scroll-cue"
         style={{
           position: "absolute",

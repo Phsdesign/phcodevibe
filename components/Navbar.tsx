@@ -47,9 +47,9 @@ export function Navbar() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const ticking = useRef(false);
-  const base = isMobile ? 3.3 : 0.1;
-  const step = 0.12;
-  const ctaDelay = base + step * 3 + links.length * step;
+  const base = isMobile ? 3.25 : 0.08;
+  const step = 0.05;
+  const ctaDelay = base + 0.44;
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -181,7 +181,7 @@ export function Navbar() {
                 aria-hidden="true"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: ctaDelay + 0.45, duration: 0.7, ease: "easeOut" }}
+                transition={{ delay: ctaDelay + 0.35, duration: 0.7, ease: "easeOut" }}
               />
               <Link href="#contato" className="navbar-cta">
                 <span className="navbar-cta-label">Começar Projeto</span>
@@ -194,7 +194,7 @@ export function Navbar() {
                 aria-hidden="true"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: ctaDelay + 0.65, duration: 0.7, ease: "easeOut" }}
+                transition={{ delay: ctaDelay + 0.50, duration: 0.7, ease: "easeOut" }}
               >
                 <i /><i /><i /><i /><i /><i />
               </motion.span>
@@ -206,7 +206,7 @@ export function Navbar() {
               className="navbar-hamburger lg:hidden"
               onClick={() => setDrawerOpen(true)}
               aria-label="Abrir menu de navegação"
-              custom={base + step * 3 + links.length * step}
+              custom={isMobile ? base + 0.16 : base + step * 3 + links.length * step}
               initial="hidden"
               animate="visible"
               variants={itemVariants}

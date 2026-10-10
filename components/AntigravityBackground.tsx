@@ -451,7 +451,12 @@ export function AntigravityBackground({
 
     const isMobileViewport = () => {
       if (typeof window === "undefined") return false;
-      return window.innerWidth < 768;
+      const isTouch =
+        (typeof window.matchMedia === "function" &&
+          window.matchMedia("(pointer: coarse)").matches) ||
+        "ontouchstart" in window ||
+        (typeof navigator !== "undefined" && navigator.maxTouchPoints > 0);
+      return window.innerWidth < 768 || (isTouch && window.innerWidth < 1024);
     };
 
     const updateMousePos = (clientX: number, clientY: number) => {
@@ -530,44 +535,46 @@ export function AntigravityBackground({
       const elapsedTime = clock.getElapsedTime();
       const isMobile = isMobileViewport();
 
+      // Flutuação orgânica contínua viva a todo instante
+      const driftX =
+        Math.sin(elapsedTime * 0.85) * 0.35 +
+        Math.cos(elapsedTime * 0.42) * 0.15;
+      const driftY =
+        Math.cos(elapsedTime * 0.95) * 0.25 +
+        Math.sin(elapsedTime * 0.55) * 0.12;
+
       if (isMobile) {
-        // No mobile: anel estático e sem aceleração, partículas paradas
-        targetRingPos.set(0, centerY);
-        currentVelocity = 0;
-        material.uniforms.uVelocity.value = 0;
+        // No mobile: movimento contínuo natural no centro, sem congelar ao clicar e sem seguir o dedo
+        targetRingPos.set(driftX, centerY + driftY);
       } else {
-        // Flutuação orgânica ampla caso o mouse ainda não tenha sido movido (apenas desktop)
-        if (!hasUserMoved) {
-          const driftX =
-            Math.sin(elapsedTime * 0.85) * 0.35 +
-            Math.cos(elapsedTime * 0.42) * 0.15;
-          const driftY =
-            Math.cos(elapsedTime * 0.95) * 0.25 +
-            Math.sin(elapsedTime * 0.55) * 0.12;
-          targetRingPos.set(driftX, driftY);
-        }
+        // No desktop: flutuação orgânica somada ao mouse
+        targetRingPos.set(
+          lastMousePos.x + driftX * 0.25,
+          lastMousePos.y + driftY * 0.25
+        );
       }
 
       // Easing adaptativo ultra-fluido: inércia líquida rápida e suave
       const currentPos = material.uniforms.uRingPos.value;
-      if (isMobile) {
-        currentPos.set(0, centerY);
-      } else {
-        const distToTarget = currentPos.distanceTo(targetRingPos);
-        const lerpFactor = THREE.MathUtils.clamp(
-          0.075 + distToTarget * 0.045,
-          0.075,
-          0.16
-        );
-        currentPos.lerp(targetRingPos, lerpFactor);
+      const distToTarget = currentPos.distanceTo(targetRingPos);
+      const lerpFactor = THREE.MathUtils.clamp(
+        0.075 + distToTarget * 0.045,
+        0.075,
+        0.16
+      );
+      currentPos.lerp(targetRingPos, lerpFactor);
 
+      if (isMobile) {
+        // No mobile: velocidade ambiente contínua viva, nunca trava no clique
+        material.uniforms.uVelocity.value = 0.16 + Math.sin(elapsedTime * 1.6) * 0.05;
+      } else {
         // Velocidade calculada continuamente a cada frame para fluidez total
         currentVelocity = THREE.MathUtils.lerp(
           currentVelocity,
           Math.min(distToTarget * 2.2, 1.4),
           0.14
         );
-        material.uniforms.uVelocity.value = currentVelocity;
+        material.uniforms.uVelocity.value = Math.max(currentVelocity, 0.12);
       }
 
       // Pulsação e respiração orgânica contínua da coroa
