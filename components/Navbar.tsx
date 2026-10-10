@@ -49,6 +49,7 @@ export function Navbar() {
   const ticking = useRef(false);
   const base = isMobile ? 3.3 : 0.1;
   const step = 0.12;
+  const ctaDelay = base + step * 3 + links.length * step;
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -168,22 +169,36 @@ export function Navbar() {
               <span className="navbar-status-text">Disponível</span>
             </motion.div>
 
-            <MotionLink
-              href="#contato"
-              className="navbar-cta hidden sm:inline-flex"
-              custom={base + step * 3 + links.length * step}
+            <motion.span
+              className="navbar-cta-wrap hidden sm:inline-flex"
+              custom={ctaDelay}
               initial="hidden"
               animate="visible"
               variants={itemVariants}
             >
-              <span className="navbar-cta-label">Começar Projeto</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                <path d="M7 17L17 7M17 7H7M17 7V17"/>
-              </svg>
-              <span className="navbar-cta-particles" aria-hidden="true">
+              <motion.span
+                className="navbar-cta-sheen"
+                aria-hidden="true"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: ctaDelay + 0.45, duration: 0.7, ease: "easeOut" }}
+              />
+              <Link href="#contato" className="navbar-cta">
+                <span className="navbar-cta-label">Começar Projeto</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                  <path d="M7 17L17 7M17 7H7M17 7V17"/>
+                </svg>
+              </Link>
+              <motion.span
+                className="navbar-cta-particles"
+                aria-hidden="true"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: ctaDelay + 0.65, duration: 0.7, ease: "easeOut" }}
+              >
                 <i /><i /><i /><i /><i /><i />
-              </span>
-            </MotionLink>
+              </motion.span>
+            </motion.span>
 
             {/* Mobile Hamburger Button */}
             <motion.button

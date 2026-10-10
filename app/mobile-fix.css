@@ -1119,7 +1119,8 @@
   }
 
   /* Ocultar CTA no header compacto mobile para layout perfeito (disponível no menu drawer) */
-  .navbar-cta {
+  .navbar-cta,
+  .navbar-cta-wrap {
     display: none !important;
   }
 
