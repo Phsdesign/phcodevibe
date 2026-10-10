@@ -6,6 +6,32 @@
 
 @media (max-width: 768px) {
 
+  /* Rodapé: wordmark "PH CODE LABS" não pode estourar a largura da tela */
+  .ft-wordmark {
+    font-size: 12.5vw !important;
+    letter-spacing: -0.05em !important;
+    margin-top: 2rem !important;
+  }
+
+  /* Cartão elite (FeaturesAI): menos padding e título menor */
+  .ph-elite-inner {
+    padding: 1.6rem 1.25rem !important;
+  }
+
+  /* CTA da oferta (Pricing): cabe em telas estreitas */
+  .offer-cta {
+    padding: 1rem 1.6rem !important;
+    font-size: 0.78rem !important;
+    letter-spacing: 0.08em !important;
+    max-width: 100%;
+    white-space: normal;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+
   /* ════════════════════════════════════════════
      0. BASE GLOBAL — DEFINITIVE ONE-SWIPE FIX
      ════════════════════════════════════════════ */
@@ -167,13 +193,48 @@
   }
 
   .hero-title {
-    font-size: 10vw !important;
-    line-height: 1.08 !important;
+    font-size: 11vw !important;
+    line-height: 1.1 !important;
     letter-spacing: -0.04em !important;
+    min-height: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .hero-title > span {
+    line-height: 1.1 !important;
+    padding-bottom: 0.06em !important;
   }
 
   .hero-rotating-word {
     font-size: inherit !important;
+    display: inline-block !important;
+    line-height: 1.15 !important;
+    padding-bottom: 0.08em !important;
+    white-space: normal !important;
+  }
+
+  .hero-section div[style*="bottom: -30px"] {
+    display: none !important;
+  }
+
+  .hz-panel-wrap {
+    margin: 2.5rem auto 1.5rem !important;
+    padding: 0 !important;
+  }
+
+  .hz-panel {
+    border-radius: 22px !important;
+  }
+
+  .hz-cell {
+    min-width: 0 !important;
+  }
+
+  .hz-label {
+    font-size: 10px !important;
+    letter-spacing: 0.12em !important;
+    line-height: 1.4 !important;
+    text-align: center !important;
   }
 
   .hero-subtitle {
