@@ -11,22 +11,6 @@ const AntigravityBackground = dynamic(
   { ssr: false }
 );
 
-const entranceVariants = {
-  hidden: ({ isMobile }: { isMobile?: boolean } = {}) => ({ 
-    opacity: 0, 
-    y: isMobile ? 14 : 22, 
-  }),
-  visible: ({ delay, isMobile }: { delay: number; isMobile?: boolean }) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay,
-      duration: isMobile ? 0.65 : 0.85,
-      ease: [0.16, 1, 0.3, 1] as const
-    }
-  })
-};
-
 const ROTATING_WORDS = ["Imbatíveis.", "Lendárias.", "Absolutas.", "Únicas."];
 
 const stack = [
@@ -59,22 +43,40 @@ const RotatingWord = memo(function RotatingWord() {
 });
 
 export function Hero() {
-  const [isMobile, setIsMobile] = useState(false);
   const base = 0.08;
   const sectionRef = useRef<HTMLElement>(null);
   const cellFrame = useRef(0);
   usePauseOffscreenAnimations(sectionRef);
   const cellPointer = useRef<{ el: HTMLDivElement | null; x: number; y: number }>({ el: null, x: 0, y: 0 });
 
+  // As partículas 3D (Three.js + WebGL a cada frame) só entram depois que a
+  // página terminou de carregar: no primeiro movimento do mouse, toque, scroll ou
+  // tecla, ou 3 s após o load. Assim o carregamento e a primeira pintura da Hero
+  // não disputam a thread principal com o WebGL; o canvas entra com fade (CSS).
+  const [showParticles, setShowParticles] = useState(false);
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    handleResize();
-    window.addEventListener("resize", handleResize, { passive: true });
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(cellFrame.current);
+    if (window.innerWidth < 768) return;
+    const events = ["pointermove", "pointerdown", "wheel", "keydown", "touchstart", "scroll"] as const;
+    let timer = 0;
+    const cleanup = () => {
+      window.clearTimeout(timer);
+      window.removeEventListener("load", arm);
+      events.forEach((e) => window.removeEventListener(e, start));
     };
+    const start = () => {
+      cleanup();
+      setShowParticles(true);
+    };
+    const arm = () => {
+      timer = window.setTimeout(start, 3000);
+    };
+    events.forEach((e) => window.addEventListener(e, start, { passive: true }));
+    if (document.readyState === "complete") arm();
+    else window.addEventListener("load", arm);
+    return cleanup;
   }, []);
+
+  useEffect(() => () => cancelAnimationFrame(cellFrame.current), []);
 
   // Escreve as CSS vars no máximo 1x por frame (mousemove pode passar de 60Hz e
   // cada leitura de rect após escrita forçava recálculo de estilo síncrono).
@@ -99,67 +101,52 @@ export function Hero() {
   return (
     <section ref={sectionRef} id="hero" className="hero-section" style={{ position: "relative", overflow: "hidden", minHeight: "100vh", width: "100%", display: "flex", alignItems: "center", background: "radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%)", transition: "background 0.5s ease" }}>
       {/* Google Antigravity Style Interactive Background (Apenas na versão black) */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.2, ease: "easeOut", delay: base + 0.15 }}
-        style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
-      >
+      <div className="hero-ag-wrap" style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
         {/* No celular o fundo 3D fica desligado (versão mobile mais estática e leve). */}
-        {typeof window !== "undefined" && window.innerWidth >= 768 && <AntigravityBackground />}
-      </motion.div>
+        {showParticles && window.innerWidth >= 768 && <AntigravityBackground />}
+      </div>
 
       {/* Content */}
       <div className="container hero-reveal-container" style={{ textAlign: "center", position: "relative", zIndex: 3 }}>
         {/* STATUS BADGE */}
-        <motion.div 
-          custom={{ delay: base + 0.48, isMobile }}
-          initial="hidden"
-          animate="visible"
-          variants={entranceVariants}
-          className="orbai-badge hero-enter hidden md:inline-flex" 
-          style={{ marginBottom: "2rem" }}
+        <div
+          className="orbai-badge hero-enter hidden md:inline-flex"
+          style={{ marginBottom: "2rem", animationDelay: `${base + 0.48}s` }}
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
             <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6z"/>
           </svg>
           <span style={{ fontWeight: 700 }}>Design &amp; Experiências High-End</span>
-        </motion.div>
+        </div>
 
         {/* HERO TITLE */}
         <h1 className="hero-title" style={{ color: "#ffffff" }}>
-          <motion.span 
-            custom={{ delay: base + 0.62, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
-            className="block hero-enter" style={{ color: "#ffffff" }}
+          <span
+            className="block hero-enter" style={{ color: "#ffffff", animationDelay: `${base + 0.62}s` }}
           >
             Design de Elite.
-          </motion.span>
-          <motion.span 
-            custom={{ delay: base + 0.74, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
-            className="block hero-enter" style={{ color: "#ffffff" }}
+          </span>
+          <span
+            className="block hero-enter" style={{ color: "#ffffff", animationDelay: `${base + 0.74}s` }}
           >
             Marcas
-          </motion.span>
-          <motion.span 
-            custom={{ delay: base + 0.86, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
-            className="block hero-enter" style={{ color: "#ffffff" }}
+          </span>
+          <span
+            className="block hero-enter" style={{ color: "#ffffff", animationDelay: `${base + 0.86}s` }}
           >
             <RotatingWord />
-          </motion.span>
+          </span>
         </h1>
 
-        <motion.p 
-          custom={{ delay: base + 1.02, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
-          className="hero-subtitle hero-enter"
-          style={{ color: "#ffffff" }}
+        <p
+          className="hero-subtitle hero-enter" style={{ color: "#ffffff", animationDelay: `${base + 1.02}s` }}
         >
           Criamos identidades digitais de alto luxo e tecnologia para marcas que buscam o topo do mercado.
-        </motion.p>
+        </p>
 
         {/* CTAs */}
-        <motion.div 
-          custom={{ delay: base + 1.18, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
-          className="hero-ctas hero-enter"
+        <div
+          className="hero-ctas hero-enter" style={{ animationDelay: `${base + 1.18}s` }}
         >
           <Link href="#portfolio" className="hero-cta-primary" aria-label="Ver portfólio de projetos">
             Ver Projetos
@@ -170,12 +157,11 @@ export function Hero() {
           <a href="https://wa.me/5549991031743" target="_blank" rel="noopener noreferrer" className="hero-cta-secondary" aria-label="Falar conosco no WhatsApp">
             Ver Serviços
           </a>
-        </motion.div>
+        </div>
 
         {/* Painel de métricas */}
-        <motion.div
-          custom={{ delay: base + 1.34, isMobile }} initial="hidden" animate="visible"
-          variants={entranceVariants} className="hero-enter hz-panel-wrap"
+        <div
+          className="hero-enter hz-panel-wrap" style={{ animationDelay: `${base + 1.34}s` }}
         >
           <style>{`
             .hz-panel-wrap {
@@ -436,6 +422,9 @@ export function Hero() {
               100% { transform: translate(0); text-shadow: none; }
             }
             @keyframes hzEdge { to { background-position: -200% 0; } }
+            /* Fade de entrada das partículas 3D (antes um motion.div em volta). */
+            .hero-ag-wrap canvas { animation: heroAgFade 1.2s cubic-bezier(0, 0, 0.58, 1) both; }
+            @keyframes heroAgFade { from { opacity: 0; } to { opacity: 1; } }
             /* Botão "Explorar": o giro e os anéis eram animados em JS pelo framer-motion
                (rotate/scale independentes não vão para o compositor), recalculando estilo
                a cada frame. Mesmas curvas em CSS: linear 6s; easeOut do framer =
@@ -500,25 +489,22 @@ export function Hero() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
 
-      <motion.a
+      <a
         href="#features"
         onClick={(e) => {
           e.preventDefault();
           document.getElementById("features")?.scrollIntoView({ behavior: "smooth" });
         }}
         aria-label="Explorar o site"
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.85, delay: base + 1.55, ease: [0.16, 1, 0.3, 1] }}
         className="hero-scroll-cue"
         style={{
+          animationDelay: `${base + 1.55}s`,
           position: "absolute",
           bottom: "clamp(1rem, 3.5vh, 2.25rem)",
           left: "50%",
-          transform: "translateX(-50%)",
           zIndex: 110,
           display: "flex",
           flexDirection: "column",
@@ -606,7 +592,7 @@ export function Hero() {
         >
           Explorar
         </span>
-      </motion.a>
+      </a>
 
     </section>
   );
