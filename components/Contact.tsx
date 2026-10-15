@@ -237,6 +237,9 @@ export function Contact() {
         @media (max-width: 480px) {
           /* No mobile o e-mail quebra linha em vez de virar reticências. */
           .ct-value { white-space: normal; overflow-wrap: anywhere; }
+          /* inline-block cria um ponto de quebra antes do "@"; acima de 480px
+             o domínio segue inline e nada muda no layout. */
+          .ct-value-domain { display: inline-block; }
         }
         .ct-arrow {
           color: var(--ct-faint);
@@ -424,8 +427,7 @@ export function Contact() {
                       {c.value.includes("@") ? (
                         <>
                           {c.value.slice(0, c.value.indexOf("@"))}
-                          <wbr />
-                          {c.value.slice(c.value.indexOf("@"))}
+                          <span className="ct-value-domain">{c.value.slice(c.value.indexOf("@"))}</span>
                         </>
                       ) : (
                         c.value
