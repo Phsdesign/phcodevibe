@@ -1371,7 +1371,10 @@
    JavaScript carregar para rodar a animação de entrada (era o que atrasava o LCP). */
 @media (max-width: 767px) {
   .hero-enter,
-  .hero-scroll-cue {
+  .hero-scroll-cue,
+  .nav-enter,
+  .nav-item-enter,
+  .nav-fade-enter {
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;

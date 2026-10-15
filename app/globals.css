@@ -334,8 +334,11 @@ p { line-height: 1.6; color: var(--text-secondary); }
   0% { background-position: 200% center; }
   100% { background-position: -200% center; }
 }
+/* O gradientSweep saiu daqui: a palavra usa .hero-rotating-word, que força
+   background-image: none, então o brilho não aparecia e só custava um repaint
+   por frame. */
 .animate-word-rotate {
-  animation: wordRotate 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards, gradientSweep 4s linear infinite;
+  animation: wordRotate 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
   background-size: 200% auto !important;
   will-change: transform, opacity;
 }
@@ -3743,4 +3746,40 @@ html:not(.dark) .hero-section video {
       min-height: 100svh !important;
     }
   }
+}
+
+/* Botão do WhatsApp: brilho, faixa de luz e pulso do ícone (mesmas curvas do
+   framer-motion: easeInOut = cubic-bezier(0.42, 0, 0.58, 1)). */
+.fab-wa-glow { animation: fabWaGlow 3.2s cubic-bezier(0.42, 0, 0.58, 1) infinite; }
+@keyframes fabWaGlow {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.7; }
+}
+/* 3,2 s de movimento + 1 s parado fora do botão (repeatDelay) = ciclo de 4,2 s. */
+.fab-wa-shine { animation: fabWaShine 4.2s infinite; }
+@keyframes fabWaShine {
+  0% { transform: translateX(-100%); animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1); }
+  76.19%, 100% { transform: translateX(250%); }
+}
+.fab-wa-icon { animation: fabWaIcon 3.2s cubic-bezier(0.42, 0, 0.58, 1) infinite; }
+@keyframes fabWaIcon {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+/* Entrada da Navbar (antes framer-motion; mesma curva, duração e atrasos). */
+.nav-enter { animation: navEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+@keyframes navEnter {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: none; }
+}
+.nav-item-enter { animation: navItemEnter 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+@keyframes navItemEnter {
+  from { opacity: 0; transform: translateY(-12px) scale(0.85); }
+  to { opacity: 1; transform: none; }
+}
+.nav-fade-enter { animation: navFadeEnter 0.7s cubic-bezier(0, 0, 0.58, 1) both; }
+@keyframes navFadeEnter {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
