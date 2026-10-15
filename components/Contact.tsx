@@ -419,7 +419,18 @@ export function Contact() {
                   </span>
                   <span className="ct-channel-meta">
                     <span className="ct-label">{c.label}</span>
-                    <span className="ct-value">{c.value}</span>
+                    <span className="ct-value">
+                      {/* No mobile o e-mail quebra antes do "@" em vez de no meio do domínio */}
+                      {c.value.includes("@") ? (
+                        <>
+                          {c.value.slice(0, c.value.indexOf("@"))}
+                          <wbr />
+                          {c.value.slice(c.value.indexOf("@"))}
+                        </>
+                      ) : (
+                        c.value
+                      )}
+                    </span>
                   </span>
                   <span className="ct-arrow">
                     <Icon size={18} strokeWidth={2}>{icons.arrowUpRight}</Icon>

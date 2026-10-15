@@ -334,9 +334,6 @@ export function Footer() {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          /* Só quebra linha quando não cabe (≤ ~360px): antes o texto
-             "Fale com a gente pelo WhatsApp" era cortado pelo overflow. */
-          flex-wrap: wrap;
           gap: 1rem 2rem;
           padding: clamp(1.25rem, 2.5vw, 2rem) 0;
           border-top: 1px solid rgba(255,255,255,0.12);
@@ -344,6 +341,12 @@ export function Footer() {
           color: #fff;
           text-decoration: none;
           overflow: hidden;
+        }
+        /* Abaixo de 430px texto, legenda e seta não cabem numa linha: o
+           "Fale com a gente pelo WhatsApp" e a seta eram cortados pelo
+           overflow. Ali legenda e seta descem para uma segunda linha. */
+        @media (max-width: 429px) {
+          .ft-cta-row { flex-wrap: wrap; }
         }
         .ft-cta-row::before {
           content: "";
