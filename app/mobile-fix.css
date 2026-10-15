@@ -1366,3 +1366,14 @@
   background: rgba(255, 255, 255, 0.1);
   transform: scale(0.98);
 }
+
+/* Versão mobile estática: o conteúdo da Hero aparece já no HTML, sem esperar o
+   JavaScript carregar para rodar a animação de entrada (era o que atrasava o LCP). */
+@media (max-width: 767px) {
+  .hero-enter,
+  .hero-scroll-cue {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}

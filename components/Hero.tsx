@@ -60,7 +60,7 @@ const RotatingWord = memo(function RotatingWord() {
 
 export function Hero() {
   const [isMobile, setIsMobile] = useState(false);
-  const base = isMobile ? 1.55 : 0.08;
+  const base = 0.08;
   const sectionRef = useRef<HTMLElement>(null);
   const cellFrame = useRef(0);
   usePauseOffscreenAnimations(sectionRef);
@@ -105,7 +105,8 @@ export function Hero() {
         transition={{ duration: 1.2, ease: "easeOut", delay: base + 0.15 }}
         style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
       >
-        <AntigravityBackground />
+        {/* No celular o fundo 3D fica desligado (versão mobile mais estática e leve). */}
+        {typeof window !== "undefined" && window.innerWidth >= 768 && <AntigravityBackground />}
       </motion.div>
 
       {/* Content */}

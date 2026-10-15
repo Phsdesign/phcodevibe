@@ -8,6 +8,9 @@ const noopSubscribe = () => () => {};
 const getClientIsMobile = (): boolean | null => window.innerWidth <= 768;
 const getServerIsMobile = (): boolean | null => null;
 
+// Desligado a pedido: no celular o splash atrasava o conteúdo (versão mobile mais estática).
+const SPLASH_ENABLED = false;
+
 export function SplashLoader() {
   const [loading, setLoading] = useState(true);
   // Mesma regra do antigo setIsMobile no mount, mas sem os 3 setState síncronos
@@ -19,7 +22,7 @@ export function SplashLoader() {
   // Navbar, que reseta body.overflow logo depois) faz parte do comportamento atual.
   useEffect(() => {
     // Se for parte web / desktop, o splash não é renderizado e o scroll é liberado
-    if (!getClientIsMobile()) {
+    if (!SPLASH_ENABLED || !getClientIsMobile()) {
       document.body.style.overflow = "auto";
       return;
     }
@@ -46,7 +49,7 @@ export function SplashLoader() {
   }, []);
 
   // Se já montou no cliente e confirmou que é desktop/web, não renderiza nada
-  if (mounted && !isMobile) {
+  if (!SPLASH_ENABLED || (mounted && !isMobile)) {
     return null;
   }
 
