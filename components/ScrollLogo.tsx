@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { createFrameLoop } from "@/lib/frameLoop";
 
 const LOGO_PATH =
   "M41.3,85.8v-.2c-.6-2.8-4.2-23,8.1-33.8,3.4-2.9,7.2-4.8,10.5-5.7,9.8-2.6,24.4-3.1,31.3,3.6,1,1,1.6,1.8,1.8,2.1,3.9,6,.8,14.1.3,15.4-4.6,11.9-20.8,14.2-21.5,14.3,6.1.5,15.9-.3,26.3-4.9,4.3-2.2,9.4-4.8,12.9-10.7,3.3-5.7,3.3-11.2,3.2-15.3,0-9.1-3.3-16.2-5.7-20.3,0,.2.3.5.6.8,1.7,2.5,5,7.3,7.4,14,1.5,4.1,2.2,7.6,2.9,10.9.5,5.9.4,14-2.3,22.9-7.7,25.1-29.9,36.7-35.2,39.2,8.9-8.2,13.2-15.8,15.4-20.8,2.1-4.7,2.7-7.7,1.3-9.7-1.2-1.7-3.8-2.8-8.8-2.9-5.9,0-16.4,1.3-20.2,2.9-1.3.5-2.8,1.2-4.5,2.4,0,0-3.1,2-5.2,4.7-4.3,5.3-4,13.4-3.9,15,1.1,17.8,13.9,27.3,13.9,27.3-4.8-3.1-11.7-8.6-16.8-17.2-3.6-6-4.8-10.9-5.1-12.3-.7-2.9-1.4-6.3-.8-10.7.8-5.7,3.5-9.7,4.8-11.5,1.9-2.7,6.7-6.2,15.3-9.7,4.5-1.8,7.6-2.2,10.8-5.4,2.8-2.7,3.2-5,3.4-5.9.2-.8,1-4-.8-6.9-1.8-3-4.9-3.9-7.2-4.2-6-.8-10.9.7-13.5,1.8-7.1,2.9-11,7.7-12,9.1-.7.9-3.5,4.7-5,10.4-1.6,6.1-1.8,12.4-1.8,12.4,0,0,0-.5-.2-.8l.3-.3Z";
@@ -199,20 +200,19 @@ export function ScrollLogo() {
     updateScrollProgress();
 
     const t0 = performance.now();
-    let raf = 0;
+    // Relógio único da página (lib/frameLoop) em vez de um rAF próprio.
+    const loop = createFrameLoop((now) => frame(now));
     // Fora da viewport o loop é parado de fato e retomado ao reentrar.
     const io = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
         updateScrollProgress();
-        if (!raf) raf = requestAnimationFrame(frame);
+        loop.start();
       } else {
-        cancelAnimationFrame(raf);
-        raf = 0;
+        loop.stop();
       }
     });
 
     const frame = (now: number) => {
-      raf = requestAnimationFrame(frame);
       if (scrollDirty) {
         scrollDirty = false;
         updateScrollProgress();
@@ -314,11 +314,11 @@ export function ScrollLogo() {
       }
     };
 
-    raf = requestAnimationFrame(frame);
+    loop.start();
     io.observe(section);
 
     return () => {
-      cancelAnimationFrame(raf);
+      loop.stop();
       cancelAnimationFrame(resizeFrame);
       io.disconnect();
       window.removeEventListener("resize", onResize);

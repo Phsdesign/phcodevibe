@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { onFrame } from "@/lib/frameLoop";
 
 export function SmoothScroll() {
   useEffect(() => {
@@ -13,7 +14,7 @@ export function SmoothScroll() {
 
     // Lenis só é baixado no desktop (import dinâmico): no celular o scroll é
     // nativo e o pacote não entra no carregamento.
-    let frame = 0;
+    let stopFrame: (() => void) | null = null;
     let lenis: import("lenis").default | null = null;
     let cancelled = false;
     import("lenis").then(({ default: Lenis }) => {
@@ -24,18 +25,17 @@ export function SmoothScroll() {
         smoothWheel: true,
         wheelMultiplier: 1.0,
         touchMultiplier: 1.0,
+        autoRaf: false,
       });
       lenis = instance;
-      const raf = (time: number) => {
-        instance.raf(time);
-        frame = requestAnimationFrame(raf);
-      };
-      frame = requestAnimationFrame(raf);
+      // Lenis anda no relógio único da página (mesmo frame do framer-motion e
+      // dos canvas), em vez de um requestAnimationFrame próprio.
+      stopFrame = onFrame((time) => instance.raf(time));
     });
 
     return () => {
       cancelled = true;
-      cancelAnimationFrame(frame);
+      stopFrame?.();
       lenis?.destroy();
     };
   }, []);

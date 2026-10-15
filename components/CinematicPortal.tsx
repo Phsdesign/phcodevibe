@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { createFrameLoop } from "@/lib/frameLoop";
 
 export function CinematicPortal() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -14,7 +15,8 @@ export function CinematicPortal() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let animationFrameId = 0;
+    // Relógio único da página (lib/frameLoop) em vez de um rAF próprio.
+    const loop = createFrameLoop((time) => draw(time));
     
     // Configurações para Elegância e Fluidez Orgânica
     const beam = { 
@@ -39,12 +41,8 @@ export function CinematicPortal() {
 
     // Fora da viewport o loop é parado de fato e retomado ao reentrar.
     const io = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        if (!animationFrameId) animationFrameId = requestAnimationFrame(draw);
-      } else {
-        cancelAnimationFrame(animationFrameId);
-        animationFrameId = 0;
-      }
+      if (entry.isIntersecting) loop.start();
+      else loop.stop();
     });
 
     let themeColor = "#ffffff";
@@ -108,21 +106,19 @@ export function CinematicPortal() {
       }
 
       ctx.restore();
-
-      animationFrameId = requestAnimationFrame(draw);
     };
 
     window.addEventListener("resize", resize, { passive: true });
     window.addEventListener("scroll", handleScroll, { passive: true });
     resize();
-    animationFrameId = requestAnimationFrame(draw);
+    loop.start();
     io.observe(canvas);
 
     return () => {
       window.removeEventListener("resize", resize);
       window.removeEventListener("scroll", handleScroll);
       io.disconnect();
-      cancelAnimationFrame(animationFrameId);
+      loop.stop();
     };
   }, []);
 

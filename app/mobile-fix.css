@@ -1152,13 +1152,6 @@
   .navbar-cta-wrap {
     display: none !important;
   }
-
-  /* Esconder tiles extras de estrelas para poupar GPU/bateria no mobile */
-  .stars-tile-1,
-  .stars-tile-2,
-  .stars-tile-3 {
-    display: none !important;
-  }
 }
 
 /* ============================================================

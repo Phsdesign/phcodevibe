@@ -53,7 +53,7 @@ function ProjectCard({ project, index, eagerImages }: { project: typeof portfoli
       >
         <div className="pf-media">
           <Image
-            src={project.mockups[0]}
+            src={project.cover}
             alt={`${project.title} Cover`}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

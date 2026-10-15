@@ -6,6 +6,8 @@ export interface Project {
   solution: string;
   logo: string;
   mockups: string[];
+  /** Capa leve (1600 px) para os cards; o original segue nas páginas do projeto. */
+  cover: string;
   color: string;
 }
 
@@ -26,6 +28,7 @@ export const portfolioData: Project[] = [
       "/portfolio/casa-solar/mockup (6).webp",
       "/portfolio/casa-solar/mockup (7).webp"
     ],
+    cover: "/portfolio/casa-solar/cover.webp",
     color: "#fbbf24"
   },
   {
@@ -50,6 +53,7 @@ export const portfolioData: Project[] = [
       "/portfolio/garage44/mockup (12).webp",
       "/portfolio/garage44/mockup (13).webp"
     ],
+    cover: "/portfolio/garage44/cover.webp",
     color: "#6b7280"
   },
   {
@@ -71,6 +75,7 @@ export const portfolioData: Project[] = [
       "/portfolio/popeloni-hub/mockup (9).webp",
       "/portfolio/popeloni-hub/mockup (10).webp"
     ],
+    cover: "/portfolio/popeloni-hub/cover.webp",
     color: "#0a8cff"
   },
   {
@@ -91,6 +96,7 @@ export const portfolioData: Project[] = [
       "/portfolio/elleganza/mockup (8).webp",
       "/portfolio/elleganza/mockup (9).webp"
     ],
+    cover: "/portfolio/elleganza/cover.webp",
     color: "#d4d4d8"
   },
   {
@@ -116,6 +122,7 @@ export const portfolioData: Project[] = [
       "/portfolio/jj-gonzales/mockup (13).webp",
       "/portfolio/jj-gonzales/mockup (14).webp"
     ],
+    cover: "/portfolio/jj-gonzales/cover.webp",
     color: "#ca8a04"
   },
   {
@@ -133,6 +140,7 @@ export const portfolioData: Project[] = [
       "/portfolio/avs/mockup (5).webp",
       "/portfolio/avs/mockup (6).webp"
     ],
+    cover: "/portfolio/avs/cover.webp",
     color: "#3b82f6"
   }
 ];

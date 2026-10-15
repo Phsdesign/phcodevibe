@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { usePauseOffscreenAnimations } from "@/hooks/usePauseOffscreenAnimations";
+import { createFrameLoop } from "@/lib/frameLoop";
 
 const NOISE =
   "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")";
@@ -47,9 +48,9 @@ function MatrixLetter({ ch, idx }: { ch: string; idx: number }) {
     type P = { x: number; y: number; vx: number; vy: number; life: number; g: string; size: number };
     let parts: P[] = [];
     let hovering = false;
-    let raf = 0;
     let lastSpawn = 0;
-    let running = false;
+    // Relógio único da página (lib/frameLoop) em vez de um rAF próprio.
+    const frameLoop = createFrameLoop((now) => loop(now));
 
     const spawn = (count: number) => {
       for (let i = 0; i < count; i++) {
@@ -88,18 +89,10 @@ function MatrixLetter({ ch, idx }: { ch: string; idx: number }) {
         ctx.fillText(p.g, p.x, p.y);
       }
       ctx.shadowBlur = 0;
-      if (hovering || parts.length > 0) {
-        raf = requestAnimationFrame(loop);
-      } else {
-        running = false;
-      }
+      if (!hovering && parts.length === 0) frameLoop.stop();
     };
 
-    const start = () => {
-      if (running) return;
-      running = true;
-      raf = requestAnimationFrame(loop);
-    };
+    const start = () => frameLoop.start();
 
     const onEnter = () => {
       hovering = true;
@@ -113,7 +106,7 @@ function MatrixLetter({ ch, idx }: { ch: string; idx: number }) {
     wrap.addEventListener("mouseleave", onLeave);
 
     return () => {
-      cancelAnimationFrame(raf);
+      frameLoop.stop();
       wrap.removeEventListener("mouseenter", onEnter);
       wrap.removeEventListener("mouseleave", onLeave);
     };

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
+import { createFrameLoop } from "@/lib/frameLoop";
 
 export type ColorPaletteType = "ph-code" | "monochrome" | "cyber" | "custom";
 
@@ -543,7 +544,8 @@ export function AntigravityBackground({
     window.addEventListener("resize", handleResize, { passive: true });
 
     // Loop de animação com render ultra-fluido e inércia orgânica
-    let animationFrameId = 0;
+    // Relógio único da página (lib/frameLoop) em vez de um rAF próprio.
+    const loop = createFrameLoop(() => animate());
     // Mesmo relógio do THREE.Clock (performance.now), sem o aviso de depreciação.
     const clockStart = performance.now();
 
@@ -555,9 +557,7 @@ export function AntigravityBackground({
     let waitingSplash = root.classList.contains("splash-active");
     let inView = true;
     const startLoop = () => {
-      if (!animationFrameId && inView && !waitingSplash) {
-        animationFrameId = requestAnimationFrame(animate);
-      }
+      if (inView && !waitingSplash) loop.start();
     };
     const splashObserver = waitingSplash
       ? new MutationObserver(() => {
@@ -574,18 +574,13 @@ export function AntigravityBackground({
     const observer = new IntersectionObserver(
       (entries) => {
         inView = entries[entries.length - 1].isIntersecting;
-        if (inView) {
-          startLoop();
-        } else {
-          cancelAnimationFrame(animationFrameId);
-          animationFrameId = 0;
-        }
+        if (inView) startLoop();
+        else loop.stop();
       },
       { threshold: 0.05 }
     );
 
     const animate = () => {
-      animationFrameId = requestAnimationFrame(animate);
 
       if (pendingPointer) {
         applyPointer(pendingPointer.x, pendingPointer.y);
@@ -648,11 +643,14 @@ export function AntigravityBackground({
       renderer.render(scene, camera);
     };
 
-    if (!waitingSplash) animate();
+    if (!waitingSplash) {
+      animate();
+      loop.start();
+    }
     observer.observe(container);
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      loop.stop();
       cancelAnimationFrame(resizeFrame);
       observer.disconnect();
       splashObserver?.disconnect();
