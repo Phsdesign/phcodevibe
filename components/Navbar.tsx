@@ -13,50 +13,16 @@ const links = [
   { href: "#contato", label: "Contato" },
 ];
 
-const MotionLink = motion.create(Link);
-
-const navVariants = {
-  hidden: { opacity: 0, y: -20 },
-  visible: (delay: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.8,
-      ease: [0.16, 1, 0.3, 1] as const,
-      delay
-    }
-  })
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: -12, scale: 0.85 },
-  visible: (delay: number) => ({
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.5,
-      ease: [0.16, 1, 0.3, 1] as const,
-      delay
-    }
-  })
-};
-
 export function Navbar() {
   const [hidden, setHidden] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const ticking = useRef(false);
-  const base = isMobile ? 3.25 : 0.08;
+  // Entrada da barra em CSS (globals.css: nav-enter / nav-item-enter / nav-fade-enter),
+  // mesma curva e atrasos de antes, rodando direto do HTML. O atraso de 3,25 s do
+  // mobile era do splash, que foi desligado.
+  const base = 0.08;
   const step = 0.05;
   const ctaDelay = base + 0.44;
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
 
   const handleScroll = useCallback(() => {
     if (ticking.current) return;
@@ -97,21 +63,12 @@ export function Navbar() {
   return (
     <>
       <header className="navbar-header" style={{ transform: hidden ? "translateY(-100%)" : "translateY(0)", opacity: hidden ? 0 : 1, transition: "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1)", willChange: "transform" }}>
-        <motion.nav 
-          className="navbar-nav"
-          custom={base}
-          initial="hidden"
-          animate="visible"
-          variants={navVariants}
-        >
+        <nav className="navbar-nav nav-enter" style={{ animationDelay: `${base}s` }}>
           {/* Logo */}
-          <MotionLink
+          <Link
             href="/"
-            className="navbar-logo-link"
-            custom={base + step}
-            initial="hidden"
-            animate="visible"
-            variants={itemVariants}
+            className="navbar-logo-link nav-item-enter"
+            style={{ animationDelay: `${base + step}s` }}
           >
             <Image 
               src="/logoicon.svg" 
@@ -122,66 +79,51 @@ export function Navbar() {
               style={{ objectFit: "contain" }}
             />
             <span className="navbar-brand">PH CODE LABS</span>
-          </MotionLink>
+          </Link>
 
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-6">
             {links.map((l, i) => (
-              <MotionLink
+              <Link
                 key={l.href}
                 href={l.href}
-                className="navbar-link"
-                custom={base + step * 2 + i * step}
-                initial="hidden"
-                animate="visible"
-                variants={itemVariants}
+                className="navbar-link nav-item-enter"
+                style={{ animationDelay: `${base + step * 2 + i * step}s` }}
               >
                 {l.label}
-              </MotionLink>
+              </Link>
             ))}
           </div>
 
           {/* Right Area */}
           <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-            <MotionLink
+            <Link
               href="/quiz"
-              className="navbar-link hidden sm:inline-flex"
-              custom={base + step * 2 + links.length * step}
-              initial="hidden"
-              animate="visible"
-              variants={itemVariants}
-              style={{ border: "1px solid rgb(var(--ink) / 0.2)", borderRadius: "999px", padding: "0.45rem 0.95rem" }}
+              className="navbar-link hidden sm:inline-flex nav-item-enter"
+              style={{ border: "1px solid rgb(var(--ink) / 0.2)", borderRadius: "999px", padding: "0.45rem 0.95rem", animationDelay: `${base + step * 2 + links.length * step}s` }}
             >
               Quiz
-            </MotionLink>
+            </Link>
 
-            <motion.div
-              custom={base + step * 2 + links.length * step}
-              initial="hidden"
-              animate="visible"
-              variants={itemVariants}
-              className="hidden md:flex navbar-status-pill"
+            <div
+              className="hidden md:flex navbar-status-pill nav-item-enter"
+              style={{ animationDelay: `${base + step * 2 + links.length * step}s` }}
             >
               <span className="navbar-status-dot-wrapper">
                 <span className="navbar-status-dot-ping" />
                 <span className="navbar-status-dot" />
               </span>
               <span className="navbar-status-text">Disponível</span>
-            </motion.div>
+            </div>
 
-            <motion.span
-              className="navbar-cta-wrap hidden sm:inline-flex"
-              custom={ctaDelay}
-              initial="hidden"
-              animate="visible"
-              variants={itemVariants}
+            <span
+              className="navbar-cta-wrap hidden sm:inline-flex nav-item-enter"
+              style={{ animationDelay: `${ctaDelay}s` }}
             >
-              <motion.span
-                className="navbar-cta-sheen"
+              <span
+                className="navbar-cta-sheen nav-fade-enter"
                 aria-hidden="true"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: ctaDelay + 0.35, duration: 0.7, ease: "easeOut" }}
+                style={{ animationDelay: `${ctaDelay + 0.35}s` }}
               />
               <Link href="#contato" className="navbar-cta">
                 <span className="navbar-cta-label">Começar Projeto</span>
@@ -189,35 +131,30 @@ export function Navbar() {
                   <path d="M7 17L17 7M17 7H7M17 7V17"/>
                 </svg>
               </Link>
-              <motion.span
-                className="navbar-cta-particles"
+              <span
+                className="navbar-cta-particles nav-fade-enter"
                 aria-hidden="true"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: ctaDelay + 0.50, duration: 0.7, ease: "easeOut" }}
+                style={{ animationDelay: `${ctaDelay + 0.5}s` }}
               >
                 <i /><i /><i /><i /><i /><i />
-              </motion.span>
-            </motion.span>
+              </span>
+            </span>
 
             {/* Mobile Hamburger Button */}
-            <motion.button
+            <button
               type="button"
-              className="navbar-hamburger lg:hidden"
+              className="navbar-hamburger lg:hidden nav-item-enter"
               onClick={() => setDrawerOpen(true)}
               aria-label="Abrir menu de navegação"
-              custom={isMobile ? base + 0.16 : base + step * 3 + links.length * step}
-              initial="hidden"
-              animate="visible"
-              variants={itemVariants}
+              style={{ animationDelay: `${base + step * 3 + links.length * step}s` }}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
                 <line x1="4" y1="7" x2="20" y2="7" />
                 <line x1="4" y1="17" x2="20" y2="17" />
               </svg>
-            </motion.button>
+            </button>
           </div>
-        </motion.nav>
+        </nav>
       </header>
 
       {/* Mobile Menu Drawer */}

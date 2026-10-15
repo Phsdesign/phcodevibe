@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { memo, useEffect, useRef, useState, type CSSProperties, type MouseEvent } from "react";
-import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { usePauseOffscreenAnimations } from "@/hooks/usePauseOffscreenAnimations";
 
@@ -430,6 +429,10 @@ export function Hero() {
                a cada frame. Mesmas curvas em CSS: linear 6s; easeOut do framer =
                cubic-bezier(0, 0, 0.58, 1). */
             .hero-cue-spin { animation: heroCueSpin 6s linear infinite; }
+            /* Setas do botão: piscavam em JS (framer-motion escrevia o style das 3 a cada
+               frame). Mesma curva easeInOut = cubic-bezier(0.42, 0, 0.58, 1). */
+            .hero-cue-arrow { animation: heroCueArrow 1.5s cubic-bezier(0.42, 0, 0.58, 1) infinite both; }
+            @keyframes heroCueArrow { 0%, 100% { opacity: 0.15; } 50% { opacity: 1; } }
             @keyframes heroCueSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
             .hero-cue-ping { animation: heroCuePing 2.4s cubic-bezier(0, 0, 0.58, 1) infinite both; }
             @keyframes heroCuePing {
@@ -449,6 +452,11 @@ export function Hero() {
               .hz-num { font-size: clamp(2.6rem, 12vw, 3.2rem); }
             }
             @media (prefers-reduced-motion: reduce) {
+              .hz-panel::before, .hz-panel::after { animation: none; }
+            }
+            /* Mobile estático: o brilho que corre por dentro do painel (com blur de
+               fundo) e a linha do topo redesenhavam o painel a cada frame. */
+            @media (max-width: 767px) {
               .hz-panel::before, .hz-panel::after { animation: none; }
             }
           `}</style>
@@ -548,8 +556,10 @@ export function Hero() {
             }}
           >
             {[0, 1, 2].map((i) => (
-              <motion.svg
+              <svg
                 key={i}
+                className="hero-cue-arrow"
+                style={{ animationDelay: `${i * 0.2}s` }}
                 width="14"
                 height="8"
                 viewBox="0 0 14 8"
@@ -558,11 +568,9 @@ export function Hero() {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                animate={{ opacity: [0.15, 1, 0.15] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.2 }}
               >
                 <path d="M1 1.5L7 6.5L13 1.5" />
-              </motion.svg>
+              </svg>
             ))}
           </span>
           {[0, 1].map((i) => (
