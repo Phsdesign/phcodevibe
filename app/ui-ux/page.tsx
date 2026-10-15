@@ -33,7 +33,7 @@ export default function UiUx() {
         />
 
         <div className="container" style={{ maxWidth: "1200px" }}>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-24 items-center">
             {/* Visual Element (Left for asymmetry contrast with IA page) */}
             <div className="lg:col-span-5 order-2 lg:order-1 animate-fade-slide-left">
               <div 
@@ -54,7 +54,7 @@ export default function UiUx() {
                 <div style={{ transform: "rotate(-10deg) scale(1.2)", opacity: 0.02, position: "absolute", fontWeight: 900, fontSize: "12rem", pointerEvents: "none" }}>UX</div>
                 
                 {/* Visual Representation of Grid/Layout */}
-                <div className="animate-float-delayed" style={{ width: "240px", height: "320px", background: "var(--glass-bg)", borderRadius: "20px", border: "1px solid rgb(var(--ink) / 0.05)", padding: "1.5rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
+                <div className="animate-float-delayed uiux-mock" style={{ width: "240px", height: "320px", background: "var(--glass-bg)", borderRadius: "20px", border: "1px solid rgb(var(--ink) / 0.05)", padding: "1.5rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
                   <div style={{ width: "40%", height: "8px", background: "var(--grad-brand)", opacity: 0.1, borderRadius: "4px" }} />
                   <div style={{ width: "100%", height: "30%", background: "var(--grad-brand)", opacity: 0.03, borderRadius: "12px" }} />
                   <div className="grid grid-cols-2 gap-2" style={{ height: "40%" }}>

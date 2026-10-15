@@ -11,7 +11,11 @@ export function FloatingButtons() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-50">
+    <div
+      className="fixed bottom-6 right-6 flex flex-col gap-3 z-50"
+      // Respeita a área segura (home indicator / notch) quando o navegador a expõe.
+      style={{ bottom: "calc(1.5rem + env(safe-area-inset-bottom, 0px))", right: "calc(1.5rem + env(safe-area-inset-right, 0px))" }}
+    >
       {/* Scroll to Top Button */}
       <button
         onClick={scrollToTop}

@@ -3705,3 +3705,27 @@ html:not(.dark) .hero-section video {
 [data-anim-offscreen] *::after {
   animation-play-state: paused !important;
 }
+
+/* ── Responsividade ──────────────────────────────────────────────── */
+
+/* /ui-ux: o mockup tem 240x320 fixos dentro de uma caixa aspect-ratio 1.2;
+   abaixo de 1024px a caixa fica mais baixa que 320px e cortava o mockup.
+   min() mantém 240x320 sempre que cabe (tablet/desktop inalterados). */
+@media (max-width: 1023px) {
+  .uiux-mock {
+    width: min(240px, 62%) !important;
+    height: min(320px, 86%) !important;
+  }
+}
+
+/* Tablets (769–1024px) em Safari/Chrome: 100vh inclui a área atrás da barra
+   do navegador e empurrava o fim da Hero para baixo dela. 100svh é a altura
+   visível; no desktop svh == vh, então nada muda lá. No mobile (≤768px) a
+   Hero já usa min-height: auto em mobile-fix.css. */
+@supports (min-height: 100svh) {
+  @media (min-width: 769px) {
+    .hero-section {
+      min-height: 100svh !important;
+    }
+  }
+}

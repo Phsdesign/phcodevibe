@@ -414,8 +414,10 @@ function PlanCard({
           box-shadow: 0 40px 80px -30px rgba(0,0,0,0.85);
           will-change: transform;
         }
-        .plan-card:hover {
-          box-shadow: 0 50px 100px -30px rgba(0,0,0,0.9), 0 0 60px -20px rgba(122,162,255,0.35);
+        @media (hover: hover) {
+          .plan-card:hover {
+            box-shadow: 0 50px 100px -30px rgba(0,0,0,0.9), 0 0 60px -20px rgba(122,162,255,0.35);
+          }
         }
         .plan-card.is-featured {
           background: transparent;
@@ -458,8 +460,10 @@ function PlanCard({
           transition: opacity 0.5s ease;
           background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), rgba(122,162,255,0.22), transparent 60%);
         }
-        .plan-card:hover .plan-card-spot {
-          opacity: 1;
+        @media (hover: hover) {
+          .plan-card:hover .plan-card-spot {
+            opacity: 1;
+          }
         }
         .plan-card-top {
           position: relative;
@@ -561,19 +565,23 @@ function PlanCard({
           0%, 55% { transform: translateX(0) skewX(-22deg); }
           100% { transform: translateX(475%) skewX(-22deg); }
         }
-        .plan-card-cta:hover {
-          background: #dbe4ff;
-          color: #0b0f19;
-          transform: translateY(-2px);
-          box-shadow: 0 18px 40px -10px rgba(122,162,255,0.8);
+        @media (hover: hover) {
+          .plan-card-cta:hover {
+            background: #dbe4ff;
+            color: #0b0f19;
+            transform: translateY(-2px);
+            box-shadow: 0 18px 40px -10px rgba(122,162,255,0.8);
+          }
         }
         .plan-card.is-featured .plan-card-cta {
           background: linear-gradient(90deg, #bae6fd, #ffffff 50%, #a5f3fc);
           color: #0b0f19;
         }
-        .plan-card.is-featured .plan-card-cta:hover {
-          background: linear-gradient(90deg, #7dd3fc, #ffffff 50%, #67e8f9);
-          color: #0b0f19;
+        @media (hover: hover) {
+          .plan-card.is-featured .plan-card-cta:hover {
+            background: linear-gradient(90deg, #7dd3fc, #ffffff 50%, #67e8f9);
+            color: #0b0f19;
+          }
         }
         .plan-card-divider {
           height: 1px;
@@ -601,9 +609,11 @@ function PlanCard({
           color: rgba(255,255,255,0.88);
           transition: background 0.35s ease, color 0.35s ease;
         }
-        .plan-card-feature:hover {
-          background: rgba(255,255,255,0.06);
-          color: #ffffff;
+        @media (hover: hover) {
+          .plan-card-feature:hover {
+            background: rgba(255,255,255,0.06);
+            color: #ffffff;
+          }
         }
         .plan-card-check {
           display: flex;
@@ -618,8 +628,10 @@ function PlanCard({
           box-shadow: 0 0 0 4px rgba(255,255,255,0.07), 0 0 16px rgba(122,162,255,0.45);
           transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
         }
-        .plan-card-feature:hover .plan-card-check {
-          transform: scale(1.12) rotate(-6deg);
+        @media (hover: hover) {
+          .plan-card-feature:hover .plan-card-check {
+            transform: scale(1.12) rotate(-6deg);
+          }
         }
         @media (max-width: 640px) {
           .plan-card-body { padding: 2.2rem 1.5rem 2rem; }
@@ -1141,14 +1153,18 @@ function ProcessSection({ isMobile }: { isMobile: boolean }) {
         .proc-step {
           transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), border-color 0.5s ease, background 0.5s ease;
         }
-        .proc-step:hover {
-          transform: translateY(-6px);
-          background: rgba(255,255,255,0.07) !important;
-          border-color: rgba(169,196,255,0.4) !important;
+        @media (hover: hover) {
+          .proc-step:hover {
+            transform: translateY(-6px);
+            background: rgba(255,255,255,0.07) !important;
+            border-color: rgba(169,196,255,0.4) !important;
+          }
         }
-        .proc-step:hover .proc-node {
-          transform: rotate(-6deg) scale(1.06);
-          box-shadow: 0 22px 44px -14px rgba(122,162,255,0.9);
+        @media (hover: hover) {
+          .proc-step:hover .proc-node {
+            transform: rotate(-6deg) scale(1.06);
+            box-shadow: 0 22px 44px -14px rgba(122,162,255,0.9);
+          }
         }
         .proc-step-num {
           font-size: 0.75rem;
@@ -1189,8 +1205,10 @@ function ProcessSection({ isMobile }: { isMobile: boolean }) {
           transform-origin: left center;
           transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
         }
-        .proc-step:hover .proc-step-bar {
-          transform: scaleX(1);
+        @media (hover: hover) {
+          .proc-step:hover .proc-step-bar {
+            transform: scaleX(1);
+          }
         }
         .proc-label {
           font-size: 0.68rem;
@@ -1215,9 +1233,11 @@ function ProcessSection({ isMobile }: { isMobile: boolean }) {
           border: 1px solid rgba(255,255,255,0.1);
           transition: border-color 0.4s ease, background 0.4s ease;
         }
-        .proc-option:hover {
-          border-color: rgba(169,196,255,0.4);
-          background: rgba(255,255,255,0.06);
+        @media (hover: hover) {
+          .proc-option:hover {
+            border-color: rgba(169,196,255,0.4);
+            background: rgba(255,255,255,0.06);
+          }
         }
         .proc-option-featured {
           border-color: rgba(169,196,255,0.35);
@@ -1284,16 +1304,22 @@ function ProcessSection({ isMobile }: { isMobile: boolean }) {
           box-shadow: 0 12px 30px -10px rgba(122,162,255,0.6);
           transition: background 0.4s ease, box-shadow 0.4s ease;
         }
-        .proc-cta:hover {
-          background: #dbe4ff;
-          box-shadow: 0 18px 40px -10px rgba(122,162,255,0.85);
+        @media (hover: hover) {
+          .proc-cta:hover {
+            background: #dbe4ff;
+            box-shadow: 0 18px 40px -10px rgba(122,162,255,0.85);
+          }
         }
-        :global(.proc-step:hover .proc-dot) {
-          animation: proc-blink 0.9s ease-in-out infinite;
+        @media (hover: hover) {
+          :global(.proc-step:hover .proc-dot) {
+            animation: proc-blink 0.9s ease-in-out infinite;
+          }
         }
-        :global(.proc-step:hover .proc-bar) {
-          animation: proc-bar 0.9s ease-in-out infinite alternate;
-          transform-origin: left center;
+        @media (hover: hover) {
+          :global(.proc-step:hover .proc-bar) {
+            animation: proc-bar 0.9s ease-in-out infinite alternate;
+            transform-origin: left center;
+          }
         }
         @keyframes proc-blink {
           0%, 100% { opacity: 1; }
@@ -1671,10 +1697,12 @@ export function Pricing() {
           border: 1px solid rgba(255,255,255,0.1);
           transition: background 0.4s ease, border-color 0.4s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1);
         }
-        .offer-feature:hover {
-          background: rgba(255,255,255,0.1);
-          border-color: rgba(255,255,255,0.25);
-          transform: translateY(-2px);
+        @media (hover: hover) {
+          .offer-feature:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+          }
         }
         .offer-feature-icon {
           display: flex;
@@ -1730,9 +1758,11 @@ export function Pricing() {
           0%, 55% { transform: translateX(0) skewX(-22deg); }
           100% { transform: translateX(475%) skewX(-22deg); }
         }
-        .offer-cta:hover {
-          background: #7aa2ff;
-          box-shadow: 0 20px 50px -10px rgba(122,162,255,0.8);
+        @media (hover: hover) {
+          .offer-cta:hover {
+            background: #7aa2ff;
+            box-shadow: 0 20px 50px -10px rgba(122,162,255,0.8);
+          }
         }
         @media (max-width: 640px) {
           .offer-card { padding: 3rem 1.25rem; border-radius: 28px; }
@@ -1742,6 +1772,16 @@ export function Pricing() {
           .offer-corner-tl, .offer-corner-bl { left: 12px; }
           .offer-corner-tr, .offer-corner-br { right: 12px; }
           .offer-features { grid-template-columns: 1fr; }
+        }
+        /* Abaixo de 430px a linha "De R$ 1.500 → Por R$ 997" não cabia no card:
+           o preço antigo quebrava e o 997 era cortado. Escala proporcional ao
+           espaço interno do card (100vw - 104px = 326px em 430), então em 430px
+           os tamanhos são exatamente os originais. */
+        @media (max-width: 429px) {
+          .offer-compare { gap: min(1.5rem, calc((100vw - 104px) * 0.0736)); }
+          .offer-old { white-space: nowrap; font-size: min(1.4rem, calc((100vw - 104px) * 0.0687)); }
+          .offer-currency { font-size: min(1.8rem, calc((100vw - 104px) * 0.0883)); margin-top: min(0.6rem, calc((100vw - 104px) * 0.0294)); }
+          .offer-value { font-size: min(4.2rem, calc((100vw - 104px) * 0.2061)); }
         }
         @media (prefers-reduced-motion: reduce) {
           .offer-ride { display: none; }
@@ -1778,13 +1818,15 @@ export function Pricing() {
           animation: shine-flow 3s infinite linear;
         }
 
-        .cta-premium-glass:hover {
-          background: transparent;
-          color: var(--text-primary);
-          border-color: var(--text-primary);
-          transform: translateY(-8px) scale(1.05);
-          box-shadow: 0 30px 60px var(--accent-glow);
-          animation-play-state: paused;
+        @media (hover: hover) {
+          .cta-premium-glass:hover {
+            background: transparent;
+            color: var(--text-primary);
+            border-color: var(--text-primary);
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 30px 60px var(--accent-glow);
+            animation-play-state: paused;
+          }
         }
 
         .btn-shine-mini {

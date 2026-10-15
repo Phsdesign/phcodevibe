@@ -151,9 +151,10 @@ export function Contact() {
         /* Layout */
         .ct-grid {
           display: grid;
-          grid-template-columns: 1fr;
+          grid-template-columns: minmax(0, 1fr);
           gap: 1.25rem;
         }
+        @media (max-width: 1023px) { .ct-card { min-width: 0; } }
         @media (min-width: 1024px) {
           .ct-grid { grid-template-columns: 5fr 7fr; gap: 1.5rem; align-items: stretch; }
         }
@@ -198,10 +199,12 @@ export function Contact() {
           background: transparent;
           transition: background-color 0.4s ease, border-color 0.4s ease, transform 0.5s var(--ct-ease);
         }
-        .ct-channel:hover {
-          background: var(--ct-surface-hover);
-          border-color: color-mix(in srgb, var(--accent) 40%, transparent);
-          transform: translateX(4px);
+        @media (hover: hover) {
+          .ct-channel:hover {
+            background: var(--ct-surface-hover);
+            border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+            transform: translateX(4px);
+          }
         }
         .ct-icon {
           flex-shrink: 0;
@@ -231,13 +234,19 @@ export function Contact() {
           text-overflow: ellipsis;
           white-space: nowrap;
         }
+        @media (max-width: 480px) {
+          /* No mobile o e-mail quebra linha em vez de virar reticências. */
+          .ct-value { white-space: normal; overflow-wrap: anywhere; }
+        }
         .ct-arrow {
           color: var(--ct-faint);
           transition: transform 0.5s var(--ct-ease), color 0.4s ease;
         }
-        .ct-channel:hover .ct-arrow {
-          color: var(--accent);
-          transform: translate(2px, -2px);
+        @media (hover: hover) {
+          .ct-channel:hover .ct-arrow {
+            color: var(--accent);
+            transform: translate(2px, -2px);
+          }
         }
 
         /* Highlights */
@@ -303,7 +312,9 @@ export function Contact() {
           transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
         }
         .ct-input::placeholder { color: var(--ct-faint); }
-        .ct-input:hover { border-color: color-mix(in srgb, var(--text-primary) 24%, transparent); }
+        @media (hover: hover) {
+          .ct-input:hover { border-color: color-mix(in srgb, var(--text-primary) 24%, transparent); }
+        }
         .ct-input:focus {
           border-color: var(--accent);
           box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 16%, transparent);
@@ -338,10 +349,12 @@ export function Contact() {
           animation: ct-shimmer 6s linear infinite;
           transition: transform 0.4s var(--ct-ease), box-shadow 0.4s ease, filter 0.4s ease;
         }
-        .ct-submit:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 14px 34px -10px rgba(30, 63, 128, 0.6);
-          filter: brightness(1.06);
+        @media (hover: hover) {
+          .ct-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 34px -10px rgba(30, 63, 128, 0.6);
+            filter: brightness(1.06);
+          }
         }
         @keyframes ct-shimmer {
           0% { background-position: 0% 50%; }
@@ -350,7 +363,9 @@ export function Contact() {
         .ct-submit:active { transform: translateY(0); }
         .ct-submit:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
         .ct-submit-arrow { transition: transform 0.5s var(--ct-ease); }
-        .ct-submit:hover .ct-submit-arrow { transform: translateX(4px); }
+        @media (hover: hover) {
+          .ct-submit:hover .ct-submit-arrow { transform: translateX(4px); }
+        }
 
         .ct-progress {
           display: flex;

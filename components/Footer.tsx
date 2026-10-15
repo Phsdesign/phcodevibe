@@ -334,7 +334,10 @@ export function Footer() {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          gap: 2rem;
+          /* Só quebra linha quando não cabe (≤ ~360px): antes o texto
+             "Fale com a gente pelo WhatsApp" era cortado pelo overflow. */
+          flex-wrap: wrap;
+          gap: 1rem 2rem;
           padding: clamp(1.25rem, 2.5vw, 2rem) 0;
           border-top: 1px solid rgba(255,255,255,0.12);
           border-bottom: 1px solid rgba(255,255,255,0.12);

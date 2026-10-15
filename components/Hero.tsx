@@ -241,7 +241,9 @@ export function Hero() {
               background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), rgba(34,211,238,0.14), transparent 70%);
               transition: opacity 0.4s ease;
             }
-            .hz-cell:hover::before { opacity: 1; }
+            @media (hover: hover) {
+              .hz-cell:hover::before { opacity: 1; }
+            }
             .hz-cell.is-hl {
               background: linear-gradient(180deg, rgba(34,211,238,0.1), rgba(99,102,241,0.08));
             }
@@ -264,7 +266,9 @@ export function Hero() {
               background-clip: text;
               color: transparent;
             }
-            .hz-cell:hover .hz-num { transform: translateY(-3px); text-shadow: 0 0 28px rgba(34,211,238,0.35); }
+            @media (hover: hover) {
+              .hz-cell:hover .hz-num { transform: translateY(-3px); text-shadow: 0 0 28px rgba(34,211,238,0.35); }
+            }
             .hz-label {
               font-size: 11px;
               font-weight: 800;
@@ -285,9 +289,15 @@ export function Hero() {
               background: linear-gradient(100deg, transparent, rgba(255,255,255,0.22), transparent);
               transform: skewX(-20deg);
             }
-            .hz-fx-sweep:hover::after { left: 130%; transition: left 1s cubic-bezier(0.16,1,0.3,1); }
-            .hz-fx-sweep:hover .hz-num { letter-spacing: 0.04em; animation: hzGlitch 0.7s steps(4) 1; }
-            .hz-fx-sweep:hover .hz-label { color: #ffffff; letter-spacing: 0.26em; transition: letter-spacing 0.6s ease, color 0.4s ease; }
+            @media (hover: hover) {
+              .hz-fx-sweep:hover::after { left: 130%; transition: left 1s cubic-bezier(0.16,1,0.3,1); }
+            }
+            @media (hover: hover) {
+              .hz-fx-sweep:hover .hz-num { letter-spacing: 0.04em; animation: hzGlitch 0.7s steps(4) 1; }
+            }
+            @media (hover: hover) {
+              .hz-fx-sweep:hover .hz-label { color: #ffffff; letter-spacing: 0.26em; transition: letter-spacing 0.6s ease, color 0.4s ease; }
+            }
             .hz-fx-orbit::after {
               content: "";
               position: absolute;
@@ -299,7 +309,9 @@ export function Hero() {
               opacity: 0;
               transition: opacity 0.6s ease;
             }
-            .hz-fx-orbit:hover::after { opacity: 0.55; animation: hzBeam 3s linear infinite; }
+            @media (hover: hover) {
+              .hz-fx-orbit:hover::after { opacity: 0.55; animation: hzBeam 3s linear infinite; }
+            }
             .hz-rings {
               position: absolute;
               inset: 0;
@@ -318,14 +330,24 @@ export function Hero() {
               box-shadow: 0 0 18px rgba(103,232,249,0.35);
               opacity: 0;
             }
-            .hz-fx-orbit:hover .hz-rings i { animation: hzRing 2.4s cubic-bezier(0.16,1,0.3,1) infinite; }
-            .hz-fx-orbit:hover .hz-rings i:nth-child(2) { animation-delay: 0.8s; }
-            .hz-fx-orbit:hover .hz-rings i:nth-child(3) { animation-delay: 1.6s; }
+            @media (hover: hover) {
+              .hz-fx-orbit:hover .hz-rings i { animation: hzRing 2.4s cubic-bezier(0.16,1,0.3,1) infinite; }
+            }
+            @media (hover: hover) {
+              .hz-fx-orbit:hover .hz-rings i:nth-child(2) { animation-delay: 0.8s; }
+            }
+            @media (hover: hover) {
+              .hz-fx-orbit:hover .hz-rings i:nth-child(3) { animation-delay: 1.6s; }
+            }
             .hz-cell.hz-fx-orbit.is-hl .hz-num { background: none; -webkit-background-clip: border-box; background-clip: border-box; color: #ffffff; }
             .hz-num { white-space: nowrap; }
             .hz-ltr { display: inline-block; }
-            .hz-fx-orbit:hover .hz-ltr { animation: hzWave 1.8s ease-in-out infinite; animation-delay: calc(var(--i) * 0.08s); }
-            .hz-fx-orbit:hover .hz-label { color: #67e8f9; letter-spacing: 0.26em; transition: letter-spacing 0.6s ease, color 0.4s ease; }
+            @media (hover: hover) {
+              .hz-fx-orbit:hover .hz-ltr { animation: hzWave 1.8s ease-in-out infinite; animation-delay: calc(var(--i) * 0.08s); }
+            }
+            @media (hover: hover) {
+              .hz-fx-orbit:hover .hz-label { color: #67e8f9; letter-spacing: 0.26em; transition: letter-spacing 0.6s ease, color 0.4s ease; }
+            }
             .hz-fx-tilt {
               transition: transform 0.45s cubic-bezier(0.16,1,0.3,1), background 0.5s ease;
               transform-style: preserve-3d;
@@ -341,13 +363,19 @@ export function Hero() {
               transform: translateX(calc(var(--tx, 0) * 40px));
               transition: opacity 0.4s ease;
             }
-            .hz-fx-tilt:hover::after { opacity: 1; }
-            .hz-fx-tilt:hover .hz-num {
-              transform: translateZ(40px);
-              text-shadow: 0 22px 30px rgba(0,0,0,0.55), 0 0 26px rgba(34,211,238,0.45);
-              transition: transform 0.45s cubic-bezier(0.16,1,0.3,1), text-shadow 0.45s ease;
+            @media (hover: hover) {
+              .hz-fx-tilt:hover::after { opacity: 1; }
             }
-            .hz-fx-tilt:hover .hz-label { transform: translateZ(24px); transition: transform 0.45s cubic-bezier(0.16,1,0.3,1); }
+            @media (hover: hover) {
+              .hz-fx-tilt:hover .hz-num {
+                transform: translateZ(40px);
+                text-shadow: 0 22px 30px rgba(0,0,0,0.55), 0 0 26px rgba(34,211,238,0.45);
+                transition: transform 0.45s cubic-bezier(0.16,1,0.3,1), text-shadow 0.45s ease;
+              }
+            }
+            @media (hover: hover) {
+              .hz-fx-tilt:hover .hz-label { transform: translateZ(24px); transition: transform 0.45s cubic-bezier(0.16,1,0.3,1); }
+            }
             .hz-cube-stage {
               position: absolute;
               inset: 0;
@@ -376,13 +404,17 @@ export function Hero() {
             .hz-cube i:nth-child(1) { transform: rotateX(90deg); }
             .hz-cube i:nth-child(2) { transform: rotateY(90deg); border-color: rgba(129,140,248,0.7); }
             .hz-cube i:nth-child(3) { transform: rotateX(45deg) rotateY(45deg); border-style: dashed; }
-            .hz-fx-tilt:hover .hz-cube { opacity: 1; animation: hzCubeSpin 5s linear infinite; }
+            @media (hover: hover) {
+              .hz-fx-tilt:hover .hz-cube { opacity: 1; animation: hzCubeSpin 5s linear infinite; }
+            }
             @keyframes hzCubeSpin {
               from { transform: rotateX(0deg) rotateY(0deg); }
               to { transform: rotateX(360deg) rotateY(360deg); }
             }
-            .hz-fx-tilt:hover {
-              transform: perspective(700px) rotateX(calc(var(--ty, 0) * -12deg)) rotateY(calc(var(--tx, 0) * 12deg)) scale(1.02);
+            @media (hover: hover) {
+              .hz-fx-tilt:hover {
+                transform: perspective(700px) rotateX(calc(var(--ty, 0) * -12deg)) rotateY(calc(var(--tx, 0) * 12deg)) scale(1.02);
+              }
             }
             @keyframes hzBeam { to { transform: rotate(360deg); } }
             @keyframes hzRing {

@@ -965,10 +965,13 @@
   }
 
   /* Garantir que o link ocupe a largura necessária */
+  /* Antes: width: fit-content + min-width: 100% fazia o link ter no mínimo a
+     largura do e-mail inteiro (nowrap), alargando o grid e cortando os dois
+     cards de Contato à direita em telas ≤ 390px. */
   #contato a[href^="mailto"],
   #contato a[href*="wa.me"] {
-    width: fit-content !important;
-    min-width: 100% !important;
+    width: 100% !important;
+    min-width: 0 !important;
     display: flex !important;
   }
 
@@ -1016,7 +1019,9 @@
 
   /* Título do footer */
   footer h2 {
-    font-size: 1.75rem !important;
+    /* 1.75rem quando cabe (≥ ~385px); abaixo disso encolhe para "Transformando"
+       não ser cortado pelo overflow da linha animada (320–375px). */
+    font-size: min(1.75rem, calc((100vw - 4rem) / 11.4)) !important;
     margin-bottom: 1.5rem !important;
   }
 
