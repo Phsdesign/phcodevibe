@@ -24,6 +24,9 @@ const RotatingWord = memo(function RotatingWord() {
   const [wordIndex, setWordIndex] = useState(0);
 
   useEffect(() => {
+    // Mobile estático: a palavra fica parada em "Imbatíveis". (Cada troca também
+    // pintava um texto novo maior que o título, e virava o LCP aos ~3 s.)
+    if (window.innerWidth < 768) return;
     const interval = setInterval(() => {
       setWordIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
     }, 2500);
@@ -48,30 +51,26 @@ export function Hero() {
   usePauseOffscreenAnimations(sectionRef);
   const cellPointer = useRef<{ el: HTMLDivElement | null; x: number; y: number }>({ el: null, x: 0, y: 0 });
 
-  // As partículas 3D (Three.js + WebGL a cada frame) só entram depois que a
-  // página terminou de carregar: no primeiro movimento do mouse, toque, scroll ou
-  // tecla, ou 3 s após o load. Assim o carregamento e a primeira pintura da Hero
-  // não disputam a thread principal com o WebGL; o canvas entra com fade (CSS).
+  // As partículas 3D (Three.js + WebGL a cada frame) só entram no primeiro
+  // movimento do mouse, toque, scroll ou tecla; o canvas entra com fade (CSS).
+  // Sem timer: em máquina sem GPU (como a do PageSpeed) cada frame do WebGL vira
+  // uma tarefa longa, e um timer as colocava dentro da medição (TBT e Speed Index).
   const [showParticles, setShowParticles] = useState(false);
   useEffect(() => {
     if (window.innerWidth < 768) return;
     const events = ["pointermove", "pointerdown", "wheel", "keydown", "touchstart", "scroll"] as const;
-    let timer = 0;
-    const cleanup = () => {
-      window.clearTimeout(timer);
-      window.removeEventListener("load", arm);
-      events.forEach((e) => window.removeEventListener(e, start));
-    };
+    const cleanup = () => events.forEach((e) => window.removeEventListener(e, start));
     const start = () => {
       cleanup();
       setShowParticles(true);
     };
-    const arm = () => {
-      timer = window.setTimeout(start, 3000);
-    };
+    // No desktop a hidratação só começa na primeira interação (scripts/defer-hydration.ts):
+    // se ela já aconteceu, as partículas entram direto, sem esperar outra.
+    if (document.documentElement.hasAttribute("data-interacted")) {
+      const raf = requestAnimationFrame(() => setShowParticles(true));
+      return () => cancelAnimationFrame(raf);
+    }
     events.forEach((e) => window.addEventListener(e, start, { passive: true }));
-    if (document.readyState === "complete") arm();
-    else window.addEventListener("load", arm);
     return cleanup;
   }, []);
 

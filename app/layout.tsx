@@ -6,6 +6,7 @@ import { CustomCursor } from "@/components/CustomCursor";
 import { StarsBackground } from "@/components/StarsBackground";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { WebVitals } from "@/components/WebVitals";
+import { MobileStatic } from "@/components/MobileStatic";
 import { StyledJsxRegistry } from "@/components/StyledJsxRegistry";
 import "./globals.css";
 import "./mobile-fix.css";
@@ -119,6 +120,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} antialiased selection:bg-cyan-400/40 selection:text-white transition-colors duration-300`}
       >
+        <MobileStatic />
         <WebVitals />
         <SmoothScroll />
         <StarsBackground />

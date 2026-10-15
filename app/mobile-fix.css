@@ -1381,3 +1381,53 @@
     animation: none !important;
   }
 }
+
+/* Versão mobile estática (resto da página): sem animações nem transições, e todo
+   conteúdo que nascia escondido para um "reveal" no scroll (opacity 0 inline do
+   framer-motion, .pf-reveal, .plan-reveal, rodapé...) já aparece no HTML, sem
+   esperar o JavaScript nem o IntersectionObserver. !important vence os estilos
+   inline e as animações; os seletores [style*="opacity:0;"] não pegam 0.x. */
+@media (max-width: 767px) {
+  main *,
+  main *::before,
+  main *::after,
+  .stars-bg-container,
+  .stars-bg-container *,
+  .fab-wa-glow,
+  .fab-wa-shine,
+  .fab-wa-icon {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  main [style*="opacity:0;"],
+  main [style*="opacity: 0;"],
+  main [style$="opacity:0"],
+  main [style$="opacity: 0"],
+  .pf-reveal,
+  .plan-reveal,
+  .proc-shell,
+  .offer-lead-anim,
+  .offer-line,
+  .ft-reveal,
+  .ft-wordmark,
+  .ft-glow,
+  .ft-line > span {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    visibility: visible !important;
+  }
+
+  /* Logo de partículas: no celular vira a logo pronta, sem os 420vh de scroll. */
+  .sl-scroll {
+    display: none !important;
+  }
+  .sl-static {
+    display: flex !important;
+  }
+}
+
+.sl-static {
+  display: none;
+}
