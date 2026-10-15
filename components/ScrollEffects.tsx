@@ -27,11 +27,15 @@ export function ScrollEffects() {
 
           const root = document.documentElement;
           // IMPORTANT: Se o modo escuro estiver ativado, pare o override do scroll!
+          // Só limpa uma vez: escrever no style do <html> a cada frame invalidava
+          // o estilo da página inteira durante toda a rolagem no modo escuro.
           if (root.classList.contains('dark')) {
-            document.body.style.backgroundColor = '';
-            root.style.removeProperty('--text-primary');
-            root.style.removeProperty('--text-secondary');
-            lastBg.current = '';
+            if (lastBg.current !== 'dark') {
+              document.body.style.backgroundColor = '';
+              root.style.removeProperty('--text-primary');
+              root.style.removeProperty('--text-secondary');
+              lastBg.current = 'dark';
+            }
             ticking.current = false;
             return;
           }

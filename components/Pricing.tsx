@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { usePauseOffscreenAnimations } from "@/hooks/usePauseOffscreenAnimations";
+import { createFrameLoop } from "@/lib/frameLoop";
 
 const OFFER_GLYPHS = "01アイウエオカキクケコ<>/+*#HPX";
 const OFFER_LOOP_MS = 9000;
@@ -82,21 +83,17 @@ function OfferCodeRide() {
     ro.observe(parent);
 
     const start = performance.now();
-    let raf = 0;
+    // Relógio único da página (lib/frameLoop) em vez de um rAF próprio.
+    const loop = createFrameLoop((now) => draw(now));
 
     // Fora da viewport o loop é desligado de fato (antes ele seguia agendando
     // requestAnimationFrame vazio a cada frame) e religado ao reentrar.
     const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        if (!raf) raf = requestAnimationFrame(draw);
-      } else {
-        cancelAnimationFrame(raf);
-        raf = 0;
-      }
+      if (entry.isIntersecting) loop.start();
+      else loop.stop();
     });
 
     const draw = (now: number) => {
-      raf = requestAnimationFrame(draw);
       if (pts.length === 0) return;
 
       const N = pts.length;
@@ -172,7 +169,7 @@ function OfferCodeRide() {
     observer.observe(canvas);
 
     return () => {
-      cancelAnimationFrame(raf);
+      loop.stop();
       observer.disconnect();
       ro.disconnect();
     };
