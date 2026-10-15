@@ -34,7 +34,6 @@ export function Team() {
             onMouseLeave={() => !isMobile && setPedroHovered(false)}
             style={{ position: "relative" }}
           >
-            <div aria-hidden="true" className="pedro-aura" />
             <div
               className="pedro-photo"
               style={{
@@ -342,14 +341,6 @@ export function Team() {
         .pedro-skill:hover .pedro-skill-icon {
           transform: scale(1.08) rotate(-4deg);
           background: rgba(122,162,255,0.22);
-        }
-        .pedro-aura {
-          position: absolute;
-          inset: 8% -6% -6% 8%;
-          border-radius: 50%;
-          background: radial-gradient(circle, rgba(122,162,255,0.35), rgba(120,200,255,0.12) 45%, transparent 70%);
-          pointer-events: none;
-          z-index: 0;
         }
         .pedro-live {
           width: 8px;
