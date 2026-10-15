@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && npm run defer-hydration",
+    "defer-hydration": "tsc -p scripts/tsconfig.json && node node_modules/.cache/build-scripts/defer-hydration.js",
     "start": "next start",
     "lint": "eslint"
   },
