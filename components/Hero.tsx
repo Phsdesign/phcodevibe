@@ -60,7 +60,7 @@ const RotatingWord = memo(function RotatingWord() {
 
 export function Hero() {
   const [isMobile, setIsMobile] = useState(false);
-  const base = isMobile ? 3.25 : 0.08;
+  const base = isMobile ? 1.55 : 0.08;
   const sectionRef = useRef<HTMLElement>(null);
   const cellFrame = useRef(0);
   usePauseOffscreenAnimations(sectionRef);
