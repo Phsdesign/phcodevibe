@@ -296,14 +296,18 @@ export function Team() {
         .pedro-link svg {
           transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
         }
-        .pedro-link:hover {
-          background: #ffffff;
-          color: #0b0f19;
-          border-color: #ffffff;
-          transform: translateY(-2px);
+        @media (hover: hover) {
+          .pedro-link:hover {
+            background: #ffffff;
+            color: #0b0f19;
+            border-color: #ffffff;
+            transform: translateY(-2px);
+          }
         }
-        .pedro-link:hover svg {
-          transform: translate(2px, -2px);
+        @media (hover: hover) {
+          .pedro-link:hover svg {
+            transform: translate(2px, -2px);
+          }
         }
         .pedro-skill {
           display: flex;
@@ -321,9 +325,11 @@ export function Team() {
           border: 1px solid rgba(255,255,255,0.1);
           transition: border-color 0.4s ease, background 0.4s ease;
         }
-        .pedro-skill:hover {
-          border-color: rgba(169,196,255,0.4);
-          background: rgba(255,255,255,0.07);
+        @media (hover: hover) {
+          .pedro-skill:hover {
+            border-color: rgba(169,196,255,0.4);
+            background: rgba(255,255,255,0.07);
+          }
         }
         .pedro-skill-icon {
           flex-shrink: 0;
@@ -338,9 +344,11 @@ export function Team() {
           border: 1px solid rgba(169,196,255,0.25);
           transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), background 0.4s ease;
         }
-        .pedro-skill:hover .pedro-skill-icon {
-          transform: scale(1.08) rotate(-4deg);
-          background: rgba(122,162,255,0.22);
+        @media (hover: hover) {
+          .pedro-skill:hover .pedro-skill-icon {
+            transform: scale(1.08) rotate(-4deg);
+            background: rgba(122,162,255,0.22);
+          }
         }
         .pedro-live {
           width: 8px;
@@ -353,9 +361,11 @@ export function Team() {
         .pedro-photo {
           transition: box-shadow 0.6s ease, border-color 0.6s ease;
         }
-        .pedro-photo:hover {
-          border-color: rgba(169,196,255,0.4);
-          box-shadow: 0 50px 110px -30px rgba(0,0,0,0.9), 0 0 70px -24px rgba(122,162,255,0.45), inset 0 1px 0 rgba(255,255,255,0.18);
+        @media (hover: hover) {
+          .pedro-photo:hover {
+            border-color: rgba(169,196,255,0.4);
+            box-shadow: 0 50px 110px -30px rgba(0,0,0,0.9), 0 0 70px -24px rgba(122,162,255,0.45), inset 0 1px 0 rgba(255,255,255,0.18);
+          }
         }
         .pedro-corner {
           position: absolute;
@@ -372,9 +382,11 @@ export function Team() {
         .pedro-corner-tr { top: 16px; right: 16px; border-top-width: 2px; border-right-width: 2px; border-top-right-radius: 14px; }
         .pedro-corner-bl { bottom: 16px; left: 16px; border-bottom-width: 2px; border-left-width: 2px; border-bottom-left-radius: 14px; }
         .pedro-corner-br { bottom: 16px; right: 16px; border-bottom-width: 2px; border-right-width: 2px; border-bottom-right-radius: 14px; }
-        .pedro-photo:hover .pedro-corner {
-          width: 44px;
-          height: 44px;
+        @media (hover: hover) {
+          .pedro-photo:hover .pedro-corner {
+            width: 44px;
+            height: 44px;
+          }
         }
         .pedro-stats {
           display: grid;
@@ -426,18 +438,22 @@ export function Team() {
           background: var(--bg-secondary);
           box-shadow: 0 40px 90px -30px rgba(0,0,0,0.85), inset 0 1px 0 rgba(255,255,255,0.14);
         }
-        .luiz-photo:hover {
-          border-color: rgba(169,196,255,0.4);
-          box-shadow: 0 50px 110px -30px rgba(0,0,0,0.9), 0 0 70px -24px rgba(122,162,255,0.45), inset 0 1px 0 rgba(255,255,255,0.18);
+        @media (hover: hover) {
+          .luiz-photo:hover {
+            border-color: rgba(169,196,255,0.4);
+            box-shadow: 0 50px 110px -30px rgba(0,0,0,0.9), 0 0 70px -24px rgba(122,162,255,0.45), inset 0 1px 0 rgba(255,255,255,0.18);
+          }
         }
         .luiz-photo-inner {
           position: absolute;
           inset: 0;
           transition: transform 0.6s ease, filter 0.6s ease;
         }
-        .luiz-photo:hover .pedro-corner {
-          width: 44px;
-          height: 44px;
+        @media (hover: hover) {
+          .luiz-photo:hover .pedro-corner {
+            width: 44px;
+            height: 44px;
+          }
         }
         .luiz-badge {
           position: absolute;
@@ -670,7 +686,9 @@ export function Team() {
           50% { opacity: 0.4; transform: scale(1.4); }
         }        .premium-link { font-size: 14px; font-weight: 700; color: var(--text-primary); text-decoration: none; position: relative; transition: all 0.3s ease; }
         .premium-link::after { content: ""; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--text-primary); transition: width 0.3s ease; }
-        .premium-link:hover::after { width: 100%; }
+        @media (hover: hover) {
+          .premium-link:hover::after { width: 100%; }
+        }
         @media (max-width: 968px) {
           .team-grid { grid-template-columns: 1fr !important; gap: 60px !important; text-align: center; }
           .team-grid.inverted { display: flex !important; flex-direction: column !important; }

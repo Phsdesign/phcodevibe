@@ -48,9 +48,11 @@ const eliteStyles = `
   overflow: hidden;
   transition: border-color 0.5s ease, box-shadow 0.5s ease;
 }
-.ph-pillar:hover {
-  border-color: rgba(60,100,180,0.45);
-  box-shadow: 0 24px 60px -24px rgba(40,80,160,0.4);
+@media (hover: hover) {
+  .ph-pillar:hover {
+    border-color: rgba(60,100,180,0.45);
+    box-shadow: 0 24px 60px -24px rgba(40,80,160,0.4);
+  }
 }
 .ph-pillar-spot {
   position: absolute;
@@ -104,7 +106,9 @@ const eliteStyles = `
 @media (prefers-reduced-motion: reduce) {
   .ph-phil-aura, .ph-phil-sweep, .ph-pillar-float, .ph-dot-pulse::after { animation: none !important; }
 }
-.ph-pillar:hover .ph-pillar-spot { opacity: 1; }
+@media (hover: hover) {
+  .ph-pillar:hover .ph-pillar-spot { opacity: 1; }
+}
 .ph-cta::after {
   content: "";
   position: absolute;
@@ -131,7 +135,9 @@ const eliteStyles = `
   animation: ph-border-flow 8s ease infinite;
   transition: box-shadow 0.6s ease;
 }
-.ph-elite-card:hover { box-shadow: 0 30px 80px -20px var(--accent-a); }
+@media (hover: hover) {
+  .ph-elite-card:hover { box-shadow: 0 30px 80px -20px var(--accent-a); }
+}
 .ph-elite-inner {
   position: relative;
   height: 100%;
@@ -153,7 +159,9 @@ const eliteStyles = `
   background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), var(--accent-a), transparent 60%);
   mix-blend-mode: screen;
 }
-.ph-elite-card:hover .ph-elite-spot { opacity: 0.22; }
+@media (hover: hover) {
+  .ph-elite-card:hover .ph-elite-spot { opacity: 0.22; }
+}
 .ph-elite-shine {
   position: absolute;
   top: 0;
@@ -164,7 +172,9 @@ const eliteStyles = `
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
   transform: translateX(-120%) skewX(-20deg);
 }
-.ph-elite-card:hover .ph-elite-shine { animation: ph-shine 1.2s ease; }
+@media (hover: hover) {
+  .ph-elite-card:hover .ph-elite-shine { animation: ph-shine 1.2s ease; }
+}
 .ph-elite-orb {
   width: 56px;
   height: 56px;
@@ -195,7 +205,9 @@ const eliteStyles = `
   background: rgba(255,255,255,0.04);
   transition: all 0.35s ease;
 }
-.ph-elite-card:hover .ph-elite-tag { border-color: var(--accent-a); color: #fff; }
+@media (hover: hover) {
+  .ph-elite-card:hover .ph-elite-tag { border-color: var(--accent-a); color: #fff; }
+}
 .ph-elite-bar {
   height: 2px;
   width: 100%;
@@ -211,7 +223,9 @@ const eliteStyles = `
   background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
   transition: width 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.ph-elite-card:hover .ph-elite-bar span { width: 100%; }
+@media (hover: hover) {
+  .ph-elite-card:hover .ph-elite-bar span { width: 100%; }
+}
 @keyframes ph-border-flow { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
 @keyframes ph-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 @keyframes ph-shine { to { transform: translateX(260%) skewX(-20deg); } }
@@ -399,10 +413,12 @@ const infographicStyles = `
   transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), border-color 0.4s ease, background 0.4s ease;
   box-sizing: border-box;
 }
-.ph-info-step:hover .ph-info-card {
-  transform: translateY(-6px);
-  border-color: rgba(160,180,255,0.35);
-  background: linear-gradient(170deg, rgba(122,162,255,0.10), rgba(255,255,255,0.01)), var(--bg);
+@media (hover: hover) {
+  .ph-info-step:hover .ph-info-card {
+    transform: translateY(-6px);
+    border-color: rgba(160,180,255,0.35);
+    background: linear-gradient(170deg, rgba(122,162,255,0.10), rgba(255,255,255,0.01)), var(--bg);
+  }
 }
 .ph-info-pill {
   display: inline-block;
@@ -424,7 +440,9 @@ const infographicStyles = `
   background: rgba(255,255,255,0.1);
   transition: background 0.4s ease;
 }
-.ph-info-step:hover .ph-info-meter i.on { background: linear-gradient(90deg, #2f6fd6, #7aa2ff); }
+@media (hover: hover) {
+  .ph-info-step:hover .ph-info-meter i.on { background: linear-gradient(90deg, #2f6fd6, #7aa2ff); }
+}
 .ph-info-pulse {
   position: absolute;
   top: 0;
@@ -944,7 +962,7 @@ export function FeaturesAI() {
               <div style={{ fontSize: "0.9rem", color: "rgba(255, 255, 255, 0.6)" }}>Fundador @ PH Code Labs</div>
             </div>
           </div>
-          <a href="#contato" className="ph-cta" style={{ position: "relative", overflow: "hidden", display: "inline-flex", alignItems: "center", gap: "8px", padding: "12px 24px", borderRadius: "100px", background: "linear-gradient(135deg, #1e3f80, #17607a)", color: "#e6eeff", fontSize: "13px", fontWeight: 800, textDecoration: "none", boxShadow: "0 10px 30px -12px rgba(30,63,128,0.6)" }}>
+          <a href="#contato" className="ph-cta" style={{ position: "relative", overflow: "hidden", display: "inline-flex", alignItems: "center", gap: "8px", minHeight: "44px", padding: "12px 24px", borderRadius: "100px", background: "linear-gradient(135deg, #1e3f80, #17607a)", color: "#e6eeff", fontSize: "13px", fontWeight: 800, textDecoration: "none", boxShadow: "0 10px 30px -12px rgba(30,63,128,0.6)" }}>
             Fale com a gente
             <span aria-hidden="true">→</span>
           </a>

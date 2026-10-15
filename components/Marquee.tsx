@@ -288,7 +288,9 @@ export function Marquee() {
           animation: mqScroll 40s linear infinite;
         }
         .mq-reverse { animation-direction: reverse; }
-        .mq-ticker:hover .mq-track { animation-play-state: paused; }
+        @media (hover: hover) {
+          .mq-ticker:hover .mq-track { animation-play-state: paused; }
+        }
         .mq-group {
           display: flex;
           flex-shrink: 0;
@@ -325,7 +327,9 @@ export function Marquee() {
           opacity: 0;
           transition: opacity 0.5s ease;
         }
-        .mq-cell:hover .mq-spot { opacity: 1; }
+        @media (hover: hover) {
+          .mq-cell:hover .mq-spot { opacity: 1; }
+        }
         .mq-sheen {
           position: absolute;
           top: 0;
@@ -374,10 +378,12 @@ export function Marquee() {
           gap: 10px;
           transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
         }
-        .mq-pill:hover {
-          transform: translateY(-3px);
-          border-color: var(--c);
-          box-shadow: 0 10px 30px -10px var(--c);
+        @media (hover: hover) {
+          .mq-pill:hover {
+            transform: translateY(-3px);
+            border-color: var(--c);
+            box-shadow: 0 10px 30px -10px var(--c);
+          }
         }
         .mq-dot {
           width: 6px;
