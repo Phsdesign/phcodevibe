@@ -2150,8 +2150,23 @@ html:not(.dark) .hero-section video {
   -webkit-text-fill-color: #ffffff !important;
   text-shadow: 0 0 30px rgba(255, 255, 255, 0.35);
 }
+/* Entrada da Hero em CSS (mesma curva e duração da versão em framer-motion).
+   Roda direto do HTML, sem esperar o JavaScript hidratar, então o texto aparece
+   mais cedo; o atraso de cada bloco vem no style (animation-delay). */
 .hero-enter {
   opacity: 0;
+  animation: heroEnter 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes heroEnter {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: none; }
+}
+.hero-scroll-cue {
+  animation: heroEnterCue 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes heroEnterCue {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
 }
 
 .hero-subtitle {
