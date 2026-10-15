@@ -564,12 +564,12 @@ function ProcessInfographic({ isMobile, progress }: { isMobile: boolean; progres
         </defs>
       </svg>
 
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: isMobile ? "2rem" : "3.5rem", position: "relative" }}>
+      <div className="ph-info-head" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: isMobile ? "2rem" : "3.5rem", position: "relative" }}>
         <span style={{ fontSize: "10px", fontWeight: 800, letterSpacing: "0.25em", color: "rgba(255,255,255,0.45)" }}>METODOLOGIA PH</span>
         <span style={{ fontSize: "10px", fontWeight: 800, letterSpacing: "0.25em", color: "rgba(255,255,255,0.45)" }}>3 FASES · 100%</span>
       </div>
 
-      <div style={{ position: "relative", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? "2.5rem" : "2rem" }}>
+      <div className="ph-info-steps" style={{ position: "relative", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: isMobile ? "2.5rem" : "2rem" }}>
         {!isMobile && (
           <div className="ph-info-track">
             <motion.span style={{ display: "block", height: "100%", transformOrigin: "left", scaleX: trackScale }} />
@@ -614,6 +614,7 @@ function AnimatedQuote({ text, isMobile, ready }: { text: string; isMobile: bool
 
   return (
     <motion.blockquote
+      className="fa-quote"
       initial="hidden"
       animate={ready ? "visible" : "hidden"}
       transition={{ staggerChildren: 0.09 }}
@@ -835,13 +836,14 @@ export function FeaturesAI() {
       width: "100%" 
     }}>
       <style dangerouslySetInnerHTML={{ __html: eliteStyles + infographicStyles }} />
-      <div style={{ position: isMobile ? "relative" : "sticky", top: 0, height: isMobile ? "auto" : "100vh", display: "flex", alignItems: "flex-start", overflow: "hidden" }}>
-      <motion.div ref={trackRef} style={{ y: trackY, position: "relative", zIndex: 2, width: "100%", maxWidth: "1440px", margin: "0 auto", padding: isMobile ? "3rem 20px" : "12vh 20px 4vh" }}>
+      <div className="fa-pin" style={{ position: isMobile ? "relative" : "sticky", top: 0, height: isMobile ? "auto" : "100vh", display: "flex", alignItems: "flex-start", overflow: "hidden" }}>
+      <motion.div ref={trackRef} className="fa-track" style={{ y: trackY, position: "relative", zIndex: 2, width: "100%", maxWidth: "1440px", margin: "0 auto", padding: isMobile ? "3rem 20px" : "12vh 20px 4vh" }}>
         
         {/* CENA 1: HEADER + CARDS */}
         <div>
         {/* HEADER */}
         <motion.div 
+          className="fa-head"
           style={{ textAlign: "center", marginBottom: "4rem", y: headY, scale: headScale, opacity: headOpacity }}
         >
           <div style={{ 
@@ -861,13 +863,14 @@ export function FeaturesAI() {
           }}>
             ESTRATEGISTA DE MARCAS & CRESCIMENTO DIGITAL
           </div>
-          <h2 style={{ fontSize: isMobile ? "2.5rem" : "5rem", fontWeight: "900", color: "#ffffff", lineHeight: "1.1", margin: 0, textShadow: "0 2px 20px rgba(0, 0, 0, 0.5)" }}>
+          <h2 className="fa-title" style={{ fontSize: isMobile ? "2.5rem" : "5rem", fontWeight: "900", color: "#ffffff", lineHeight: "1.1", margin: 0, textShadow: "0 2px 20px rgba(0, 0, 0, 0.5)" }}>
             Domine o seu Mercado.
           </h2>
         </motion.div>
 
         {/* CARDS PRINCIPAIS */}
         <motion.div 
+          className="fa-cards"
           style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "20px", marginBottom: "40px" }}
         >
           <motion.div style={{ x: leftX, rotateY: leftRot, scale: leftScale, opacity: leftOp, transformPerspective: 1200 }}>
@@ -899,26 +902,27 @@ export function FeaturesAI() {
         </div>
 
         {/* CENA 2: PROCESSO — INFOGRÁFICO */}
-        <motion.div style={{ marginTop: isMobile ? "2rem" : "6rem", opacity: infoOp, y: infoY }}>
+        <motion.div className="fa-info-wrap" style={{ marginTop: isMobile ? "2rem" : "6rem", opacity: infoOp, y: infoY }}>
           <ProcessInfographic isMobile={isMobile} progress={scrollYProgress} />
         </motion.div>
 
       </motion.div>
       </div>
     </section>
-    <section ref={philoRef} style={{ position: "relative", zIndex: 2, width: "100%", padding: isMobile ? "2rem 20px 4rem" : "1rem 20px 6rem", display: "flex", alignItems: "flex-start", justifyContent: "center", overflow: "hidden" }}>
-      <div aria-hidden="true" style={{ position: "absolute", top: "50%", left: "50%", width: isMobile ? "320px" : "720px", height: isMobile ? "320px" : "720px", transform: "translate(-50%, -50%)", background: "radial-gradient(circle, rgba(120, 160, 255, 0.18), transparent 65%)", pointerEvents: "none" }} />
+    <section ref={philoRef} className="fa-philo" style={{ position: "relative", zIndex: 2, width: "100%", padding: isMobile ? "2rem 20px 4rem" : "1rem 20px 6rem", display: "flex", alignItems: "flex-start", justifyContent: "center", overflow: "hidden" }}>
+      <div aria-hidden="true" className="fa-philo-glow" style={{ position: "absolute", top: "50%", left: "50%", width: isMobile ? "320px" : "720px", height: isMobile ? "320px" : "720px", transform: "translate(-50%, -50%)", background: "radial-gradient(circle, rgba(120, 160, 255, 0.18), transparent 65%)", pointerEvents: "none" }} />
 
       <motion.div
         initial={{ opacity: 0, y: 40, scale: 0.97 }}
         animate={philoReady ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 40, scale: 0.97 }}
         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        className="fa-philo-card"
         style={{ position: "relative", width: "100%", maxWidth: "1000px", padding: isMobile ? "2.5rem 1.5rem" : "4rem 4.5rem", borderRadius: "32px", background: "linear-gradient(160deg, rgba(20,24,34,0.82), rgba(8,10,16,0.9))", border: "1px solid rgba(255,255,255,0.12)", backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)", boxShadow: "0 40px 100px -30px rgba(0,0,0,0.7)", textAlign: "center", overflow: "hidden" }}
       >
 
         <div aria-hidden="true" className="ph-phil-aura a" />
         <div aria-hidden="true" className="ph-phil-aura b" />
-        <div aria-hidden="true" style={{ position: "absolute", top: "-30px", left: "24px", fontSize: isMobile ? "9rem" : "14rem", lineHeight: 1, fontFamily: "Georgia, serif", color: "rgba(120, 160, 255, 0.08)", userSelect: "none", pointerEvents: "none" }}>&ldquo;</div>
+        <div aria-hidden="true" className="fa-philo-mark" style={{ position: "absolute", top: "-30px", left: "24px", fontSize: isMobile ? "9rem" : "14rem", lineHeight: 1, fontFamily: "Georgia, serif", color: "rgba(120, 160, 255, 0.08)", userSelect: "none", pointerEvents: "none" }}>&ldquo;</div>
 
         <motion.div
           initial={{ opacity: 0 }}
@@ -939,7 +943,7 @@ export function FeaturesAI() {
           style={{ width: "120px", height: "1px", margin: "1.5rem auto 2.5rem", background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)", transformOrigin: "center" }}
         />
 
-        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: "16px", marginBottom: "3rem", textAlign: "left" }}>
+        <div className="fa-pillars" style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: "16px", marginBottom: "3rem", textAlign: "left" }}>
           {[
             { n: "01", t: "Estratégia", d: "Cada decisão visual parte de um objetivo de negócio, não de tendência." },
             { n: "02", t: "Autoridade", d: "Identidade e estrutura que fazem sua marca ser levada a sério no primeiro olhar." },
@@ -953,6 +957,7 @@ export function FeaturesAI() {
           initial={{ opacity: 0, y: 12 }}
           animate={philoReady ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
           transition={{ delay: 0.9, duration: 0.8 }}
+          className="fa-philo-cta"
           style={{ display: "flex", flexDirection: isMobile ? "column" : "row", alignItems: "center", justifyContent: "space-between", gap: "1.5rem", flexWrap: "wrap" }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>

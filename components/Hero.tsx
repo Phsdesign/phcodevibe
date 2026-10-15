@@ -512,6 +512,7 @@ export function Hero() {
           position: "absolute",
           bottom: "clamp(1rem, 3.5vh, 2.25rem)",
           left: "50%",
+          transform: "translateX(-50%)",
           zIndex: 110,
           display: "flex",
           flexDirection: "column",

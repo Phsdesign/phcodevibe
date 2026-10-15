@@ -921,6 +921,7 @@ function ProcessSection({ isMobile }: { isMobile: boolean }) {
         </header>
 
         <ol
+          className="proc-steps"
           style={{
             position: "relative",
             listStyle: "none",
@@ -963,6 +964,7 @@ function ProcessSection({ isMobile }: { isMobile: boolean }) {
         </ol>
 
         <div
+          className="proc-panels"
           style={{
             position: "relative",
             display: "grid",
@@ -985,7 +987,7 @@ function ProcessSection({ isMobile }: { isMobile: boolean }) {
           >
             <span className="proc-label">Pagamento</span>
             <h4 className="proc-panel-title">Escolha como prefere pagar</h4>
-            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "0.9rem" }}>
+            <div className="proc-options" style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "0.9rem" }}>
               <div className="proc-option">
                 <span className="proc-option-tag">Opção 1</span>
                 <strong className="proc-big">50 / 50</strong>
@@ -1052,6 +1054,7 @@ function ProcessSection({ isMobile }: { isMobile: boolean }) {
         </div>
 
         <footer
+          className="proc-foot"
           style={{
             position: "relative",
             display: "flex",

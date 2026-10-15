@@ -139,6 +139,7 @@ function PillarScene({
       >
         <motion.span
           aria-hidden
+          className="mt-pillar-arrow"
           variants={{
             show: { opacity: 0, x: -12, y: 12, color: INK },
             hover: { opacity: 1, x: 0, y: 0, color: INK },
@@ -165,6 +166,8 @@ function PillarScene({
           transition={{ duration: 0.5, ease: EASE }}
           style={{
             y: desktop ? numeralY : 0,
+            // Mesmo estado do variant "show" já no HTML (número só com contorno).
+            color: "rgba(255, 255, 255, 0)",
             fontSize: desktop ? "clamp(5rem, 11vw, 9rem)" : "4rem",
             fontWeight: 900,
             lineHeight: 0.85,
