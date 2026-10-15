@@ -6,6 +6,7 @@ import { CustomCursor } from "@/components/CustomCursor";
 import { StarsBackground } from "@/components/StarsBackground";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { WebVitals } from "@/components/WebVitals";
+import { StyledJsxRegistry } from "@/components/StyledJsxRegistry";
 import "./globals.css";
 import "./mobile-fix.css";
 import "./theme-glass.css";
@@ -123,7 +124,7 @@ export default function RootLayout({
         <StarsBackground />
         <ScrollEffects />
         <FloatingButtons />
-        {children}
+        <StyledJsxRegistry>{children}</StyledJsxRegistry>
         <CustomCursor />
       </body>
     </html>
