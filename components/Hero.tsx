@@ -435,6 +435,17 @@ export function Hero() {
               100% { transform: translate(0); text-shadow: none; }
             }
             @keyframes hzEdge { to { background-position: -200% 0; } }
+            /* Botão "Explorar": o giro e os anéis eram animados em JS pelo framer-motion
+               (rotate/scale independentes não vão para o compositor), recalculando estilo
+               a cada frame. Mesmas curvas em CSS: linear 6s; easeOut do framer =
+               cubic-bezier(0, 0, 0.58, 1). */
+            .hero-cue-spin { animation: heroCueSpin 6s linear infinite; }
+            @keyframes heroCueSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+            .hero-cue-ping { animation: heroCuePing 2.4s cubic-bezier(0, 0, 0.58, 1) infinite both; }
+            @keyframes heroCuePing {
+              from { transform: scale(1); opacity: 0.5; }
+              to { transform: scale(2.4); opacity: 0; }
+            }
             /* Deslocamento via transform (compositor) em vez de left (layout+paint).
                160% do pai / 30% de largura = 533.333% da própria largura: trajeto idêntico. */
             @keyframes hzSweep {
@@ -530,9 +541,8 @@ export function Hero() {
             boxShadow: "0 0 24px rgba(0,229,255,0.25)",
           }}
         >
-          <motion.span
-            animate={{ rotate: 360 }}
-            transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+          <span
+            className="hero-cue-spin"
             style={{ position: "absolute", inset: 0, borderRadius: "50%", background: "inherit", pointerEvents: "none" }}
           />
           <span
@@ -569,12 +579,12 @@ export function Hero() {
             ))}
           </span>
           {[0, 1].map((i) => (
-            <motion.span
+            <span
               key={i}
               aria-hidden="true"
-              animate={{ scale: [1, 2.4], opacity: [0.5, 0] }}
-              transition={{ duration: 2.4, repeat: Infinity, ease: "easeOut", delay: i * 1.2 }}
+              className="hero-cue-ping"
               style={{
+                animationDelay: `${i * 1.2}s`,
                 position: "absolute",
                 inset: 0,
                 borderRadius: "50%",

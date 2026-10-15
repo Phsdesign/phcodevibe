@@ -123,7 +123,10 @@ export function AntigravityBackground({
 
     const width = container.offsetWidth || window.innerWidth;
     const height = container.offsetHeight || window.innerHeight;
-    const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
+    // No celular o canvas cobre a Hero inteira e é redesenhado a cada frame; 1.25x
+    // (em vez de 1.5x) reduz ~30% dos pixels por frame sem diferença visível nas
+    // partículas, que já têm borda suave. Desktop segue em 1.5x.
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, window.innerWidth < 768 ? 1.25 : 1.5);
     const BASE_HALF = Math.tan((40 * Math.PI) / 360) * 3.1;
     const SEAM_Y = -BASE_HALF;
     const extra = bleed ? extraPx : 0;
@@ -149,7 +152,9 @@ export function AntigravityBackground({
 
     // Renderer WebGL
     const renderer = new THREE.WebGLRenderer({
-      antialias: true,
+      // As partículas são point sprites com borda recortada no shader (smoothstep),
+      // então o MSAA não muda nada na imagem; no mobile ele só custava GPU por frame.
+      antialias: window.innerWidth >= 768,
       alpha: true,
       powerPreference: "high-performance",
       preserveDrawingBuffer: false,
@@ -542,13 +547,35 @@ export function AntigravityBackground({
     // Mesmo relógio do THREE.Clock (performance.now), sem o aviso de depreciação.
     const clockStart = performance.now();
 
+    // No mobile a Hero fica coberta pelo SplashLoader (classe `splash-active` no
+    // <html>) e com opacidade 0 até ele sair. Renderizar o WebGL nesse intervalo
+    // era trabalho invisível que travava o carregamento; o loop só começa quando
+    // o splash termina, antes de o fundo aparecer.
+    const root = document.documentElement;
+    let waitingSplash = root.classList.contains("splash-active");
+    let inView = true;
+    const startLoop = () => {
+      if (!animationFrameId && inView && !waitingSplash) {
+        animationFrameId = requestAnimationFrame(animate);
+      }
+    };
+    const splashObserver = waitingSplash
+      ? new MutationObserver(() => {
+          if (root.classList.contains("splash-active")) return;
+          waitingSplash = false;
+          splashObserver?.disconnect();
+          startLoop();
+        })
+      : null;
+    splashObserver?.observe(root, { attributes: true, attributeFilter: ["class"] });
+
     // Fora da viewport o loop é realmente parado (antes seguia agendando um
     // requestAnimationFrame vazio por frame) e retomado ao voltar.
     const observer = new IntersectionObserver(
       (entries) => {
-        const visible = entries[entries.length - 1].isIntersecting;
-        if (visible) {
-          if (!animationFrameId) animationFrameId = requestAnimationFrame(animate);
+        inView = entries[entries.length - 1].isIntersecting;
+        if (inView) {
+          startLoop();
         } else {
           cancelAnimationFrame(animationFrameId);
           animationFrameId = 0;
@@ -621,13 +648,14 @@ export function AntigravityBackground({
       renderer.render(scene, camera);
     };
 
-    animate();
+    if (!waitingSplash) animate();
     observer.observe(container);
 
     return () => {
       cancelAnimationFrame(animationFrameId);
       cancelAnimationFrame(resizeFrame);
       observer.disconnect();
+      splashObserver?.disconnect();
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("resize", handleResize);
