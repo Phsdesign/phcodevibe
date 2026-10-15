@@ -2,7 +2,6 @@
 
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
-import { motion, Variants } from "framer-motion";
 
 const SKILL_ICONS = [
   <path key="a" d="M12 3l8 4.5v9L12 21l-8-4.5v-9z" />,
@@ -15,7 +14,6 @@ export function Team() {
   const containerRef = useRef<HTMLElement>(null);
   const [pedroHovered, setPedroHovered] = useState(false);
   const [luizHovered, setLuizHovered] = useState(false);
-  const [claudioHovered, setClaudioHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -24,18 +22,6 @@ export function Team() {
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
-
-  const fadeIn: Variants = isMobile 
-    ? { initial: { opacity: 1, y: 0 }, whileInView: { opacity: 1, y: 0 } }
-    : { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 } };
-
-  const defaultTransition: import("framer-motion").Transition = isMobile 
-    ? { duration: 0 } 
-    : { duration: 0.8, ease: [0.16, 1, 0.3, 1] };
-    
-  const viewportConfig = isMobile 
-    ? { once: true, margin: "0px" } 
-    : { once: true, margin: "-50px" };
 
   return (
     <section id="sobre" ref={containerRef} style={{ background: "var(--bg)", padding: isMobile ? "4rem 0" : "10rem 0", overflow: isMobile ? "visible" : "hidden" }}>
@@ -66,7 +52,7 @@ export function Team() {
                 className="pedro-photo-inner"
                 style={{ width: "100%", height: "100%", position: "relative", transform: pedroHovered ? "scale(1.04)" : "scale(1)", filter: pedroHovered ? "grayscale(0)" : "grayscale(1)", transition: "transform 0.6s ease, filter 0.6s ease" }}
               >
-                <Image src="/person.png" alt="Pedro Henrique" fill quality={isMobile ? 80 : 95} style={{ objectFit: "cover", objectPosition: "center top" }} />
+                <Image src="/person.png" alt="Pedro Henrique" fill style={{ objectFit: "cover", objectPosition: "center top" }} />
               </div>
               <div
                 aria-hidden="true"
@@ -197,7 +183,7 @@ export function Team() {
                 className="luiz-photo-inner"
                 style={{ transform: luizHovered ? "scale(1.04)" : "scale(1)", filter: luizHovered ? "grayscale(0)" : "grayscale(1)" }}
               >
-                <Image src="/person-2.png" alt="Luiz Felipe" fill quality={isMobile ? 80 : 95} style={{ objectFit: "cover", objectPosition: "center center" }} />
+                <Image src="/person-2.png" alt="Luiz Felipe" fill style={{ objectFit: "cover", objectPosition: "center center" }} />
               </div>
               <span className="pedro-corner pedro-corner-tl" aria-hidden="true" />
               <span className="pedro-corner pedro-corner-tr" aria-hidden="true" />

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { usePauseOffscreenAnimations } from "@/hooks/usePauseOffscreenAnimations";
 
 const NOISE =
   "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")";
@@ -116,7 +117,7 @@ function MatrixLetter({ ch, idx }: { ch: string; idx: number }) {
       wrap.removeEventListener("mouseenter", onEnter);
       wrap.removeEventListener("mouseleave", onLeave);
     };
-  }, []);
+  }, [idx]);
 
   return (
     <span ref={wrapRef} className="ft-wm-letter">
@@ -142,9 +143,16 @@ function useLocalTime() {
   return time;
 }
 
+// Folha isolada: o relógio atualiza a cada 30s re-renderizando só este texto,
+// e não o Footer inteiro (com seu <style> grande e as letras com canvas).
+function LocalTime() {
+  const time = useLocalTime();
+  return <>{time || "--:--"}</>;
+}
+
 export function Footer() {
   const rootRef = useRef<HTMLElement>(null);
-  const time = useLocalTime();
+  usePauseOffscreenAnimations(rootRef);
 
   useEffect(() => {
     const el = rootRef.current;
@@ -623,7 +631,7 @@ export function Footer() {
           <span>Estúdio de design de elite</span>
           <span className="ft-status">
             <span className="ft-dot" />
-            System operational · {time || "--:--"} BRT
+            System operational · <LocalTime /> BRT
           </span>
         </div>
 

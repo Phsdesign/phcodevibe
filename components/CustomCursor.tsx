@@ -1,27 +1,30 @@
 ﻿"use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import { motion, useSpring, useMotionValue } from "framer-motion";
 
+const springConfig = { damping: 40, stiffness: 180, mass: 0.8 };
+
+// Cursor só existe em dispositivos sem touch. No servidor/hidratação é `false`
+// (igual ao estado inicial anterior) e no cliente vira o valor real logo em
+// seguida — sem setState síncrono dentro de useEffect.
+const noopSubscribe = () => () => {};
+const getHasFinePointer = () => !("ontouchstart" in window || navigator.maxTouchPoints > 0);
+const getServerSnapshot = () => false;
+
 export function CustomCursor() {
-  const [mounted, setMounted] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const isVisible = useSyncExternalStore(noopSubscribe, getHasFinePointer, getServerSnapshot);
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const springConfig = { damping: 40, stiffness: 180, mass: 0.8 };
   const smoothX = useSpring(mouseX, springConfig);
   const smoothY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
-    setMounted(true);
-    const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
-    if (isTouchDevice) return;
-
-    setIsVisible(true);
+    if (!isVisible) return;
 
     const moveMouse = (e: MouseEvent) => {
       mouseX.set(e.clientX);
@@ -31,7 +34,7 @@ export function CustomCursor() {
     const handleHoverStart = () => setIsHovered(true);
     const handleHoverEnd = () => setIsHovered(false);
 
-    window.addEventListener("mousemove", moveMouse);
+    window.addEventListener("mousemove", moveMouse, { passive: true });
 
     const interactiveElements = document.querySelectorAll('a, button, [role="button"], .neu-card, .hero-cta-primary, .hero-cta-secondary');
     interactiveElements.forEach((el) => {
@@ -46,9 +49,9 @@ export function CustomCursor() {
         el.removeEventListener("mouseleave", handleHoverEnd);
       });
     };
-  }, [mouseX, mouseY]);
+  }, [isVisible, mouseX, mouseY]);
 
-  if (!mounted || !isVisible) return null;
+  if (!isVisible) return null;
 
   const content = (
     <div 

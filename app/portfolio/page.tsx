@@ -13,7 +13,7 @@ export default function PaginaPortfolio() {
       <Navbar />
 
       <div style={{ width: "100%", paddingTop: "6rem" }}>
-        <Portfolio />
+        <Portfolio eagerImages />
       </div>
 
 

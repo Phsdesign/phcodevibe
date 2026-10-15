@@ -2,15 +2,6 @@
 
 import { useEffect, useRef } from "react";
 
-interface Particle {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  originX: number;
-  originY: number;
-}
-
 export function CinematicPortal() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const scrollVelocity = useRef(0);
@@ -23,7 +14,7 @@ export function CinematicPortal() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let animationFrameId: number;
+    let animationFrameId = 0;
     
     // Configurações para Elegância e Fluidez Orgânica
     const beam = { 
@@ -33,9 +24,11 @@ export function CinematicPortal() {
       alpha: 0
     };
 
+    // Reatribuir canvas.width limpa e realoca o bitmap mesmo com o mesmo valor;
+    // no mobile a barra de endereço dispara resize a cada rolagem. Só aplica se mudou.
     const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = 100; 
+      if (canvas.width !== window.innerWidth) canvas.width = window.innerWidth;
+      if (canvas.height !== 100) canvas.height = 100;
     };
 
     const handleScroll = () => {
@@ -44,20 +37,20 @@ export function CinematicPortal() {
       lastScrollY.current = currentScrollY;
     };
 
-    let visible = true;
+    // Fora da viewport o loop é parado de fato e retomado ao reentrar.
     const io = new IntersectionObserver(([entry]) => {
-      visible = entry.isIntersecting;
+      if (entry.isIntersecting) {
+        if (!animationFrameId) animationFrameId = requestAnimationFrame(draw);
+      } else {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = 0;
+      }
     });
-    io.observe(canvas);
 
     let themeColor = "#ffffff";
     let colorReadAt = -1000;
 
     const draw = (time: number) => {
-      if (!visible) {
-        animationFrameId = requestAnimationFrame(draw);
-        return;
-      }
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       if (time - colorReadAt > 250) {
@@ -119,10 +112,11 @@ export function CinematicPortal() {
       animationFrameId = requestAnimationFrame(draw);
     };
 
-    window.addEventListener("resize", resize);
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", resize, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
     resize();
     animationFrameId = requestAnimationFrame(draw);
+    io.observe(canvas);
 
     return () => {
       window.removeEventListener("resize", resize);

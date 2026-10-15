@@ -27,7 +27,10 @@ export function AntigravityBackground({
   bleedVh = 0,
 }: AntigravityBackgroundProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [currentTheme, setCurrentTheme] = useState<"light" | "dark">("dark");
+  const [autoTheme, setAutoTheme] = useState<"light" | "dark">("dark");
+  // Tema fixo via prop é derivado no render (antes era copiado para o estado
+  // dentro de um effect, gerando um render extra em cascata).
+  const currentTheme = theme === "auto" ? autoTheme : theme;
   const [extraPx, setExtraPx] = useState(0);
   const bleed = bleedVh > 0 && extraPx > 0;
 
@@ -41,14 +44,11 @@ export function AntigravityBackground({
 
   // Detecção automática de dark/light mode
   useEffect(() => {
-    if (theme !== "auto") {
-      setCurrentTheme(theme);
-      return;
-    }
+    if (theme !== "auto") return;
 
     const checkDarkMode = () => {
       const isDark = document.documentElement.classList.contains("dark");
-      setCurrentTheme(isDark ? "dark" : "light");
+      setAutoTheme(isDark ? "dark" : "light");
     };
 
     checkDarkMode();
@@ -447,21 +447,25 @@ export function AntigravityBackground({
     const targetRingPos = new THREE.Vector2(0, 0);
     const lastMousePos = new THREE.Vector2(0, 0);
     let currentVelocity = 0;
-    let hasUserMoved = false;
 
-    const isMobileViewport = () => {
-      if (typeof window === "undefined") return false;
+    // A detecção mobile era refeita a cada frame e a cada mousemove (matchMedia +
+    // innerWidth). Agora é calculada uma vez e atualizada só no resize.
+    const coarseQuery =
+      typeof window.matchMedia === "function" ? window.matchMedia("(pointer: coarse)") : null;
+    const computeIsMobileViewport = () => {
       const isTouch =
-        (typeof window.matchMedia === "function" &&
-          window.matchMedia("(pointer: coarse)").matches) ||
+        (coarseQuery?.matches ?? false) ||
         "ontouchstart" in window ||
         (typeof navigator !== "undefined" && navigator.maxTouchPoints > 0);
       return window.innerWidth < 768 || (isTouch && window.innerWidth < 1024);
     };
+    let mobileViewport = computeIsMobileViewport();
 
-    const updateMousePos = (clientX: number, clientY: number) => {
-      if (isMobileViewport()) return;
-      hasUserMoved = true;
+    // O ponteiro só é guardado no evento; o getBoundingClientRect e a conversão
+    // para coordenadas da cena rodam uma única vez por frame dentro do loop.
+    let pendingPointer: { x: number; y: number } | null = null;
+
+    const applyPointer = (clientX: number, clientY: number) => {
       const rect = container.getBoundingClientRect();
       const ndcX = ((clientX - rect.left) / rect.width) * 2 - 1;
       const ndcY = -((clientY - rect.top) / rect.height) * 2 + 1;
@@ -475,27 +479,45 @@ export function AntigravityBackground({
       targetRingPos.set(targetX, targetY);
     };
 
+    const queuePointer = (clientX: number, clientY: number) => {
+      if (mobileViewport) return;
+      if (pendingPointer) {
+        pendingPointer.x = clientX;
+        pendingPointer.y = clientY;
+      } else {
+        pendingPointer = { x: clientX, y: clientY };
+      }
+    };
+
     const handleMouseMove = (e: MouseEvent) => {
-      if (isMobileViewport()) return;
-      updateMousePos(e.clientX, e.clientY);
+      queuePointer(e.clientX, e.clientY);
     };
 
     const handleTouchMove = (e: TouchEvent) => {
       // No mobile, não interagir com o toque/dedo do usuário
-      if (isMobileViewport()) return;
+      if (mobileViewport) return;
       if (e.touches.length > 0) {
-        updateMousePos(e.touches[0].clientX, e.touches[0].clientY);
+        queuePointer(e.touches[0].clientX, e.touches[0].clientY);
       }
     };
 
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
     window.addEventListener("touchmove", handleTouchMove, { passive: true });
 
-    // Resize Handler
-    const handleResize = () => {
-      if (!container) return;
+    // Resize Handler — agrupado em 1x por frame e ignorado quando o tamanho do
+    // container não muda (no mobile a barra de endereço dispara resize ao rolar,
+    // e cada renderer.setSize realocava o drawing buffer da GPU sem necessidade).
+    let lastW = width;
+    let lastH = height;
+    let resizeFrame = 0;
+    const applyResize = () => {
+      resizeFrame = 0;
+      mobileViewport = computeIsMobileViewport();
       const w = container.offsetWidth || window.innerWidth;
       const h = container.offsetHeight || window.innerHeight;
+      if (w === lastW && h === lastH) return;
+      lastW = w;
+      lastH = h;
       const dims = calcDimensions(w, h);
       camera.fov = dims.fov;
       camera.aspect = w / h;
@@ -510,30 +532,41 @@ export function AntigravityBackground({
       material.uniforms.uParticleScale.value =
         particleScale * (w < 768 ? 0.75 : 1.0);
     };
-    window.addEventListener("resize", handleResize);
+    const handleResize = () => {
+      if (!resizeFrame) resizeFrame = requestAnimationFrame(applyResize);
+    };
+    window.addEventListener("resize", handleResize, { passive: true });
 
     // Loop de animação com render ultra-fluido e inércia orgânica
-    let animationFrameId: number;
-    let isVisible = true;
-    const clock = new THREE.Clock();
+    let animationFrameId = 0;
+    // Mesmo relógio do THREE.Clock (performance.now), sem o aviso de depreciação.
+    const clockStart = performance.now();
 
+    // Fora da viewport o loop é realmente parado (antes seguia agendando um
+    // requestAnimationFrame vazio por frame) e retomado ao voltar.
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          isVisible = entry.isIntersecting;
-        });
+        const visible = entries[entries.length - 1].isIntersecting;
+        if (visible) {
+          if (!animationFrameId) animationFrameId = requestAnimationFrame(animate);
+        } else {
+          cancelAnimationFrame(animationFrameId);
+          animationFrameId = 0;
+        }
       },
       { threshold: 0.05 }
     );
-    observer.observe(container);
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate);
 
-      if (!isVisible) return;
+      if (pendingPointer) {
+        applyPointer(pendingPointer.x, pendingPointer.y);
+        pendingPointer = null;
+      }
 
-      const elapsedTime = clock.getElapsedTime();
-      const isMobile = isMobileViewport();
+      const elapsedTime = (performance.now() - clockStart) / 1000;
+      const isMobile = mobileViewport;
 
       // Flutuação orgânica contínua viva a todo instante
       const driftX =
@@ -589,16 +622,20 @@ export function AntigravityBackground({
     };
 
     animate();
+    observer.observe(container);
 
     return () => {
       cancelAnimationFrame(animationFrameId);
+      cancelAnimationFrame(resizeFrame);
       observer.disconnect();
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("resize", handleResize);
-      renderer.dispose();
       geometry.dispose();
       material.dispose();
+      renderer.dispose();
+      // Libera o contexto WebGL imediatamente (o navegador limita contextos ativos).
+      renderer.forceContextLoss();
       if (renderer.domElement && renderer.domElement.parentElement) {
         renderer.domElement.parentElement.removeChild(renderer.domElement);
       }

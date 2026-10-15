@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { usePauseOffscreenAnimations } from "@/hooks/usePauseOffscreenAnimations";
 
 const icons = {
   mail: <path d="M22 17a2 2 0 01-2 2H4a2 2 0 01-2-2V7a2 2 0 012-2h16a2 2 0 012 2v10zM22 7l-10 6L2 7" />,
@@ -43,6 +44,8 @@ const highlights = [
 ];
 
 export function Contact() {
+  const sectionRef = useRef<HTMLElement>(null);
+  usePauseOffscreenAnimations(sectionRef);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -57,7 +60,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contato" className="ct">
+    <section ref={sectionRef} id="contato" className="ct">
       <style>{`
         .ct {
           --ct-text: var(--text-primary);

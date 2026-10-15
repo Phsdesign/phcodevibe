@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState, type CSSProperties, type MouseEvent } from "react";
+import { memo, useEffect, useRef, useState, type CSSProperties, type MouseEvent } from "react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
+import { usePauseOffscreenAnimations } from "@/hooks/usePauseOffscreenAnimations";
 
 const AntigravityBackground = dynamic(
   () => import("@/components/AntigravityBackground").then((m) => m.AntigravityBackground),
@@ -26,48 +27,77 @@ const entranceVariants = {
   })
 };
 
-export function Hero() {
+const ROTATING_WORDS = ["Imbatíveis.", "Lendárias.", "Absolutas.", "Únicas."];
 
+const stack = [
+  { name: "Next.js", label: "Site rápido que aparece bem no Google", fx: "hz-fx-sweep" },
+  { name: "TypeScript", label: "Menos erros e mais segurança no produto", fx: "hz-fx-orbit" },
+  { name: "Three.js", label: "Efeitos 3D que dão vida ao site", fx: "hz-fx-tilt" },
+];
 
-  const ROTATING_WORDS = ["Imbatíveis.", "Lendárias.", "Absolutas.", "Únicas."];
+// Folha isolada: o setInterval de 2.5s agora re-renderiza só esta palavra,
+// e não a Hero inteira (dezenas de motion components + <style> grande).
+const RotatingWord = memo(function RotatingWord() {
   const [wordIndex, setWordIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
-  const base = isMobile ? 3.25 : 0.08;
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-      setIsDesktop(window.innerWidth >= 768);
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setWordIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
     }, 2500);
     return () => clearInterval(interval);
-  }, [ROTATING_WORDS.length]);
-
-  const handleCellMove = (e: MouseEvent<HTMLDivElement>) => {
-    const r = e.currentTarget.getBoundingClientRect();
-    e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
-    e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
-    e.currentTarget.style.setProperty("--tx", `${((e.clientX - r.left) / r.width) * 2 - 1}`);
-    e.currentTarget.style.setProperty("--ty", `${((e.clientY - r.top) / r.height) * 2 - 1}`);
-  };
-
-  const stack = [
-    { name: "Next.js", label: "Site rápido que aparece bem no Google", fx: "hz-fx-sweep" },
-    { name: "TypeScript", label: "Menos erros e mais segurança no produto", fx: "hz-fx-orbit" },
-    { name: "Three.js", label: "Efeitos 3D que dão vida ao site", fx: "hz-fx-tilt" },
-  ];
+  }, []);
 
   return (
-    <section id="hero" className="hero-section" style={{ position: "relative", overflow: "hidden", minHeight: "100vh", width: "100%", display: "flex", alignItems: "center", background: "radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%)", transition: "background 0.5s ease" }}>
+    <span
+      key={wordIndex}
+      className="inline-block animate-word-rotate hero-rotating-word"
+      style={{ color: "#ffffff", WebkitTextFillColor: "#ffffff" }}
+    >
+      {ROTATING_WORDS[wordIndex]}
+    </span>
+  );
+});
+
+export function Hero() {
+  const [isMobile, setIsMobile] = useState(false);
+  const base = isMobile ? 3.25 : 0.08;
+  const sectionRef = useRef<HTMLElement>(null);
+  const cellFrame = useRef(0);
+  usePauseOffscreenAnimations(sectionRef);
+  const cellPointer = useRef<{ el: HTMLDivElement | null; x: number; y: number }>({ el: null, x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener("resize", handleResize, { passive: true });
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      cancelAnimationFrame(cellFrame.current);
+    };
+  }, []);
+
+  // Escreve as CSS vars no máximo 1x por frame (mousemove pode passar de 60Hz e
+  // cada leitura de rect após escrita forçava recálculo de estilo síncrono).
+  const handleCellMove = (e: MouseEvent<HTMLDivElement>) => {
+    const p = cellPointer.current;
+    p.el = e.currentTarget;
+    p.x = e.clientX;
+    p.y = e.clientY;
+    if (cellFrame.current) return;
+    cellFrame.current = requestAnimationFrame(() => {
+      cellFrame.current = 0;
+      const el = p.el;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      el.style.setProperty("--mx", `${p.x - r.left}px`);
+      el.style.setProperty("--my", `${p.y - r.top}px`);
+      el.style.setProperty("--tx", `${((p.x - r.left) / r.width) * 2 - 1}`);
+      el.style.setProperty("--ty", `${((p.y - r.top) / r.height) * 2 - 1}`);
+    });
+  };
+
+  return (
+    <section ref={sectionRef} id="hero" className="hero-section" style={{ position: "relative", overflow: "hidden", minHeight: "100vh", width: "100%", display: "flex", alignItems: "center", background: "radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%)", transition: "background 0.5s ease" }}>
       {/* Google Antigravity Style Interactive Background (Apenas na versão black) */}
       <motion.div
         initial={{ opacity: 0 }}
@@ -113,13 +143,7 @@ export function Hero() {
             custom={{ delay: base + 0.86, isMobile }} initial="hidden" animate="visible" variants={entranceVariants}
             className="block hero-enter" style={{ color: "#ffffff" }}
           >
-            <span 
-              key={wordIndex} 
-              className="inline-block animate-word-rotate hero-rotating-word"
-              style={{ color: "#ffffff", WebkitTextFillColor: "#ffffff" }}
-            >
-              {ROTATING_WORDS[wordIndex]}
-            </span>
+            <RotatingWord />
           </motion.span>
         </h1>
 
@@ -379,9 +403,11 @@ export function Hero() {
               100% { transform: translate(0); text-shadow: none; }
             }
             @keyframes hzEdge { to { background-position: -200% 0; } }
+            /* Deslocamento via transform (compositor) em vez de left (layout+paint).
+               160% do pai / 30% de largura = 533.333% da própria largura: trajeto idêntico. */
             @keyframes hzSweep {
-              0%, 55% { left: -40%; }
-              100% { left: 120%; }
+              0%, 55% { transform: translateX(0) skewX(-18deg); }
+              100% { transform: translateX(533.333%) skewX(-18deg); }
             }
             @media (max-width: 720px) {
               .hz-panel { grid-template-columns: 1fr; }

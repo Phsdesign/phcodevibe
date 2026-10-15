@@ -134,8 +134,17 @@ export function ScrollLogo() {
       layers = { body: bg.canvas, shine: sg };
     };
 
+    // Calibragem de DPR: no mobile/touch o canvas de tela cheia é limitado a 1.5x
+    // (partículas de 2px — diferença imperceptível, ~44% menos pixels por frame em telas 2x).
+    const coarse = window.matchMedia("(pointer: coarse)");
+    const maxDpr = () => (window.innerWidth < 768 || coarse.matches ? 1.5 : 2);
+
     const resize = () => {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const nextDpr = Math.min(window.devicePixelRatio || 1, maxDpr());
+      // No mobile a barra de endereço dispara resize ao rolar; realocar o bitmap
+      // e recalcular as camadas sem mudança real de tamanho era trabalho perdido.
+      if (nextDpr === dpr && window.innerWidth === vw && window.innerHeight === vh) return;
+      dpr = nextDpr;
       vw = window.innerWidth;
       vh = window.innerHeight;
       canvas.width = vw * dpr;
@@ -158,7 +167,17 @@ export function ScrollLogo() {
       mouse.y = -9999;
     };
 
-    window.addEventListener("resize", resize);
+    let resizeFrame = 0;
+    const onResize = () => {
+      if (resizeFrame) return;
+      resizeFrame = requestAnimationFrame(() => {
+        resizeFrame = 0;
+        resize();
+        scrollDirty = true;
+      });
+    };
+
+    window.addEventListener("resize", onResize, { passive: true });
     window.addEventListener("mousemove", handleMouse, { passive: true });
     document.addEventListener("mouseleave", handleLeave);
 
@@ -168,21 +187,34 @@ export function ScrollLogo() {
       const range = Math.max(1, section.offsetHeight - vh);
       p = Math.min(1, Math.max(0, -rect.top / range));
     };
-    window.addEventListener("scroll", updateScrollProgress, { passive: true });
+    // O scroll só marca "sujo"; a leitura de layout acontece 1x por frame no loop
+    // (antes: getBoundingClientRect + offsetHeight a cada evento de scroll).
+    let scrollDirty = true;
+    const onScroll = () => {
+      scrollDirty = true;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
     updateScrollProgress();
 
     const t0 = performance.now();
     let raf = 0;
-    let inView = true;
+    // Fora da viewport o loop é parado de fato e retomado ao reentrar.
     const io = new IntersectionObserver(([entry]) => {
-      inView = entry.isIntersecting;
-      if (inView) updateScrollProgress();
+      if (entry.isIntersecting) {
+        updateScrollProgress();
+        if (!raf) raf = requestAnimationFrame(frame);
+      } else {
+        cancelAnimationFrame(raf);
+        raf = 0;
+      }
     });
-    io.observe(section);
 
     const frame = (now: number) => {
       raf = requestAnimationFrame(frame);
-      if (!inView) return;
+      if (scrollDirty) {
+        scrollDirty = false;
+        updateScrollProgress();
+      }
       const t = (now - t0) / 1000;
 
       const gather = smoothstep(0.0, 0.2, p);
@@ -281,12 +313,14 @@ export function ScrollLogo() {
     };
 
     raf = requestAnimationFrame(frame);
+    io.observe(section);
 
     return () => {
       cancelAnimationFrame(raf);
+      cancelAnimationFrame(resizeFrame);
       io.disconnect();
-      window.removeEventListener("resize", resize);
-      window.removeEventListener("scroll", updateScrollProgress);
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("scroll", onScroll);
       window.removeEventListener("mousemove", handleMouse);
       document.removeEventListener("mouseleave", handleLeave);
     };

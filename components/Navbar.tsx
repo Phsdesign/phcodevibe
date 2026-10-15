@@ -13,7 +13,7 @@ const links = [
   { href: "#contato", label: "Contato" },
 ];
 
-const MotionLink = motion(Link);
+const MotionLink = motion.create(Link);
 
 const navVariants = {
   hidden: { opacity: 0, y: -20 },

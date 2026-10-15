@@ -11,7 +11,6 @@ import "./mobile-fix.css";
 import "./theme-glass.css";
 import "./stars.css";
 
-import Script from "next/script";
 
 const inter = Inter({
   variable: "--font-inter",
