@@ -1380,4 +1380,149 @@
     filter: none !important;
     animation: none !important;
   }
+  /* O botão Explorar é centralizado com left: 50% + translateX(-50%). */
+  .hero-scroll-cue {
+    transform: translateX(-50%) !important;
+  }
+}
+
+/* Versão mobile estática (resto da página): sem animações nem transições, e todo
+   conteúdo que nascia escondido para um "reveal" no scroll (opacity 0 inline do
+   framer-motion, .pf-reveal, .plan-reveal, rodapé...) já aparece no HTML, sem
+   esperar o JavaScript nem o IntersectionObserver. !important vence os estilos
+   inline e as animações; os seletores [style*="opacity:0;"] não pegam 0.x. */
+@media (max-width: 767px) {
+  main *,
+  main *::before,
+  main *::after,
+  .stars-bg-container,
+  .stars-bg-container *,
+  .fab-wa-glow,
+  .fab-wa-shine,
+  .fab-wa-icon {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  main [style*="opacity:0;"],
+  main [style*="opacity: 0;"],
+  main [style$="opacity:0"],
+  main [style$="opacity: 0"],
+  .pf-reveal,
+  .plan-reveal,
+  .proc-shell,
+  .offer-lead-anim,
+  .offer-line,
+  .ft-reveal,
+  .ft-wordmark,
+  .ft-glow,
+  .ft-line > span {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    visibility: visible !important;
+  }
+
+  /* Layout de celular já no HTML. FeaturesAI e Pricing escolhem o layout pelo
+     isMobile do React, que no HTML estático nasce false (layout de PC: seção
+     presa de 320vh com o conteúdo cortado, grades de 2 a 4 colunas, títulos
+     de PC) e só virava celular depois da hidratação, mudando tudo de altura
+     enquanto a pessoa rolava. Estes valores são os mesmos do ramo isMobile. */
+  #features {
+    height: auto !important;
+  }
+  #features .fa-pin {
+    position: relative !important;
+    height: auto !important;
+  }
+  #features .fa-track {
+    padding: 3rem 20px !important;
+    transform: none !important;
+  }
+  /* Cabeçalho ligado ao scroll do PC: nasce com opacidade 0.3 e reduzido. */
+  #features .fa-head {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  #features .fa-title {
+    font-size: 2.5rem !important;
+  }
+  #features .fa-cards,
+  #features .ph-info-steps,
+  .fa-pillars,
+  .proc-steps,
+  .proc-panels,
+  .proc-options {
+    grid-template-columns: 1fr !important;
+  }
+  #features .fa-info-wrap {
+    margin-top: 2rem !important;
+  }
+  #features .ph-info {
+    padding: 2.5rem 1.5rem !important;
+  }
+  #features .ph-info-head {
+    margin-bottom: 2rem !important;
+  }
+  #features .ph-info-steps {
+    gap: 2.5rem !important;
+  }
+  #features .ph-info-track,
+  #features .ph-info-pulse {
+    display: none !important;
+  }
+  .fa-philo {
+    padding: 2rem 20px 4rem !important;
+  }
+  .fa-philo-glow {
+    width: 320px !important;
+    height: 320px !important;
+  }
+  .fa-philo-card {
+    padding: 2.5rem 1.5rem !important;
+  }
+  .fa-philo-mark {
+    font-size: 9rem !important;
+  }
+  .fa-quote {
+    font-size: 1.4rem !important;
+  }
+  .fa-pillars .ph-pillar {
+    padding: 1.25rem !important;
+  }
+  .fa-philo-cta {
+    flex-direction: column !important;
+  }
+  #precos {
+    overflow: visible !important;
+  }
+  .proc {
+    margin-top: 5rem !important;
+  }
+  .proc-shell {
+    gap: 2.5rem !important;
+    padding: 2.2rem 1.4rem !important;
+  }
+  .proc-foot {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  /* Exceção: a seta dos cards de Métricas é só de hover (o framer põe
+     opacity 0 inline nela, e a regra acima a mostraria). */
+  main .mt-pillar-arrow {
+    opacity: 0 !important;
+  }
+
+  /* Logo de partículas: no celular vira a logo pronta, sem os 420vh de scroll. */
+  .sl-scroll {
+    display: none !important;
+  }
+  .sl-static {
+    display: flex !important;
+  }
+}
+
+.sl-static {
+  display: none;
 }

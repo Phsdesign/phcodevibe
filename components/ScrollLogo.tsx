@@ -77,6 +77,8 @@ export function ScrollLogo() {
     const section = sectionRef.current;
     const canvas = canvasRef.current;
     if (!section || !canvas) return;
+    // No celular a seção vira a logo estática (.sl-static, via CSS): sem canvas.
+    if (window.matchMedia("(max-width: 767px)").matches) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
@@ -327,23 +329,56 @@ export function ScrollLogo() {
   }, []);
 
   return (
-    <div
-      ref={sectionRef}
-      aria-hidden="true"
-      style={{ position: "relative", width: "100%", height: "420vh" }}
-    >
+    <>
       <div
-        style={{
-          position: "sticky",
-          top: 0,
-          width: "100%",
-          height: "100vh",
-          overflow: "hidden",
-          pointerEvents: "none",
-        }}
+        ref={sectionRef}
+        aria-hidden="true"
+        className="sl-scroll"
+        style={{ position: "relative", width: "100%", height: "420vh" }}
       >
-        <canvas ref={canvasRef} style={{ position: "absolute", inset: 0 }} />
+        <div
+          style={{
+            position: "sticky",
+            top: 0,
+            width: "100%",
+            height: "100vh",
+            overflow: "hidden",
+            pointerEvents: "none",
+          }}
+        >
+          <canvas ref={canvasRef} style={{ position: "absolute", inset: 0 }} />
+        </div>
       </div>
-    </div>
+      {/* Mobile: o estado final da animação (gradiente, brilho e scanlines), parado. */}
+      <div
+        aria-hidden="true"
+        className="sl-static"
+        style={{ width: "100%", justifyContent: "center", padding: "18vw 0" }}
+      >
+        <svg
+          viewBox="40.35 30.3 79.29 106.7"
+          style={{
+            height: "60vw",
+            width: "auto",
+            overflow: "visible",
+            opacity: 0.92,
+            filter: "drop-shadow(0 0 24px rgba(103, 232, 249, 0.75))",
+          }}
+        >
+          <defs>
+            <linearGradient id="sl-static-body" gradientUnits="userSpaceOnUse" x1="0" y1="30" x2="0" y2="130">
+              <stop offset="0" stopColor="#ffffff" />
+              <stop offset="0.5" stopColor="#a5f3fc" />
+              <stop offset="1" stopColor="#818cf8" />
+            </linearGradient>
+            <pattern id="sl-static-scan" patternUnits="userSpaceOnUse" width="160" height="3">
+              <rect width="160" height="1" fill="rgba(8, 12, 24, 0.22)" />
+            </pattern>
+          </defs>
+          <path d={LOGO_PATH} fill="url(#sl-static-body)" />
+          <path d={LOGO_PATH} fill="url(#sl-static-scan)" />
+        </svg>
+      </div>
+    </>
   );
 }

@@ -8,6 +8,17 @@
 // que um loader inline injeta, na mesma ordem e com os mesmos atributos, assim
 // que o navegador registra o first-contentful-paint. Fallbacks: dois frames +
 // 300 ms, e 3 s fixos (aba em segundo plano / prerender não pintam).
+//
+// No desktop com mouse a hidratação espera a primeira interação (mexer o mouse,
+// rolar, clicar ou teclar), e os scripts são só pré-baixados depois do load. A
+// página já está toda no HTML e as animações de entrada são CSS; o que depende
+// de JS (palavra que gira, partículas, Lenis, cursor) começa no primeiro
+// movimento (o loader marca <html data-interacted> para quem precisa saber que
+// essa interação já aconteceu). Em máquina lenta (como a do PageSpeed) a hidratação da página
+// inteira são várias tarefas longas seguidas, que pesavam no TBT do desktop.
+// Em tela com toque (celular, tablet, notebook touch) fica no primeiro paint:
+// o primeiro toque não pode se perder. (Não dá para usar (hover: hover) aqui: o
+// Chrome headless do Lighthouse responde "none" mesmo emulando desktop.)
 import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -23,6 +34,14 @@ function loader(scripts: Array<[string, string | null]>): string {
     "function go(){if(done)return;done=1;L.forEach(function(s){" +
     'var e=document.createElement("script");e.src=s[0];e.async=true;if(s[1])e.id=s[1];' +
     "document.head.appendChild(e);});}" +
+    "if(innerWidth>=768&&!navigator.maxTouchPoints){" +
+    'var E=["pointermove","pointerdown","wheel","keydown","touchstart","scroll"],' +
+    "o={capture:true,passive:true},f=function(){E.forEach(function(n){removeEventListener(n,f,o);});" +
+    'document.documentElement.setAttribute("data-interacted","");go();};' +
+    "E.forEach(function(n){addEventListener(n,f,o);});" +
+    'addEventListener("load",function(){L.forEach(function(s){' +
+    'var k=document.createElement("link");k.rel="prefetch";k.as="script";k.href=s[0];' +
+    "document.head.appendChild(k);});});return;}" +
     "try{new PerformanceObserver(function(l){l.getEntries().forEach(function(e){" +
     'if(e.name==="first-contentful-paint")setTimeout(go,0);});})' +
     '.observe({type:"paint",buffered:true});}catch(e){}' +

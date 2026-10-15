@@ -2169,9 +2169,10 @@ html:not(.dark) .hero-section video {
 .hero-scroll-cue {
   animation: heroEnterCue 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
+/* translateX(-50%) centraliza o botão (left: 50% inline); sem ele ficava 40px à direita. */
 @keyframes heroEnterCue {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: none; }
+  from { opacity: 0; transform: translate(-50%, 12px); }
+  to { opacity: 1; transform: translateX(-50%); }
 }
 
 .hero-subtitle {
@@ -3784,4 +3785,10 @@ html:not(.dark) .hero-section video {
 @keyframes navFadeEnter {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+/* Seta do card de Métricas: só aparece no hover (o framer anima a opacidade
+   inline); escondida já no HTML, antes do JavaScript. */
+.mt-pillar-arrow {
+  opacity: 0;
 }
