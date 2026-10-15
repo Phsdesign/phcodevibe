@@ -1,21 +1,25 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
+
+// `null` no servidor/hidratação (= ainda não montado); no cliente, a largura real.
+const noopSubscribe = () => () => {};
+const getClientIsMobile = (): boolean | null => window.innerWidth <= 768;
+const getServerIsMobile = (): boolean | null => null;
 
 export function SplashLoader() {
   const [loading, setLoading] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  // Mesma regra do antigo setIsMobile no mount, mas sem os 3 setState síncronos
+  // dentro do effect que causavam renders em cascata logo na hidratação.
+  const isMobile = useSyncExternalStore(noopSubscribe, getClientIsMobile, getServerIsMobile);
+  const mounted = isMobile !== null;
 
+  // Roda no mount, como antes: a ordem deste effect em relação aos demais (ex.: o
+  // Navbar, que reseta body.overflow logo depois) faz parte do comportamento atual.
   useEffect(() => {
-    setMounted(true);
-    const mobile = window.innerWidth <= 768;
-    setIsMobile(mobile);
-
-    // Se for parte web / desktop, desativa imediatamente e libera o scroll
-    if (!mobile) {
-      setLoading(false);
+    // Se for parte web / desktop, o splash não é renderizado e o scroll é liberado
+    if (!getClientIsMobile()) {
       document.body.style.overflow = "auto";
       return;
     }

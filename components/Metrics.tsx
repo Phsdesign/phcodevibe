@@ -297,7 +297,6 @@ export function Metrics() {
 
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
   const chapterScale = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
-  const blobY = useTransform(scrollYProgress, [0, 1], [-200, 200]);
 
   return (
     <section

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, type CSSProperties, type MouseEvent, type ReactNode } from "react";
 import { motion, useMotionValue, useSpring, useTransform, type MotionValue } from "framer-motion";
+import { usePauseOffscreenAnimations } from "@/hooks/usePauseOffscreenAnimations";
 
 const itemVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -115,9 +116,10 @@ const eliteStyles = `
   transform: skewX(-20deg);
   animation: ph-cta-shine 3.2s ease-in-out infinite;
 }
+/* transform em vez de left: 200% do pai / 50% de largura = 400% (mesmo trajeto). */
 @keyframes ph-cta-shine {
-  0%, 60% { left: -75%; }
-  100% { left: 125%; }
+  0%, 60% { transform: translateX(0) skewX(-20deg); }
+  100% { transform: translateX(400%) skewX(-20deg); }
 }
 .ph-elite-card {
   position: relative;
@@ -682,6 +684,8 @@ export function FeaturesAI() {
   const [philoIn, setPhiloIn] = useState(false);
   const philoRef = useRef<HTMLElement>(null);
   const philoReady = philoIn && pinDone;
+  usePauseOffscreenAnimations(sectionRef);
+  usePauseOffscreenAnimations(philoRef);
   const headY = useTransform(scrollYProgress, [0, 0.16], [90, 0]);
   const headScale = useTransform(scrollYProgress, [0, 0.16], [0.82, 1]);
   const headOpacity = useTransform(scrollYProgress, [0, 0.08], [0.3, 1]);
@@ -725,6 +729,19 @@ export function FeaturesAI() {
   }, [isMobile]);
 
   useEffect(() => {
+    // Alturas (seção, track, viewport) só mudam em resize/ResizeObserver; antes eram
+    // relidas a cada frame de scroll junto com o rect. Agora o scroll lê só o rect.
+    let vh = 0;
+    let range = 0;
+    let travel = 0;
+    let done = false;
+    const measure = () => {
+      const el = sectionRef.current;
+      const track = trackRef.current;
+      vh = window.innerHeight;
+      range = el ? el.offsetHeight - vh : 0;
+      travel = track ? Math.max(0, track.offsetHeight - vh + 40) : 0;
+    };
     const update = () => {
       const el = sectionRef.current;
       const track = trackRef.current;
@@ -732,18 +749,22 @@ export function FeaturesAI() {
       if (isMobile || !track) {
         scrollYProgress.set(1);
         trackY.set(0);
-        setPinDone(true);
+        if (!done) {
+          done = true;
+          setPinDone(true);
+        }
         return;
       }
-      const vh = window.innerHeight;
-      const range = el.offsetHeight - vh;
       const top = el.getBoundingClientRect().top;
       const p = range <= 0 ? 1 : Math.min(1, Math.max(0, -top / range));
-      const travel = Math.max(0, track.offsetHeight - vh + 40);
       scrollYProgress.set(p);
       trackY.set(-travel * p);
-      if (p >= 0.98) setPinDone(true);
+      if (p >= 0.98 && !done) {
+        done = true;
+        setPinDone(true);
+      }
     };
+    measure();
     update();
     let frame = 0;
     const onScroll = () => {
@@ -753,11 +774,19 @@ export function FeaturesAI() {
         update();
       });
     };
+    const onResize = () => {
+      measure();
+      update();
+    };
+    const ro = new ResizeObserver(onResize);
+    if (sectionRef.current) ro.observe(sectionRef.current);
+    if (trackRef.current) ro.observe(trackRef.current);
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", update);
+    window.addEventListener("resize", onResize, { passive: true });
     return () => {
+      ro.disconnect();
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", update);
+      window.removeEventListener("resize", onResize);
       cancelAnimationFrame(frame);
     };
   }, [isMobile, pinH, scrollYProgress, trackY]);

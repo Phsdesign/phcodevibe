@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import { usePauseOffscreenAnimations } from "@/hooks/usePauseOffscreenAnimations";
 
 const OFFER_GLYPHS = "01アイウエオカキクケコ<>/+*#HPX";
 const OFFER_LOOP_MS = 9000;
@@ -66,7 +67,9 @@ function OfferCodeRide() {
     const resize = () => {
       w = parent.clientWidth;
       h = parent.clientHeight;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      // DPR limitado a 1.5 no mobile/touch (carga de GPU menor, sem perda perceptível).
+      const mobile = window.innerWidth < 768 || window.matchMedia("(pointer: coarse)").matches;
+      const dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1.5 : 2);
       canvas.width = w * dpr;
       canvas.height = h * dpr;
       canvas.style.width = `${w}px`;
@@ -78,21 +81,23 @@ function OfferCodeRide() {
     const ro = new ResizeObserver(resize);
     ro.observe(parent);
 
-    let visible = true;
-    const observer = new IntersectionObserver(([entry]) => {
-      visible = entry.isIntersecting;
-    });
-    observer.observe(canvas);
-
     const start = performance.now();
     let raf = 0;
 
-    const draw = (now: number) => {
-      if (!visible || pts.length === 0) {
-        raf = requestAnimationFrame(draw);
-        return;
+    // Fora da viewport o loop é desligado de fato (antes ele seguia agendando
+    // requestAnimationFrame vazio a cada frame) e religado ao reentrar.
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        if (!raf) raf = requestAnimationFrame(draw);
+      } else {
+        cancelAnimationFrame(raf);
+        raf = 0;
       }
+    });
+
+    const draw = (now: number) => {
       raf = requestAnimationFrame(draw);
+      if (pts.length === 0) return;
 
       const N = pts.length;
       const progress = ((now - start) % OFFER_LOOP_MS) / OFFER_LOOP_MS;
@@ -164,7 +169,7 @@ function OfferCodeRide() {
         ctx.fillText(s.glyph, s.x, s.y);
       }
     };
-    raf = requestAnimationFrame(draw);
+    observer.observe(canvas);
 
     return () => {
       cancelAnimationFrame(raf);
@@ -272,35 +277,44 @@ function PlanCard({
   plan,
   index,
   featured,
-  onEnter,
-  onLeave,
 }: {
   plan: Plan;
   index: number;
   featured: boolean;
-  onEnter: () => void;
-  onLeave: () => void;
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
+  const moveFrame = useRef(0);
+  const pointer = useRef({ x: 0, y: 0 });
   const whatsapp = `https://wa.me/5549991031743?text=${encodeURIComponent(`Olá! Gostaria de detalhes sobre o investimento no plano ${plan.name}.`)}`;
 
+  useEffect(() => () => cancelAnimationFrame(moveFrame.current), []);
+
+  // mousemove dispara acima de 60Hz; ler o rect logo após escrever o transform forçava
+  // recálculo de estilo síncrono a cada evento. Agora lê/escreve uma vez por frame.
   const handleMove = (e: { clientX: number; clientY: number }) => {
-    const el = cardRef.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    const x = e.clientX - r.left;
-    const y = e.clientY - r.top;
-    el.style.setProperty("--mx", `${x}px`);
-    el.style.setProperty("--my", `${y}px`);
-    const rx = (y / r.height - 0.5) * -6;
-    const ry = (x / r.width - 0.5) * 6;
-    el.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-6px)`;
+    pointer.current.x = e.clientX;
+    pointer.current.y = e.clientY;
+    if (moveFrame.current) return;
+    moveFrame.current = requestAnimationFrame(() => {
+      moveFrame.current = 0;
+      const el = cardRef.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const x = pointer.current.x - r.left;
+      const y = pointer.current.y - r.top;
+      el.style.setProperty("--mx", `${x}px`);
+      el.style.setProperty("--my", `${y}px`);
+      const rx = (y / r.height - 0.5) * -6;
+      const ry = (x / r.width - 0.5) * 6;
+      el.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-6px)`;
+    });
   };
 
   const handleLeave = () => {
+    cancelAnimationFrame(moveFrame.current);
+    moveFrame.current = 0;
     const el = cardRef.current;
     if (el) el.style.transform = "";
-    onLeave();
   };
 
   return (
@@ -315,7 +329,6 @@ function PlanCard({
         ref={cardRef}
         className={`plan-card${featured ? " is-featured" : ""}`}
         onMouseMove={handleMove}
-        onMouseEnter={onEnter}
         onMouseLeave={handleLeave}
       >
         <div className="plan-card-body">
@@ -543,9 +556,10 @@ function PlanCard({
           animation: plan-cta-shine 3.4s ease-in-out infinite;
           pointer-events: none;
         }
+        /* transform em vez de left: 190% do pai / 40% de largura = 475% (mesmo trajeto). */
         @keyframes plan-cta-shine {
-          0%, 55% { left: -60%; }
-          100% { left: 130%; }
+          0%, 55% { transform: translateX(0) skewX(-22deg); }
+          100% { transform: translateX(475%) skewX(-22deg); }
         }
         .plan-card-cta:hover {
           background: #dbe4ff;
@@ -1299,8 +1313,8 @@ function ProcessSection({ isMobile }: { isMobile: boolean }) {
 }
 
 export function Pricing() {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [hoveredWebIndex, setHoveredWebIndex] = useState<number | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  usePauseOffscreenAnimations(sectionRef);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -1311,7 +1325,7 @@ export function Pricing() {
   }, []);
 
   return (
-    <section id="precos" style={{ padding: "10rem 0", width: "100%", background: "var(--bg)", overflow: isMobile ? "visible" : "hidden" }}>
+    <section ref={sectionRef} id="precos" style={{ padding: "10rem 0", width: "100%", background: "var(--bg)", overflow: isMobile ? "visible" : "hidden" }}>
       <style jsx global>{`
         @keyframes premium-glow {
           0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
@@ -1711,9 +1725,10 @@ export function Pricing() {
           animation: offer-cta-shine 3.2s ease-in-out infinite;
           pointer-events: none;
         }
+        /* transform em vez de left: 190% do pai / 40% de largura = 475% (mesmo trajeto). */
         @keyframes offer-cta-shine {
-          0%, 55% { left: -60%; }
-          100% { left: 130%; }
+          0%, 55% { transform: translateX(0) skewX(-22deg); }
+          100% { transform: translateX(475%) skewX(-22deg); }
         }
         .offer-cta:hover {
           background: #7aa2ff;
@@ -1874,8 +1889,6 @@ export function Pricing() {
               plan={p}
               index={i}
               featured={p.name === "Plano Personalizado"}
-              onEnter={() => setHoveredIndex(i)}
-              onLeave={() => setHoveredIndex(null)}
             />
           ))}
         </div>
@@ -1900,8 +1913,6 @@ export function Pricing() {
               plan={p}
               index={i}
               featured={p.name === "Custom & Saas"}
-              onEnter={() => setHoveredWebIndex(i)}
-              onLeave={() => setHoveredWebIndex(null)}
             />
           ))}
         </div>

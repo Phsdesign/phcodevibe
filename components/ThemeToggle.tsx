@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useSyncExternalStore } from "react";
+
+const noopSubscribe = () => () => {};
 
 const SPARKLES = [
   { width: 2, deg: 25, duration: 11 },
@@ -36,10 +38,10 @@ interface ThemeToggleProps {
 
 export function ThemeToggle({ id = "toggle", className = "" }: ThemeToggleProps) {
   const [isDark, setIsDark] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  // `false` no servidor/hidratação e `true` no cliente — sem setState síncrono em effect.
+  const mounted = useSyncExternalStore(noopSubscribe, () => true, () => false);
 
   useEffect(() => {
-    setMounted(true);
     const syncTheme = () => {
       const savedTheme = localStorage.getItem("theme");
       const currentDark = savedTheme === "dark" || document.documentElement.classList.contains("dark");

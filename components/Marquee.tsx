@@ -10,6 +10,7 @@ import {
   useTransform,
   type MotionValue,
 } from "framer-motion";
+import { usePauseOffscreenAnimations } from "@/hooks/usePauseOffscreenAnimations";
 
 type ClientLogo = {
   src: string;
@@ -230,6 +231,7 @@ export function Marquee() {
   const parallax = desktop && !reduceMotion;
   const interactive = parallax && fine;
   const sectionRef = useRef<HTMLElement>(null);
+  usePauseOffscreenAnimations(sectionRef);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -360,9 +362,10 @@ export function Marquee() {
           background: linear-gradient(90deg, transparent, rgba(120,170,255,0.35), transparent);
           animation: mqBadge 3.5s ease-in-out infinite;
         }
+        /* transform em vez de left: 190% do pai / 40% de largura = 475% (mesmo trajeto). */
         @keyframes mqBadge {
-          0%, 60% { left: -60%; }
-          100% { left: 130%; }
+          0%, 60% { transform: translateX(0); }
+          100% { transform: translateX(475%); }
         }
         .mq-pill {
           --c: #2f6fd6;

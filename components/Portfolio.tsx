@@ -36,7 +36,7 @@ const ArrowIcon = ({ size = 16 }: { size?: number }) => (
 const WIDE_INDEXES = [0, 3, 4];
 
 /* ── Card ── */
-function ProjectCard({ project, index }: { project: typeof portfolioData[0]; index: number }) {
+function ProjectCard({ project, index, eagerImages }: { project: typeof portfolioData[0]; index: number; eagerImages: boolean }) {
   const cardRef = useReveal();
   const isWide = WIDE_INDEXES.includes(index);
 
@@ -57,7 +57,7 @@ function ProjectCard({ project, index }: { project: typeof portfolioData[0]; ind
             alt={`${project.title} Cover`}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            loading={index < 3 ? "eager" : "lazy"}
+            loading={eagerImages && index < 3 ? "eager" : "lazy"}
             className="pf-img"
           />
           <span className="pf-count">{project.mockups.length} fotos</span>
@@ -78,7 +78,9 @@ function ProjectCard({ project, index }: { project: typeof portfolioData[0]; ind
 }
 
 /* ── Main Portfolio Section ── */
-export function Portfolio() {
+// Na home o portfólio fica muitas dobras abaixo: as capas não devem competir com o
+// carregamento inicial. Em /portfolio (acima da dobra) as 3 primeiras seguem "eager".
+export function Portfolio({ eagerImages = false }: { eagerImages?: boolean }) {
   return (
     <section id="portfolio" className="pf-section">
       <div className="container" style={{ maxWidth: "1280px", position: "relative", zIndex: 1 }}>
@@ -102,7 +104,7 @@ export function Portfolio() {
         {/* Grid */}
         <div className="pf-grid">
           {portfolioData.map((project, i) => (
-            <ProjectCard key={project.slug} project={project} index={i} />
+            <ProjectCard key={project.slug} project={project} index={i} eagerImages={eagerImages} />
           ))}
         </div>
 

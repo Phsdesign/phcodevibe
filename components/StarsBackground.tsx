@@ -31,25 +31,48 @@ export function StarsBackground() {
   useEffect(() => {
     // Se não estiver na home (ex: /sobre, /portfolio, etc.), sempre visível
     if (pathname !== "/") {
-      setIsVisible(true);
-      return;
+      const id = requestAnimationFrame(() => setIsVisible(true));
+      return () => cancelAnimationFrame(id);
     }
 
-    // Na home: oculta na Hero (dobra 1) e ativa a partir da dobra 2
-    const checkScroll = () => {
-      const heroElement = document.getElementById("hero");
-      const heroHeight = heroElement ? heroElement.offsetHeight : 600;
-      // Começa a transição suave quando o usuário começa a sair da Hero em direção à dobra 2
-      const scrolledToSecondFold = window.scrollY > Math.max(200, heroHeight * 0.45);
-      setIsVisible(scrolledToSecondFold);
-    };
+    // Na home: oculta na Hero (dobra 1) e ativa a partir da dobra 2.
+    // A altura da Hero é medida só no resize (antes: offsetHeight a cada evento de
+    // scroll) e a checagem roda no máximo 1x por frame.
+    let heroHeight = 600;
+    let needsMeasure = false;
+    let frame = 0;
 
-    checkScroll();
-    window.addEventListener("scroll", checkScroll, { passive: true });
-    window.addEventListener("resize", checkScroll, { passive: true });
+    const measure = () => {
+      const heroElement = document.getElementById("hero");
+      heroHeight = heroElement ? heroElement.offsetHeight : 600;
+    };
+    const check = () => {
+      // Começa a transição suave quando o usuário começa a sair da Hero em direção à dobra 2
+      setIsVisible(window.scrollY > Math.max(200, heroHeight * 0.45));
+    };
+    const schedule = (remeasure: boolean) => {
+      if (remeasure) needsMeasure = true;
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        if (needsMeasure) {
+          needsMeasure = false;
+          measure();
+        }
+        check();
+      });
+    };
+    const onScroll = () => schedule(false);
+    const onResize = () => schedule(true);
+
+    // Primeira checagem no próximo frame (evita setState síncrono dentro do effect).
+    schedule(true);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onResize, { passive: true });
     return () => {
-      window.removeEventListener("scroll", checkScroll);
-      window.removeEventListener("resize", checkScroll);
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
     };
   }, [pathname]);
 

@@ -1,24 +1,35 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
 import { prepare, layout } from '@chenglou/pretext';
 
-export default function PretextExample() {
-  const [measurement, setMeasurement] = useState<{ height: number; lineCount: number } | null>(null);
-  const text = "Pretext is a pure JavaScript/TypeScript library for multiline text measurement & layout. It's fast, accurate and supports all languages.";
-  const font = "16px Inter, system-ui, sans-serif";
-  const maxWidth = 300;
-  const lineHeight = 24;
+type Measurement = { height: number; lineCount: number };
 
-  useEffect(() => {
+const TEXT = "Pretext is a pure JavaScript/TypeScript library for multiline text measurement & layout. It's fast, accurate and supports all languages.";
+const FONT = "16px Inter, system-ui, sans-serif";
+const MAX_WIDTH = 300;
+const LINE_HEIGHT = 24;
+
+let cachedMeasurement: Measurement | null = null;
+const noopSubscribe = () => () => {};
+const getServerMeasurement = (): Measurement | null => null;
+const getMeasurement = (): Measurement | null => {
+  if (!cachedMeasurement) {
     // 1. Prepare the text (one-time work)
-    const prepared = prepare(text, font);
-    
+    const prepared = prepare(TEXT, FONT);
     // 2. Layout (cheap hot path)
-    const result = layout(prepared, maxWidth, lineHeight);
-    
-    setMeasurement(result);
-  }, []);
+    cachedMeasurement = layout(prepared, MAX_WIDTH, LINE_HEIGHT);
+  }
+  return cachedMeasurement;
+};
+
+export default function PretextExample() {
+  const text = TEXT;
+  const maxWidth = MAX_WIDTH;
+  const lineHeight = LINE_HEIGHT;
+
+  // Medição só no cliente (canvas), sem setState síncrono dentro de effect.
+  const measurement = useSyncExternalStore(noopSubscribe, getMeasurement, getServerMeasurement);
 
   return (
     <div className="p-6 bg-white dark:bg-zinc-900 rounded-xl shadow-lg border border-zinc-200 dark:border-zinc-800 max-w-md">

@@ -3693,3 +3693,15 @@ html:not(.dark) .hero-section video {
     transform: translateX(24px) rotate(-225deg);
   }
 }
+
+/* ── Performance: animações CSS de seções fora da viewport ficam pausadas ──
+   Ver hooks/usePauseOffscreenAnimations.ts. Só atua quando a seção está fora
+   da tela (com 200px de margem), portanto não altera nada visível. */
+[data-anim-offscreen],
+[data-anim-offscreen]::before,
+[data-anim-offscreen]::after,
+[data-anim-offscreen] *,
+[data-anim-offscreen] *::before,
+[data-anim-offscreen] *::after {
+  animation-play-state: paused !important;
+}
