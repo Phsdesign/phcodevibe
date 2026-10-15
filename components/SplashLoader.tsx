@@ -35,7 +35,7 @@ export function SplashLoader() {
       document.body.style.overflow = "auto";
       document.documentElement.classList.remove("splash-active");
       document.body.classList.remove("splash-active");
-    }, 3200);
+    }, 1500);
 
     return () => {
       clearTimeout(timer);
